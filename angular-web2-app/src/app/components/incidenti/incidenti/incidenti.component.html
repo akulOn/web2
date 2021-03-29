@@ -1,1 +1,15 @@
-<p>incidenti works!</p>
+<div>
+    <button (click)= "ucitajIncidente()">Ucitaj</button>
+</div>
+
+<div>
+    <p [hidden]="incidenti.length !== 0"> 
+    Trenutno nema incidenata!
+    </p>
+</div>
+
+<div>
+    <ul *ngFor="let incident of incidenti">
+        <li>{{ incident.id }} / {{ incident.adresa }} / {{ incident.pocetniDatum | date }} / {{ incident.status}} / {{ incident.brojTelefona }}</li>
+    </ul>
+</div>
