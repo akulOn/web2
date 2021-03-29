@@ -8,17 +8,21 @@ import { HeaderComponent } from './components/neRegistrovan/header/header.compon
 import { NeRegistrovanComponent } from './components/neRegistrovan/ne-registrovan/ne-registrovan.component';
 import { IncidentiComponent } from './components/incidenti/incidenti/incidenti.component';
 
+import { OrderModule } from 'ngx-order-pipe';
+
+
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HeaderComponent,
     NeRegistrovanComponent,
-    IncidentiComponent
+    IncidentiComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    OrderModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IncidentService } from '../../../services/incident/incident.service';
 import { Incident } from '../../../entities/incident/incident';
+import { identifierModuleUrl } from '@angular/compiler';
 
 @Component({
   selector: 'app-incidenti',
@@ -9,7 +10,7 @@ import { Incident } from '../../../entities/incident/incident';
 })
 export class IncidentiComponent implements OnInit {
   incidenti:Array<Incident>;
-
+  order:string = 'id';
 
   constructor(private incidentService:IncidentService) { 
     this.incidenti = new Array<Incident>();
