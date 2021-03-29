@@ -3,14 +3,18 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { HeaderComponent } from './header/header.component';
+import { LoginComponent } from './components/neRegistrovan/login/login.component';
+import { HeaderComponent } from './components/neRegistrovan/header/header.component';
+import { NeRegistrovanComponent } from './components/neRegistrovan/ne-registrovan/ne-registrovan.component';
+import { IncidentiComponent } from './components/incidenti/incidenti/incidenti.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HeaderComponent
+    HeaderComponent,
+    NeRegistrovanComponent,
+    IncidentiComponent
   ],
   imports: [
     BrowserModule,
