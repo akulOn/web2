@@ -8,9 +8,18 @@ import { HeaderComponent } from './components/neRegistrovan/header/header.compon
 import { NeRegistrovanComponent } from './components/neRegistrovan/ne-registrovan/ne-registrovan.component';
 import { IncidentiComponent } from './components/incidenti/incidenti/incidenti.component';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
+import { MatPaginatorModule } from '@angular/material/paginator';
 
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
+const materialModules = [
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule
+];
 
 @NgModule({
   declarations: [
@@ -23,10 +32,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MatSortModule,
     BrowserAnimationsModule,
+    materialModules
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
