@@ -8,7 +8,8 @@ import { HeaderComponent } from './components/neRegistrovan/header/header.compon
 import { NeRegistrovanComponent } from './components/neRegistrovan/ne-registrovan/ne-registrovan.component';
 import { IncidentiComponent } from './components/incidenti/incidenti/incidenti.component';
 
-import { OrderModule } from 'ngx-order-pipe';
+import { MatSortModule } from '@angular/material/sort';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { OrderModule } from 'ngx-order-pipe';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    OrderModule
+    MatSortModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

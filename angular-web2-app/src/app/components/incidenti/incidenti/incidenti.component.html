@@ -11,19 +11,19 @@
     </div>
     
     <div [hidden]="incidenti.length === 0" class="w-50">
-        <table class="table">
+        <table matSort (matSortChange)="sortData($event)" class="table">
             <thead class="thead-light">
               <tr>
-                <th scope="col">Id</th>
-                <th scope="col">Adresa</th>
-                <th scope="col">Pocetni datum</th>
-                <th scope="col">Status</th>
-                <th scope="col">Broj telefona</th>
+                <th mat-sort-header="id">Id</th>
+                <th mat-sort-header="adresa">Adresa</th>
+                <th mat-sort-header="pocetniDatum">Pocetni datum</th>
+                <th mat-sort-header="status">Status</th>
+                <th mat-sort-header="brojTelefona">Broj telefona</th>
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let incident of incidenti">
-                <th scope="row">{{ incident.id }}</th>
+              <tr *ngFor="let incident of sortedData">
+                <th>{{ incident.id }}</th>
                 <td>{{ incident.adresa }}</td>
                 <td>{{ incident.pocetniDatum | date }}</td>
                 <td>{{ incident.status}}</td>
