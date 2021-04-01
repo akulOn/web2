@@ -40,11 +40,10 @@ namespace WebApplication1.Controllers
 
         // POST: Korisnik
 
-        public HttpResponseMessage Post(Korisnik korisnik)
+        public HttpResponseMessage Post(Korisnik korisnik) // ako dodas vec postojeceg korisnika nece baciti error, ali nece ga dodati u bazu
         {
             string procedure = "dbo.InsertKorisnik";
             DataTable table = new DataTable();
-
             try
             {
                 using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
@@ -71,12 +70,41 @@ namespace WebApplication1.Controllers
                         }
                     }
                 }
-                return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
+                return Request.CreateResponse(System.Net.HttpStatusCode.OK);
 
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, table);
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+        }
+
+        public HttpResponseMessage Delete(int id) // prolazi ako ne postoji korisnik
+        {
+            string procedure = "dbo.DeleteKorisnik";
+            try
+            {
+                using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
+                {
+                    using (var command = new SqlCommand(procedure, connection))
+                    {
+                        command.CommandType = CommandType.StoredProcedure;
+
+                        // 3. add parameter to command, which will be passed to the stored procedure
+                        command.Parameters.Add(new SqlParameter("@idKorisnika", id));
+
+                        using (var adapter = new SqlDataAdapter(command))
+                        {
+
+                        }
+                    }
+                }
+                return Request.CreateResponse(System.Net.HttpStatusCode.OK);
+
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
         }
     }
