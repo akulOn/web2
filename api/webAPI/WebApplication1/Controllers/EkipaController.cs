@@ -15,12 +15,13 @@ namespace WebApplication1.Controllers
         // GET: Ekipa
         public HttpResponseMessage Get()
         {
+            // trebalo bi da se radi sa procedrama na bazi, nije dobro da ovde direktno kucam SQL upite
             string query = @"
                     select idEkipe, Naziv from dbo.Ekipa
                     ";
             DataTable table = new DataTable();
 
-            using(var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["EkipaAppDB"].ConnectionString))
+            using(var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
             {
                 using (var command = new SqlCommand(query, connection))
                 {
