@@ -13,8 +13,34 @@ namespace WebApplication1.Controllers
 {
     public class KorisnikController : ApiController
     {
-        // GET: Korisnik
-        public HttpResponseMessage Get() // zapravo je GetAll
+        [HttpGet]
+        public HttpResponseMessage Get(int id)
+        {
+            // trebalo bi da se radi sa procedrama na bazi, nije dobro da ovde direktno kucam SQL upite
+            string procedure = "dbo.GetKorisnik";
+            DataTable table = new DataTable();
+
+            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
+            {
+                using (var command = new SqlCommand(procedure, connection))
+                {
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    // 3. add parameter to command, which will be passed to the stored procedure
+                    command.Parameters.Add(new SqlParameter("@idKorisnika", id));
+
+                    using (var adapter = new SqlDataAdapter(command))
+                    {
+                        adapter.Fill(table);
+                    }
+                }
+            }
+            return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
+        }
+
+        [Route("api/Korisnik/GetAll")]
+        [HttpGet]
+        public HttpResponseMessage GetAll() // zapravo je GetAll
         {
             // trebalo bi da se radi sa procedrama na bazi, nije dobro da ovde direktno kucam SQL upite
             string procedure = "dbo.GetAllKorisnik";
@@ -37,9 +63,7 @@ namespace WebApplication1.Controllers
             }
             return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
         }
-
-        // POST: Korisnik
-
+        [HttpPost]
         public HttpResponseMessage Post(Korisnik korisnik) // ako dodas vec postojeceg korisnika nece baciti error, ali nece ga dodati u bazu
         {
             string procedure = "dbo.InsertKorisnik";
@@ -78,7 +102,7 @@ namespace WebApplication1.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
         }
-
+        [HttpPut]
         public HttpResponseMessage Put(Korisnik korisnik) // nece baciti error ako korisnik ne postoji u bazi
         {
             string procedure = "dbo.UpdateKorisnik";
@@ -117,29 +141,28 @@ namespace WebApplication1.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
         }
-
+        [HttpDelete]
         public HttpResponseMessage Delete(int id) // prolazi ako ne postoji korisnik
         {
             string procedure = "dbo.DeleteKorisnik";
+            DataTable table = new DataTable();
             try
             {
                 using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
                 {
                     using (var command = new SqlCommand(procedure, connection))
                     {
-                        command.CommandType = CommandType.StoredProcedure;
-
                         // 3. add parameter to command, which will be passed to the stored procedure
                         command.Parameters.Add(new SqlParameter("@idKorisnika", id));
 
                         using (var adapter = new SqlDataAdapter(command))
                         {
-
+                            command.CommandType = CommandType.StoredProcedure;
+                            adapter.Fill(table);
                         }
                     }
                 }
                 return Request.CreateResponse(System.Net.HttpStatusCode.OK);
-
             }
             catch (Exception e)
             {
