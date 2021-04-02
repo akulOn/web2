@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using WebApplication1.Models;
 
@@ -167,6 +168,45 @@ namespace WebApplication1.Controllers
             catch (Exception e)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+        }
+
+        [Route("api/Korisnik/SaveFile")]
+        [HttpPost]
+        public string SaveFile() // ako se doda ista slika nisam siguran sta se desi
+        {
+            int idKorisnika = 0;
+            string procedure = "dbo.DodajSlikuKorisniku";
+            DataTable table = new DataTable();
+            try
+            {
+                var httpRequest = HttpContext.Current.Request;
+                var postedFile = httpRequest.Files[0]; // gleda samo prvi fajl, ako ih je vise izabrano
+                string fileName = " tu bi bio Id trenutno logovanog korisnika!" + postedFile.FileName;
+                string physicalPath = HttpContext.Current.Server.MapPath("~/Photos/" + fileName);
+
+                postedFile.SaveAs(physicalPath);
+
+                using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
+                {
+                    using (var command = new SqlCommand(procedure, connection))
+                    {
+                        // 3. add parameter to command, which will be passed to the stored procedure
+                        command.Parameters.Add(new SqlParameter("@idKorisnika", idKorisnika)); // tu bi trebalo proslediti informacije o trenutno logovanom korisniku
+                        command.Parameters.Add(new SqlParameter("@Putanja", physicalPath));
+
+                        using (var adapter = new SqlDataAdapter(command))
+                        {
+                            command.CommandType = CommandType.StoredProcedure;
+                            adapter.Fill(table);
+                        }
+                    }
+                }
+                return fileName;
+            }
+            catch (Exception e)
+            {
+                return "SaveFile() failed!";
             }
         }
     }

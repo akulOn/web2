@@ -63,7 +63,7 @@ namespace WebApplication1.Controllers
         public HttpResponseMessage Post(Ekipa ekipa) // ako dodas vec postojecu ekipu nece baciti error, ali nece ga dodati u bazu
         {
             string query = @"
-                    insert into dbo.Ekipa values (" + ekipa.IdEkipe + ", '" + ekipa.Naziv + "')"
+                    insert into dbo.Ekipa(Naziv) values ('" + ekipa.Naziv + "')"
                     ;
             DataTable table = new DataTable();
             try
