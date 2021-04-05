@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Incident } from '../../entities/incident/incident';
+import { HttpClientModule } from "@angular/common/http";
+import { Observable } from "rxjs"; // async
 
 @Injectable({
   providedIn: 'root'

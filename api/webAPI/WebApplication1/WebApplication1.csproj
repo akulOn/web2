@@ -163,17 +163,29 @@
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\EkipaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IncidentController.cs" />
     <Compile Include="Controllers\KorisnikController.cs" />
     <Compile Include="Controllers\OpremaController.cs" />
     <Compile Include="Controllers\PozivController.cs" />
+    <Compile Include="Controllers\ResenjeController.cs" />
+    <Compile Include="Controllers\TipKonstrukcijeController.cs" />
+    <Compile Include="Controllers\TipMaterijalaController.cs" />
+    <Compile Include="Controllers\UzrokController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Ekipa.cs" />
+    <Compile Include="Models\Incident.cs" />
+    <Compile Include="Models\IncidentOprema.cs" />
     <Compile Include="Models\Korisnik.cs" />
     <Compile Include="Models\Oprema.cs" />
+    <Compile Include="Models\OpremaPoziv.cs" />
     <Compile Include="Models\Poziv.cs" />
+    <Compile Include="Models\Resenje.cs" />
+    <Compile Include="Models\TipKonstrukcije.cs" />
+    <Compile Include="Models\TipMaterijala.cs" />
+    <Compile Include="Models\Uzrok.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -182,7 +182,7 @@ namespace WebApplication1.Controllers
             {
                 var httpRequest = HttpContext.Current.Request;
                 var postedFile = httpRequest.Files[0]; // gleda samo prvi fajl, ako ih je vise izabrano
-                string fileName = " tu bi bio Id trenutno logovanog korisnika!" + postedFile.FileName;
+                string fileName = postedFile.FileName;
                 string physicalPath = HttpContext.Current.Server.MapPath("~/Photos/" + fileName);
 
                 postedFile.SaveAs(physicalPath);

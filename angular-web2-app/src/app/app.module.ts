@@ -9,11 +9,12 @@ import { NeRegistrovanComponent } from './components/neRegistrovan/ne-registrova
 import { IncidentiComponent } from './components/incidenti/incidenti/incidenti.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
-
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 const materialModules = [
   MatTableModule,
@@ -33,10 +34,13 @@ const materialModules = [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    materialModules
+    materialModules,
+    HttpClientModule,
+    FormsModule,
+     ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: []
 })
 export class AppModule { }
