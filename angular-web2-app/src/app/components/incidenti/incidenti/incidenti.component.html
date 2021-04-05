@@ -1,35 +1,26 @@
 <div class="bs-example d-flex justify-content-center">
-    <div>
-        <button (click)= "ucitajIncidente()">Ucitaj</button>
-        <button>Dodaj</button>
-    </div>
-    
-    <div [hidden]="incidenti.length !== 0">
-        <p> 
-        Trenutno nema incidenata!
-        </p>
-    </div>
-    
-    <div [hidden]="incidenti.length === 0" class="w-50">
-        <table matSort (matSortChange)="sortData($event)" class="table">
-            <thead class="thead-light">
-              <tr>
-                <th mat-sort-header="id">Id</th>
-                <th mat-sort-header="adresa">Adresa</th>
-                <th mat-sort-header="pocetniDatum">Pocetni datum</th>
-                <th mat-sort-header="status">Status</th>
-                <th mat-sort-header="brojTelefona">Broj telefona</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let incident of sortedData">
-                <th>{{ incident.id }}</th>
-                <td>{{ incident.adresa }}</td>
-                <td>{{ incident.pocetniDatum | date }}</td>
-                <td>{{ incident.status}}</td>
-                <td>{{ incident.brojTelefona }}</td>
-              </tr>
-            </tbody>
-        </table>
-    </div>
+  <div [hidden]="incidenti.length === 0" class="w-50">
+      <table class="table table-striped">
+        <thead>
+          <th>IncidentId</th>
+          <th>Prioritet</th>
+          <th>Potvrdjen</th>
+          <th>ETA</th>
+          <th>ATA</th>
+          <th>ETR</th>
+          <th>Nivo Napona</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of incidenti">
+            <td>{{ item.idIncidenta }}</td>
+            <td>{{ item.Prioritet }}</td>
+            <td>{{ item.Potvrdjen }}</td>
+            <td>{{ item.ETA | date}}</td>
+            <td>{{ item.ATA | date}}</td>
+            <td>{{ item.ETR | date}}</td>
+            <td>{{ item.NivoNapona}} kW</td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
 </div>

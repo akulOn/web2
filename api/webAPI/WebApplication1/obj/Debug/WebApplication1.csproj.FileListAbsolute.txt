@@ -85,3 +85,4 @@ C:\Users\draca\Desktop\Web2\web2\api\webAPI\WebApplication1\obj\Debug\WebApplica
 C:\Users\draca\Desktop\Web2\web2\api\webAPI\WebApplication1\obj\Debug\WebApplication1.csproj.CopyComplete
 C:\Users\draca\Desktop\Web2\web2\api\webAPI\WebApplication1\obj\Debug\WebApplication1.dll
 C:\Users\draca\Desktop\Web2\web2\api\webAPI\WebApplication1\obj\Debug\WebApplication1.pdb
+C:\Users\draca\Desktop\Web2\web2\api\webAPI\WebApplication1\obj\Debug\WebApplication1.csprojAssemblyReference.cache
