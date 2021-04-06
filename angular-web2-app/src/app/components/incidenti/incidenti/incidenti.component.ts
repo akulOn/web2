@@ -24,8 +24,6 @@ export class IncidentiComponent implements OnInit {
   ucitajIncidente(){
     this.incidentService.getAllIncidenti().subscribe(data => {
       this.incidenti = data;
-      console.log(data);
-      console.log(this.incidenti);
     }); 
   }
 }

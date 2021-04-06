@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA  } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { DodajIncidentComponent } from './components/incidenti/dodaj-incident/dodaj-incident.component';
 
 const materialModules = [
   MatTableModule,
@@ -29,6 +30,7 @@ const materialModules = [
     HeaderComponent,
     NeRegistrovanComponent,
     IncidentiComponent,
+    DodajIncidentComponent,
   ],
   imports: [
     BrowserModule,
@@ -37,10 +39,10 @@ const materialModules = [
     materialModules,
     HttpClientModule,
     FormsModule,
-     ReactiveFormsModule
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent],
-  schemas: []
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class AppModule { }

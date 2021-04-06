@@ -1,0 +1,69 @@
+<div class="container w-50" style="margin-top: 100px;">
+    <form [formGroup]="dodajForm" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="form-group col-md-6" style="text-align: center;">
+                <label for="tipIncidenta">Tip Incidenta</label>
+                <select id="tipIncidenta" class="form-control" formControlName="tipIncidenta">
+                  <option selected>Planirani</option>
+                  <option>Neplanirani</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-6" style="text-align: center;">
+                <label for="ETA">ETA</label>
+                <input class="form-control" id="ETA" type="date" formControlName="ETA">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6" style="text-align: center;">
+                <label for="prioritet">Prioritet</label>
+                <input required class="form-control" id="prioritet" type="number" formControlName="prioritet" placeholder="0">
+            </div>
+
+            <div class="form-group col-md-6" style="text-align: center;">
+                <label for="ATA">ATA</label>
+                <input class="form-control" id="ATA" type="date" formControlName="ATA">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6" style="text-align: center;">
+                <label for="statusIncidenta">Status</label>
+                <select id="statusIncidenta" class="form-control" formControlName="statusIncidenta">
+                  <option selected>Resen</option>
+                  <option>drafted</option>
+                  <option>submitted</option>
+                </select>
+            </div>
+
+            <div class="form-group col-md-6" style="text-align: center;">
+                <label for="ETR">ETR</label>
+                <input class="form-control" id="ETR" type="date" formControlName="ETR">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6" style="text-align: center;">
+                <label for="nivoNapona">Nivo Napona</label>
+                <input class="form-control" id="nivoNapona" type="number" formControlName="nivoNapona" placeholder="2.5">
+            </div>
+    
+            <div class="form-group col-md-6" style="text-align: center;">
+                <label for="planiranoVremeRada">Planirano vreme rada</label>
+                <input class="form-control" id="planiranoVremeRada" type="date" formControlName="planiranoVremeRada">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-6" style="text-align: center;">
+                <input type="checkbox" class="form-check-input" id="potvrdjen" formControlName="potvrdjen">
+                <label class="form-check-label" for="potvrdjen">Potvrdjen</label>
+            </div>
+
+            <div class="form-group col-md-6" style="text-align: center;">
+                <button class="btn btn-danger" type="submit">Prijavi Incident</button>
+            </div>
+        </div>
+      </form>
+</div>
