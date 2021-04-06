@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from "@angular/forms";
+import { FormBuilder, Validators } from "@angular/forms";
 import { Incident } from 'src/app/entities/incident/incident';
 import { IncidentService } from "src/app/services/incident/incident.service";
 
@@ -10,17 +10,19 @@ import { IncidentService } from "src/app/services/incident/incident.service";
 })
 export class DodajIncidentComponent implements OnInit {
   dodajForm = this.formBuilder.group({
-    tipIncidenta: '',
-    prioritet: '' ,
+    tipIncidenta: ['', Validators.required],
+    prioritet: ['', [Validators.required, Validators.min(0)]] ,
     potvrdjen: '',
-    statusIncidenta: '',
+    statusIncidenta: ['', Validators.required],
     ETA: '',
     ATA: '',
     ETR: '',
-    nivoNapona: '',
+    nivoNapona: ['', [Validators.required, Validators.min(0)]],
     planiranoVremeRada: '',
     idKorisnika: null
   });
+
+  status:string = 'INVALID';
   constructor(private formBuilder:FormBuilder, private service:IncidentService) { }
 
   ngOnInit(): void {

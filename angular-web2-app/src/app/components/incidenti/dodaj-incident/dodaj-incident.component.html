@@ -3,10 +3,13 @@
         <div class="row">
             <div class="form-group col-md-6" style="text-align: center;">
                 <label for="tipIncidenta">Tip Incidenta</label>
-                <select id="tipIncidenta" class="form-control" formControlName="tipIncidenta">
+                <select required id="tipIncidenta" class="form-control" formControlName="tipIncidenta">
                   <option selected>Planirani</option>
                   <option>Neplanirani</option>
                 </select>
+                <div style="color: blueviolet;" *ngIf="dodajForm.status === 'INVALID'">
+                    Tip incidenta je obavezno polje.
+                </div>
             </div>
 
             <div class="form-group col-md-6" style="text-align: center;">
@@ -19,6 +22,9 @@
             <div class="form-group col-md-6" style="text-align: center;">
                 <label for="prioritet">Prioritet</label>
                 <input required class="form-control" id="prioritet" type="number" formControlName="prioritet" placeholder="0">
+                <div style="color: blueviolet;" *ngIf="dodajForm.status === 'INVALID'">
+                    Prioritet je obavezno polje.
+                </div>
             </div>
 
             <div class="form-group col-md-6" style="text-align: center;">
@@ -35,6 +41,9 @@
                   <option>drafted</option>
                   <option>submitted</option>
                 </select>
+                <div style="color: blueviolet;" *ngIf="dodajForm.status === 'INVALID'">
+                    Status incidenta je obavezno polje.
+                </div>
             </div>
 
             <div class="form-group col-md-6" style="text-align: center;">
@@ -47,6 +56,9 @@
             <div class="form-group col-md-6" style="text-align: center;">
                 <label for="nivoNapona">Nivo Napona</label>
                 <input class="form-control" id="nivoNapona" type="number" formControlName="nivoNapona" placeholder="2.5">
+                <div style="color: blueviolet;" *ngIf="dodajForm.status === 'INVALID'">
+                    Nivo napona je obavezno polje.
+                </div>
             </div>
     
             <div class="form-group col-md-6" style="text-align: center;">
@@ -62,7 +74,7 @@
             </div>
 
             <div class="form-group col-md-6" style="text-align: center;">
-                <button class="btn btn-danger" type="submit">Prijavi Incident</button>
+                <button [disabled]="!dodajForm.valid" class="btn btn-danger" type="submit">Prijavi Incident</button>
             </div>
         </div>
       </form>
