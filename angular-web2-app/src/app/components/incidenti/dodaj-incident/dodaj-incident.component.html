@@ -7,14 +7,11 @@
                   <option selected>Planirani</option>
                   <option>Neplanirani</option>
                 </select>
-                <div style="color: blueviolet;" *ngIf="dodajForm.status === 'INVALID'">
-                    Tip incidenta je obavezno polje.
-                </div>
             </div>
 
             <div class="form-group col-md-6" style="text-align: center;">
                 <label for="ETA">ETA</label>
-                <input class="form-control" id="ETA" type="date" formControlName="ETA">
+                <input required class="form-control" id="ETA" type="date" formControlName="ETA">
             </div>
         </div>
 
@@ -22,14 +19,11 @@
             <div class="form-group col-md-6" style="text-align: center;">
                 <label for="prioritet">Prioritet</label>
                 <input required class="form-control" id="prioritet" type="number" formControlName="prioritet" placeholder="0">
-                <div style="color: blueviolet;" *ngIf="dodajForm.status === 'INVALID'">
-                    Prioritet je obavezno polje.
-                </div>
             </div>
 
             <div class="form-group col-md-6" style="text-align: center;">
                 <label for="ATA">ATA</label>
-                <input class="form-control" id="ATA" type="date" formControlName="ATA">
+                <input required class="form-control" id="ATA" type="date" formControlName="ATA">
             </div>
         </div>
 
@@ -41,29 +35,23 @@
                   <option>drafted</option>
                   <option>submitted</option>
                 </select>
-                <div style="color: blueviolet;" *ngIf="dodajForm.status === 'INVALID'">
-                    Status incidenta je obavezno polje.
-                </div>
             </div>
 
             <div class="form-group col-md-6" style="text-align: center;">
                 <label for="ETR">ETR</label>
-                <input class="form-control" id="ETR" type="date" formControlName="ETR">
+                <input required class="form-control" id="ETR" type="date" formControlName="ETR">
             </div>
         </div>
 
         <div class="row">
             <div class="form-group col-md-6" style="text-align: center;">
                 <label for="nivoNapona">Nivo Napona</label>
-                <input class="form-control" id="nivoNapona" type="number" formControlName="nivoNapona" placeholder="2.5">
-                <div style="color: blueviolet;" *ngIf="dodajForm.status === 'INVALID'">
-                    Nivo napona je obavezno polje.
-                </div>
+                <input required class="form-control" id="nivoNapona" type="number" formControlName="nivoNapona" placeholder="2.5">
             </div>
     
             <div class="form-group col-md-6" style="text-align: center;">
                 <label for="planiranoVremeRada">Planirano vreme rada</label>
-                <input class="form-control" id="planiranoVremeRada" type="date" formControlName="planiranoVremeRada">
+                <input required class="form-control" id="planiranoVremeRada" type="date" formControlName="planiranoVremeRada">
             </div>
         </div>
 
@@ -76,6 +64,9 @@
             <div class="form-group col-md-6" style="text-align: center;">
                 <button [disabled]="!dodajForm.valid" class="btn btn-danger" type="submit">Prijavi Incident</button>
             </div>
+        </div>
+        <div style="color: blueviolet;" *ngIf="dodajForm.status === 'INVALID'">
+            Forma nije dobro popunjena.
         </div>
       </form>
 </div>

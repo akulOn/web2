@@ -22,7 +22,6 @@ export class DodajIncidentComponent implements OnInit {
     idKorisnika: null
   });
 
-  status:string = 'INVALID';
   constructor(private formBuilder:FormBuilder, private service:IncidentService) { }
 
   ngOnInit(): void {
