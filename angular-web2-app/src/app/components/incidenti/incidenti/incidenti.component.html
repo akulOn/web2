@@ -1,17 +1,37 @@
-<div class="bs-example d-flex justify-content-center">
+<div class="help d-flex justify-content-center">
+  <div class="btn-group btn-group-toggle align" data-toggle="buttons">
+    <label class="btn btn-secondary active">
+      <input type="radio" checked (click)="pagination(0)"> Default
+    </label>
+    <label class="btn btn-secondary">
+      <input type="radio" (click)="pagination(5)"> 5
+    </label>
+    <label class="btn btn-secondary">
+      <input type="radio" (click)="pagination(10)"> 10
+    </label>
+    <label class="btn btn-secondary">
+      <input type="radio" (click)="pagination(25)"> 25
+    </label>
+    <label class="btn btn-secondary">
+      <input type="radio" (click)="pagination(50)"> 50
+    </label>
+  </div>
+</div>
+
+<div class="d-flex justify-content-center">
   <div [hidden]="incidenti.length === 0" class="w-50">
-      <table class="table table-striped">
+      <table matSort (matSortChange)="sortData($event)" class="table table-striped table-bordered table-sm">
         <thead>
-          <th>IncidentId</th>
-          <th>Prioritet</th>
-          <th>Potvrdjen</th>
-          <th>ETA</th>
-          <th>ATA</th>
-          <th>ETR</th>
-          <th>Nivo Napona</th>
+          <th mat-sort-header="id">IncidentId</th>
+          <th mat-sort-header="Prioritet">Prioritet</th>
+          <th mat-sort-header="Potvrdjen">Potvrdjen</th>
+          <th mat-sort-header="ETA">ETA</th>
+          <th mat-sort-header="ATA">ATA</th>
+          <th mat-sort-header="ETR">ETR</th>
+          <th mat-sort-header="Nivo Napona">Nivo Napona</th>  <!--mat-sort-header mora da primi istu vrednost kao sto i je u th-u -->
         </thead>
         <tbody>
-          <tr *ngFor="let item of incidenti">
+          <tr *ngFor="let item of sortedData">
             <td>{{ item.idIncidenta }}</td>
             <td>{{ item.Prioritet }}</td>
             <td>{{ item.Potvrdjen }}</td>

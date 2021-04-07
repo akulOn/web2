@@ -36,10 +36,10 @@ const materialModules = [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    materialModules,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    materialModules
   ],
   providers: [],
   bootstrap: [AppComponent],
