@@ -36,6 +36,31 @@ namespace WebApplication1.Controllers
             }
             return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
         }
+
+        [Route("api/Oprema/GetAllSafe")]
+        [HttpGet]
+        public HttpResponseMessage GetAllSafe()
+        {
+            // trebalo bi da se radi sa procedrama na bazi, nije dobro da ovde direktno kucam SQL upite
+            string query = @"
+                    select * from Oprema where idOpreme not in (select idOpreme from IncidentOprema)
+                    ";
+            DataTable table = new DataTable();
+
+            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
+            {
+                using (var command = new SqlCommand(query, connection))
+                {
+                    using (var adapter = new SqlDataAdapter(command))
+                    {
+                        command.CommandType = CommandType.Text;
+                        adapter.Fill(table);
+                    }
+                }
+            }
+            return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
+        }
+
         [HttpGet]
         public HttpResponseMessage Get(int id)
         {
@@ -168,6 +193,37 @@ namespace WebApplication1.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
+        }
+
+        [Route("api/Oprema/GetAllPoziviVezaniZaOpremu")]
+        [HttpGet]
+        public HttpResponseMessage GetAllPoziviVezaniZaOpremu(int id)
+        {
+            // trebalo bi da se radi sa procedrama na bazi, nije dobro da ovde direktno kucam SQL upite
+            string query = @"
+                    select * from Poziv where idPoziva in (select idPoziva from OpremaPoziv where idOpreme =" + id +")";
+                DataTable table = new DataTable();
+
+            try
+            {
+                using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
+                {
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        using (var adapter = new SqlDataAdapter(command))
+                        {
+                            command.CommandType = CommandType.Text;
+                            adapter.Fill(table);
+                        }
+                    }
+                }
+                return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
+            }
+            catch(Exception e)
+            {
+                return Request.CreateResponse(System.Net.HttpStatusCode.BadRequest);
+            }
+            
         }
     }
 }
