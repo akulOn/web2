@@ -30,6 +30,6 @@ export class OpremaService {
   }
 
   getAllPoziviVezaniZaOpremu(id:number){
-    return this.http.get<Poziv>(this.APIUrl + "/Oprema/GetAllPoziviVezaniZaOpremu/" + id);
+    return this.http.get<any>(this.APIUrl + "/Oprema/GetAllPoziviVezaniZaOpremu/" + id);
   }
 }

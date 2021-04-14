@@ -11,7 +11,8 @@ namespace WebApplication1
     {
         public static void Register(HttpConfiguration config)
         {
-            // Web API configuration and services
+            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
+            config.EnableCors(new EnableCorsAttribute("*", "*", "*")); // prihvatamo zahteve sa svih strana, ako zelimo da primamo zahtev sa specificnog domena, promenili bi prvu *
 
             // Web API routes
             config.MapHttpAttributeRoutes();
@@ -21,10 +22,6 @@ namespace WebApplication1
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional }
             );
-
-            config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
-
-            config.EnableCors(new EnableCorsAttribute("*", "*", "*")); // prihvatamo zahteve sa svih strana, ako zelimo da primamo zahtev sa specificnog domena, promenili bi prvu *
         }
     }
 }

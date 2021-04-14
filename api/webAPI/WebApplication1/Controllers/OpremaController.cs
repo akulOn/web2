@@ -7,10 +7,12 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
+    [EnableCors(origins:"*", headers:"*", methods:"*")]
     public class OpremaController : ApiController
     {
         [Route("api/Oprema/GetAll")]
@@ -82,6 +84,7 @@ namespace WebApplication1.Controllers
             }
             return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
         }
+
         [HttpPost]
         public HttpResponseMessage Post(Oprema oprema)
         {
@@ -109,6 +112,7 @@ namespace WebApplication1.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
         }
+
         [HttpPut]
         public HttpResponseMessage Put(Oprema oprema) // nece baciti error ako oprema ne postoji u bazi
         {
@@ -138,6 +142,7 @@ namespace WebApplication1.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
         }
+
         [HttpDelete]
         public HttpResponseMessage Delete(int id) // prolazi ako ne postoji oprema
         {
@@ -195,7 +200,7 @@ namespace WebApplication1.Controllers
             }
         }
 
-        [Route("api/Oprema/GetAllPoziviVezaniZaOpremu")]
+        [Route("api/Oprema/GetAllPoziviVezaniZaOpremu/")]
         [HttpGet]
         public HttpResponseMessage GetAllPoziviVezaniZaOpremu(int id)
         {

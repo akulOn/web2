@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from "@angular/forms";
+import { AbstractControl, FormBuilder, ValidatorFn, Validators } from "@angular/forms";
 import { Incident } from 'src/app/entities/incident/incident';
+import { EkipaService } from 'src/app/services/ekipa/ekipa.service';
 import { IncidentService } from "src/app/services/incident/incident.service";
 import { OpremaService } from 'src/app/services/oprema/oprema.service';
 import { PozivService } from 'src/app/services/poziv/poziv.service';
@@ -12,38 +13,56 @@ import { PozivService } from 'src/app/services/poziv/poziv.service';
 })
 export class DodajIncidentComponent implements OnInit {
   dodajIncidentForm = this.formBuilder.group({
-    tipIncidenta: ['', Validators.required],
+    tipIncidenta: ['Planirani', Validators.required],
     prioritet: ['', [Validators.required, Validators.min(0)]] ,
     potvrdjen: '',
-    statusIncidenta: ['', Validators.required],
+    statusIncidenta: ['submitted', Validators.required],
     ETA: '',
-    ATA: '',
+    ATA: ['', this.ATAValidator],
     ETR: '',
     nivoNapona: ['', [Validators.required, Validators.min(0)]],
     planiranoVremeRada: '',
     idKorisnika: null
   });
+
   dodajResenjeForm = this.formBuilder.group({
     uzrok: ['', Validators.required],
     poduzrok: ['', Validators.required],
-    tipKonstrukcije: ['', Validators.required],
-    tipMaterijala: ['', Validators.required]
+    tipKonstrukcije: ['Podzemni', Validators.required],
+    tipMaterijala: ['Metal', Validators.required]
   });
+
+  dodajPozivForm = this.formBuilder.group({
+    razlog: ['', Validators.required],
+    komentar: [''],
+    kvar: ['', Validators.required],
+    idPotrosaca: ['']
+  })
+
+  ETA:Date = new Date();
+  ATA:Date = new Date();
+
   Oprema:any = [];
   Pozivi:any = [];
+  Ekipe:any = [];
   opremaIncident:number[] = []; // oprema koja se treba dodati treuntnom incidentu
 
   constructor(
     private formBuilder:FormBuilder, 
     private service:IncidentService, 
     private opremaService:OpremaService,
-    private pozivService:PozivService
+    private pozivService:PozivService,
+    private ekipaService:EkipaService
     ) { }
 
   ngOnInit(): void {
     this.opremaService.getAllOprema().subscribe(data => {
       this.Oprema = data;
     });
+
+    this.ekipaService.getAllEkipe().subscribe(data => {
+      this.Ekipe = data
+    })
   }
 
   onSubmit(){
@@ -71,4 +90,12 @@ export class DodajIncidentComponent implements OnInit {
     console.log(this.opremaIncident);
   }
 
+  ATAValidator (control: AbstractControl):{[key: string]: boolean} | null {
+    if( control.value === null || control.value > this.ETA){  
+      return {'ATAValidator': true}
+    }
+    return null;
+  };
 }
+
+
