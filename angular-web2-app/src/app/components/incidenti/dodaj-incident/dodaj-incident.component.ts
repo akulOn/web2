@@ -17,13 +17,17 @@ export class DodajIncidentComponent implements OnInit {
     prioritet: ['', [Validators.required, Validators.min(0)]] ,
     potvrdjen: '',
     statusIncidenta: ['submitted', Validators.required],
-    ETA: '',
-    ATA: ['', this.ATAValidator],
+    ETA: ['', Validators.required],
+    ATA: '',
     ETR: '',
     nivoNapona: ['', [Validators.required, Validators.min(0)]],
     planiranoVremeRada: '',
     idKorisnika: null
-  });
+    },
+    {
+      validator: [DateValidator('ETA', 'ATA'), DateValidator('ATA', 'ETR'), DateValidator('ETR', 'planiranoVremeRada')]
+    }
+  );
 
   dodajResenjeForm = this.formBuilder.group({
     uzrok: ['', Validators.required],
@@ -38,9 +42,6 @@ export class DodajIncidentComponent implements OnInit {
     kvar: ['', Validators.required],
     idPotrosaca: ['']
   })
-
-  ETA:Date = new Date();
-  ATA:Date = new Date();
 
   Oprema:any = [];
   Pozivi:any = [];
@@ -89,13 +90,16 @@ export class DodajIncidentComponent implements OnInit {
     }
     console.log(this.opremaIncident);
   }
-
-  ATAValidator (control: AbstractControl):{[key: string]: boolean} | null {
-    if( control.value === null || control.value > this.ETA){  
-      return {'ATAValidator': true}
-    }
-    return null;
-  };
 }
 
+export function DateValidator(date1: string, date2: string) { // treba mi pomoc
+  return function (frm:any) {
+    let Date1:Date = new Date(frm.get(date1).value);
+    let Date2:Date = new Date(frm.get(date2).value);
 
+    if (Date1.getTime() > Date2.getTime()) {
+      return { 'match': `value ${Date2} is greter then ${Date1}` }
+    }
+    return null;  
+  }
+}
