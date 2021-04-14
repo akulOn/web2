@@ -1,89 +1,91 @@
-<div class="container" style="margin-top: 55px;">
+<div class="container" style="margin-top: 55px;" id="accordion">
     <div class="row">
         <div class="col-md-4">
             <div class="row btn-group-vertical w-100">
-                <button class="btn btn-block btn-outline-dark" data-toggle="collapse" data-target="#dodajIncidentForm" aria-expanded="true" aria-controls="dodajIncidentForm">Dodaj incident</button>
-                <button class="btn btn-block btn-outline-dark" data-toggle="collapse" data-target="#opremaTable" aria-expanded="false" aria-controls="opremaTable">Tabela oprema</button>
-                <button class="btn btn-block btn-outline-dark" data-toggle="collapse" data-target="#dodajResenjeForm" aria-expanded="false" aria-controls="dodajResenjeForm">Dodaj resenje</button>
-                <button class="btn btn-block btn-outline-dark" data-toggle="collapse" data-target="#pozivTable" aria-expanded="false" aria-controls="pozivTable">Tabela poziv</button>
-                <button class="btn btn-block btn-outline-dark" data-toggle="collapse" data-target="#dodajPozivForm" aria-expanded="false" aria-controls="dodajPozivForm">Dodaj poziv</button>
-                <button class="btn btn-block btn-outline-dark" data-toggle="collapse" data-target="#ekipaTable" aria-expanded="false" aria-controls="ekipaTable">Tabela ekipa</button>
-                <button class="btn btn-block btn-outline-dark" data-toggle="collapse" data-target="#slika" aria-expanded="false" aria-controls="slika">Slika</button>
+                <button class="btn btn-block btn-dark" data-toggle="collapse" data-target="#dodajIncidentForm" aria-expanded="true" aria-controls="dodajIncidentForm">Dodaj incident</button>
+                <button class="btn btn-block btn-dark" data-toggle="collapse" data-target="#opremaTable" aria-expanded="false" aria-controls="opremaTable">Tabela oprema</button>
+                <button class="btn btn-block btn-dark" data-toggle="collapse" data-target="#dodajResenjeForm" aria-expanded="false" aria-controls="dodajResenjeForm">Dodaj resenje</button>
+                <button class="btn btn-block btn-dark" data-toggle="collapse" data-target="#pozivTable" aria-expanded="false" aria-controls="pozivTable">Tabela poziv</button>
+                <button class="btn btn-block btn-dark" data-toggle="collapse" data-target="#dodajPozivForm" aria-expanded="false" aria-controls="dodajPozivForm">Dodaj poziv</button>
+                <button class="btn btn-block btn-dark" data-toggle="collapse" data-target="#ekipaTable" aria-expanded="false" aria-controls="ekipaTable">Tabela ekipa</button>
+                <button class="btn btn-block btn-dark" data-toggle="collapse" data-target="#slika" aria-expanded="false" aria-controls="slika">Slika</button>
             </div>
         </div>
         <div class="col-md-8">
-            <form class="collapse show" id="dodajIncidentForm" [formGroup]="dodajIncidentForm" (ngSubmit)="onSubmit()">
-                <div class="row">
-                    <div class="form-group col-md-6" style="text-align: center;">
-                        <label for="tipIncidenta">Tip Incidenta</label>
-                        <select required id="tipIncidenta" class="form-control" formControlName="tipIncidenta">
-                          <option>Planirani</option>
-                          <option>Neplanirani</option>
-                        </select>
-                    </div>
-        
-                    <div class="form-group col-md-6" style="text-align: center;">
-                        <label for="ETA">ETA</label>
-                        <input required class="form-control" id="ETA" type="date" formControlName="ETA">
-                    </div>
-                </div>
-        
-                <div class="row">
-                    <div class="form-group col-md-6" style="text-align: center;">
-                        <label for="prioritet">Prioritet</label>
-                        <input required class="form-control" id="prioritet" type="number" formControlName="prioritet" placeholder="0">
-                    </div>
-        
-                    <div class="form-group col-md-6" style="text-align: center;">
-                        <label for="ATA">ATA</label>
-                        <input required class="form-control" id="ATA" type="date" formControlName="ATA">
-                    </div>
-                </div>
-        
-                <div class="row">
-                    <div class="form-group col-md-6" style="text-align: center;">
-                        <label for="statusIncidenta">Status</label>
-                        <select id="statusIncidenta" class="form-control" formControlName="statusIncidenta">
-                          <option>Resen</option>
-                          <option>drafted</option>
-                          <option>submitted</option>
-                        </select>
-                    </div>
-        
-                    <div class="form-group col-md-6" style="text-align: center;">
-                        <label for="ETR">ETR</label>
-                        <input required class="form-control" id="ETR" type="date" formControlName="ETR">
-                    </div>
-                </div>
-        
-                <div class="row">
-                    <div class="form-group col-md-6" style="text-align: center;">
-                        <label for="nivoNapona">Nivo Napona</label>
-                        <input required class="form-control" id="nivoNapona" type="number" formControlName="nivoNapona" placeholder="2.5">
+            <div class="collapse show" id="dodajIncidentForm" data-parant="#accordion">
+                <form [formGroup]="dodajIncidentForm" (ngSubmit)="onSubmit()">
+                    <div class="row">
+                        <div class="form-group col-md-6" style="text-align: center;">
+                            <label for="tipIncidenta">Tip Incidenta</label>
+                            <select required id="tipIncidenta" class="form-control" formControlName="tipIncidenta">
+                              <option>Planirani</option>
+                              <option>Neplanirani</option>
+                            </select>
+                        </div>
+            
+                        <div class="form-group col-md-6" style="text-align: center;">
+                            <label for="ETA">ETA</label>
+                            <input required class="form-control" id="ETA" type="date" formControlName="ETA">
+                        </div>
                     </div>
             
-                    <div class="form-group col-md-6" style="text-align: center;">
-                        <label for="planiranoVremeRada">Planirano vreme rada</label>
-                        <input required class="form-control" id="planiranoVremeRada" type="date" formControlName="planiranoVremeRada">
+                    <div class="row">
+                        <div class="form-group col-md-6" style="text-align: center;">
+                            <label for="prioritet">Prioritet</label>
+                            <input required class="form-control" id="prioritet" type="number" formControlName="prioritet" placeholder="0">
+                        </div>
+            
+                        <div class="form-group col-md-6" style="text-align: center;">
+                            <label for="ATA">ATA</label>
+                            <input required class="form-control" id="ATA" type="date" formControlName="ATA">
+                        </div>
                     </div>
-                </div>
-        
-                <div class="row">
-                    <div class="form-group col-md-6" style="text-align: center;">
-                        <input type="checkbox" class="form-check-input" id="potvrdjen" formControlName="potvrdjen">
-                        <label class="form-check-label" for="potvrdjen">Potvrdjen</label>
+            
+                    <div class="row">
+                        <div class="form-group col-md-6" style="text-align: center;">
+                            <label for="statusIncidenta">Status</label>
+                            <select id="statusIncidenta" class="form-control" formControlName="statusIncidenta">
+                              <option>Resen</option>
+                              <option>drafted</option>
+                              <option>submitted</option>
+                            </select>
+                        </div>
+            
+                        <div class="form-group col-md-6" style="text-align: center;">
+                            <label for="ETR">ETR</label>
+                            <input required class="form-control" id="ETR" type="date" formControlName="ETR">
+                        </div>
                     </div>
-        
-                    <div class="form-group col-md-6" style="text-align: center;">
-                        <button [disabled]="!dodajIncidentForm.valid" class="btn btn-danger" type="submit">Prijavi Incident</button>
+            
+                    <div class="row">
+                        <div class="form-group col-md-6" style="text-align: center;">
+                            <label for="nivoNapona">Nivo Napona</label>
+                            <input required class="form-control" id="nivoNapona" type="number" formControlName="nivoNapona" placeholder="2.5">
+                        </div>
+                
+                        <div class="form-group col-md-6" style="text-align: center;">
+                            <label for="planiranoVremeRada">Planirano vreme rada</label>
+                            <input required class="form-control" id="planiranoVremeRada" type="date" formControlName="planiranoVremeRada">
+                        </div>
                     </div>
-                </div>
-                <div style="color: blueviolet;" *ngIf="dodajIncidentForm.status === 'INVALID'">
-                    Forma nije dobro popunjena.
-                </div>
-            </form>
+            
+                    <div class="row">
+                        <div class="form-group col-md-6" style="text-align: center;">
+                            <input type="checkbox" class="form-check-input" id="potvrdjen" formControlName="potvrdjen">
+                            <label class="form-check-label" for="potvrdjen">Potvrdjen</label>
+                        </div>
+            
+                        <div class="form-group col-md-6" style="text-align: center;">
+                            <button [disabled]="!dodajIncidentForm.valid" class="btn btn-danger" type="submit">Prijavi Incident</button>
+                        </div>
+                    </div>
+                    <div style="color: blueviolet;" *ngIf="dodajIncidentForm.status === 'INVALID'">
+                        Forma nije dobro popunjena.
+                    </div>
+                </form>
+            </div>
 
-            <div class="collapse" id="opremaTable">
+            <div class="collapse" id="opremaTable" data-parent="#accordion">
                 <table class="table table-striped table-bordered table-sm">
                     <thead>
                         <th>IdOpreme</th>
@@ -114,35 +116,38 @@
                 </table>
             </div>
 
-            <form class="collapse" id="dodajResenjeForm" [formGroup]="dodajResenjeForm">
-                <div class="form-group" style="text-align: center;">
-                    <label for="uzrok">Uzrok</label>
-                    <input required class="form-control" id="uzrok" type="text" formControlName="uzrok" placeholder="Ljudski faktor">
-                </div>
-                <div class="form-group" style="text-align: center;">
-                    <label for="poduzrok">Poduzrok</label>
-                    <input required class="form-control" id="poduzrok" type="text" formControlName="poduzrok" placeholder="Postavljena pogresna oprema">
-                </div>
-                <div class="form-group" style="text-align: center;">
-                    <label for="tipKonstrukcije">Tip Konstrukcije</label>
-                    <select required id="tipKonstrukcije" class="form-control" formControlName="tipKonstrukcije">
-                    <option>Podzemni</option>
-                    <option>Nadzemni</option>
-                    </select>
-                </div>
-                <div class="form-group" style="text-align: center;">
-                    <label for="tipMaterijala">Tip Materijala</label>
-                    <select required id="tipMaterijala" class="form-control" formControlName="tipMaterijala">
-                    <option>Metal</option>
-                    <option>Plastika</option>
-                    </select>
-                </div>
-                <div style="color: blueviolet;" *ngIf="dodajResenjeForm.status === 'INVALID'">
-                    Forma nije dobro popunjena.
-                </div>
-            </form>
+            <div class="collapse" id="dodajResenjeForm" data-parent="#accordion">
+                <form [formGroup]="dodajResenjeForm">
+                    <div class="form-group" style="text-align: center;">
+                        <label for="uzrok">Uzrok</label>
+                        <input required class="form-control" id="uzrok" type="text" formControlName="uzrok" placeholder="Ljudski faktor">
+                    </div>
+                    <div class="form-group" style="text-align: center;">
+                        <label for="poduzrok">Poduzrok</label>
+                        <input required class="form-control" id="poduzrok" type="text" formControlName="poduzrok" placeholder="Postavljena pogresna oprema">
+                    </div>
+                    <div class="form-group" style="text-align: center;">
+                        <label for="tipKonstrukcije">Tip Konstrukcije</label>
+                        <select required id="tipKonstrukcije" class="form-control" formControlName="tipKonstrukcije">
+                        <option>Podzemni</option>
+                        <option>Nadzemni</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="text-align: center;">
+                        <label for="tipMaterijala">Tip Materijala</label>
+                        <select required id="tipMaterijala" class="form-control" formControlName="tipMaterijala">
+                        <option>Metal</option>
+                        <option>Plastika</option>
+                        </select>
+                    </div>
+                    <div style="color: blueviolet;" *ngIf="dodajResenjeForm.status === 'INVALID'">
+                        Forma nije dobro popunjena.
+                    </div>
+                </form>
+            </div>
             
-            <div class="collapse" id="pozivTable">
+            
+            <div class="collapse" id="pozivTable" data-parent="#accordion">
                 <table class="table table-striped table-bordered table-sm">
                     <thead>
                         <th>IdPoziva</th>
@@ -165,27 +170,29 @@
                 </table>
             </div>
             
-        
-            <form class="collapse" id="dodajPozivForm" [formGroup]="dodajPozivForm">
-                <div class="form-group" style="text-align: center;">
-                    <label for="razlog">Razlog</label>
-                    <input required class="form-control" id="razlog" type="text" formControlName="razlog" placeholder="Nema struje">
-                </div>
-                <div class="form-group" style="text-align: center;">
-                    <label for="komentar">Komentar</label>
-                    <input class="form-control" id="komentar" type="text" formControlName="komentar" placeholder="Potrosac je bez struje">
-                </div>
-                <div class="form-group" style="text-align: center;">
-                    <label for="kvar">Kvar</label>
-                    <input required class="form-control" id="kvar" type="kvar" formControlName="kvar">
-                </div>
-                <div class="form-group" style="text-align: center;">
-                    <label for="idPotrosaca">Potrosac</label>
-                    <input class="form-control" id="idPotrosaca" type="number" formControlName="idPotrosaca">
-                </div>
-            </form>
+            <div class="collapse" id="dodajPozivForm" data-parent="#accordion">
+                <form [formGroup]="dodajPozivForm">
+                    <div class="form-group" style="text-align: center;">
+                        <label for="razlog">Razlog</label>
+                        <input required class="form-control" id="razlog" type="text" formControlName="razlog" placeholder="Nema struje">
+                    </div>
+                    <div class="form-group" style="text-align: center;">
+                        <label for="komentar">Komentar</label>
+                        <input class="form-control" id="komentar" type="text" formControlName="komentar" placeholder="Potrosac je bez struje">
+                    </div>
+                    <div class="form-group" style="text-align: center;">
+                        <label for="kvar">Kvar</label>
+                        <input required class="form-control" id="kvar" type="kvar" formControlName="kvar">
+                    </div>
+                    <div class="form-group" style="text-align: center;">
+                        <label for="idPotrosaca">Potrosac</label>
+                        <input class="form-control" id="idPotrosaca" type="number" formControlName="idPotrosaca">
+                    </div>
+                </form>
+            </div>
             
-            <div class="collapse" id="ekipaTable">
+            
+            <div class="collapse" id="ekipaTable" data-parent="#accordion">
                 <table class="table table-striped table-bordered table-sm">
                     <thead>
                         <th>IdEkipe</th>
@@ -202,7 +209,7 @@
                 </table>
             </div>
             
-            <div class="collapse" id="slika">
+            <div class="collapse" id="slika" data-parent="#accordion">
                 <label class="image-upload-container btn btn-bwm">
                     <span>Select Image </span>
                     <input type="file" accept="image/*">

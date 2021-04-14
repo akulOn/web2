@@ -70,9 +70,7 @@ export class DodajIncidentComponent implements OnInit {
     // tu se moze pokupiti id trenutno logovanog korisnika
     console.warn('Dodali ste incident!', this.dodajIncidentForm.value);
 
-    this.service.addIncident(new Incident(0, this.dodajIncidentForm.value.tipIncidenta, this.dodajIncidentForm.value.prioritet, this.dodajIncidentForm.value.potvrdjen === null ? false : true, // desi se null
-      this.dodajIncidentForm.value.statusIncidenta, this.dodajIncidentForm.value.ETA, this.dodajIncidentForm.value.ATA, this.dodajIncidentForm.value.ETR, this.dodajIncidentForm.value.nivoNapona,
-      this.dodajIncidentForm.value.planiranoVremeRada, this.dodajIncidentForm.value.idKorisnika)).subscribe() // server odgovara, mogu da uzmem odgovor sa lambda
+    this.service.addIncident(this.dodajIncidentForm.value).subscribe() // server odgovara, mogu da uzmem odgovor sa lambda
   }
 
   addId(id:number){
