@@ -1,3 +1,7 @@
-.btn-dark {
+.btn {
     border-radius: 0%;
+}
+
+.btn-primary-outline:hover {
+    background-color: lightgray;
 }

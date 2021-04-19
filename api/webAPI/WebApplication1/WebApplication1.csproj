@@ -177,7 +177,9 @@
     </Compile>
     <Compile Include="Models\Ekipa.cs" />
     <Compile Include="Models\Incident.cs" />
+    <Compile Include="Models\IncidentEkipa.cs" />
     <Compile Include="Models\IncidentOprema.cs" />
+    <Compile Include="Models\IncidentResenje.cs" />
     <Compile Include="Models\Korisnik.cs" />
     <Compile Include="Models\Oprema.cs" />
     <Compile Include="Models\OpremaPoziv.cs" />

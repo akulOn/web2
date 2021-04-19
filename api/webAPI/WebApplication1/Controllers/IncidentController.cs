@@ -36,6 +36,7 @@ namespace WebApplication1.Controllers
             }
             return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
         }
+
         [HttpGet]
         public HttpResponseMessage Get(int id)
         {
@@ -58,6 +59,7 @@ namespace WebApplication1.Controllers
             }
             return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
         }
+
         [HttpPost]
         public HttpResponseMessage Post(Incident incident)
         {
@@ -95,12 +97,14 @@ namespace WebApplication1.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
         }
+
         [HttpPost]
         [Route("api/Incident/DodajOpremu")]
         public HttpResponseMessage DodajOpremu(IncidentOprema incidentOprema)
         {
-            string query = @"                    
-                    insert into IncidentOprema(idIncidenta, idOpreme) values (" + incidentOprema.IdIncidenta + "," + incidentOprema.IdOpreme + ")"
+            string query = @"
+                    if not exists(select idOpreme from IncidentOprema where idIncidenta = " + incidentOprema.IdIncidenta + " and idOpreme = " + incidentOprema.IdOpreme + ")" +
+                        "insert into IncidentOprema(idIncidenta, idOpreme) values (" + incidentOprema.IdIncidenta + "," + incidentOprema.IdOpreme + ")"
                     ;
             DataTable table = new DataTable();
             try
@@ -117,6 +121,68 @@ namespace WebApplication1.Controllers
                     }
                 }
                 return Request.CreateResponse(System.Net.HttpStatusCode.Created, table);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+        }
+
+        [HttpPut]
+        [Route("api/Incident/DodajEkipu")]
+        public HttpResponseMessage DodajEkipu(IncidentEkipa incidentEkipa)
+        {
+            string query = @"
+                    update Incident
+                    set idEkipe = " + incidentEkipa.IdEkipe
+                    + "where idIncidenta = " + incidentEkipa.IdIncidenta
+                    ;
+            DataTable table = new DataTable();
+            try
+            {
+                using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
+                {
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        using (var adapter = new SqlDataAdapter(command))
+                        {
+                            command.CommandType = CommandType.Text;
+                            adapter.Fill(table);
+                        }
+                    }
+                }
+                return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+        }
+
+        [HttpPut]
+        [Route("api/Incident/DodajResenje")]
+        public HttpResponseMessage DodajResenje(IncidentResenje incidentResenje)
+        {
+            string query = @"
+                    update Incident
+                    set idResenja = " + incidentResenje.IdResenja
+                    + "where idIncidenta = " + incidentResenje.IdIncidenta
+                    ;
+            DataTable table = new DataTable();
+            try
+            {
+                using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
+                {
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        using (var adapter = new SqlDataAdapter(command))
+                        {
+                            command.CommandType = CommandType.Text;
+                            adapter.Fill(table);
+                        }
+                    }
+                }
+                return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
             }
             catch (Exception e)
             {

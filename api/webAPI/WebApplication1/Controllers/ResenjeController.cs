@@ -71,6 +71,7 @@ namespace WebApplication1.Controllers
                     {
                         // 3. add parameter to command, which will be passed to the stored procedure
                         command.Parameters.Add(new SqlParameter("@nazivUzroka", resenje.NazivUzroka));
+                        command.Parameters.Add(new SqlParameter("@nazivPoduzroka", resenje.NazivPoduzroka));
                         command.Parameters.Add(new SqlParameter("@nazivTipKonstrukcije", resenje.NazivTipKonstrukcije));
                         command.Parameters.Add(new SqlParameter("@nazivTipMaterijala", resenje.NazivTipMaterijala));
 
@@ -81,7 +82,7 @@ namespace WebApplication1.Controllers
                         }
                     }
                 }
-                return Request.CreateResponse(System.Net.HttpStatusCode.Created);
+                return Request.CreateResponse(System.Net.HttpStatusCode.Created, table);
 
             }
             catch (Exception e)

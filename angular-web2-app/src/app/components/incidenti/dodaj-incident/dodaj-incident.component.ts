@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, ValidatorFn, Validators } from "@angular/forms";
 import { Incident } from 'src/app/entities/incident/incident';
+import { Resenje } from 'src/app/entities/resenje/resenje';
 import { EkipaService } from 'src/app/services/ekipa/ekipa.service';
 import { IncidentService } from "src/app/services/incident/incident.service";
 import { OpremaService } from 'src/app/services/oprema/oprema.service';
 import { PozivService } from 'src/app/services/poziv/poziv.service';
+import { ResenjeService } from 'src/app/services/resenje/resenje.service';
 
 @Component({
   selector: 'app-dodaj-incident',
@@ -13,10 +15,10 @@ import { PozivService } from 'src/app/services/poziv/poziv.service';
 })
 export class DodajIncidentComponent implements OnInit {
   dodajIncidentForm = this.formBuilder.group({
-    tipIncidenta: ['Planirani', Validators.required],
+    NazivTipIncidenta: ['Planirani', Validators.required],
     prioritet: ['', [Validators.required, Validators.min(0)]] ,
     potvrdjen: '',
-    statusIncidenta: ['submitted', Validators.required],
+    NazivStatusaIncidenta: ['submitted', Validators.required],
     ETA: ['', Validators.required],
     ATA: '',
     ETR: '',
@@ -43,6 +45,9 @@ export class DodajIncidentComponent implements OnInit {
     idPotrosaca: ['']
   })
 
+  Incident:any;
+  Resenje:any;
+
   Oprema:any = [];
   Pozivi:any = [];
   Ekipe:any = [];
@@ -50,14 +55,17 @@ export class DodajIncidentComponent implements OnInit {
 
   constructor(
     private formBuilder:FormBuilder, 
-    private service:IncidentService, 
+    private incidentService:IncidentService, 
     private opremaService:OpremaService,
     private pozivService:PozivService,
-    private ekipaService:EkipaService
+    private ekipaService:EkipaService,
+    private resenjeService:ResenjeService
     ) { }
 
   ngOnInit(): void {
-    this.opremaService.getAllOprema().subscribe(data => {
+    this.Incident = -1;
+
+    this.opremaService.getAllSafeOprema().subscribe(data => {
       this.Oprema = data;
     });
 
@@ -66,11 +74,41 @@ export class DodajIncidentComponent implements OnInit {
     })
   }
 
-  onSubmit(){
+  onSubmitIncident(){
     // tu se moze pokupiti id trenutno logovanog korisnika
     console.warn('Dodali ste incident!', this.dodajIncidentForm.value);
 
-    this.service.addIncident(this.dodajIncidentForm.value).subscribe() // server odgovara, mogu da uzmem odgovor sa lambda
+    this.incidentService.addIncident(this.dodajIncidentForm.value).subscribe(data => {
+      this.Incident = data;
+    }) // server odgovara, mogu da uzmem odgovor sa lambda
+  }
+
+  onSubmitResenje(){
+    if(this.Incident === -1)
+      alert("Morate prvo da dodate Incident da bi mogli da dodate resenje!");
+    else if (this.Resenje == null)
+    {
+      this.Resenje = new Resenje(this.dodajResenjeForm.value.uzrok, this.dodajResenjeForm.value.poduzrok, this.dodajResenjeForm.value.tipKonstrukcije, this.dodajResenjeForm.value.tipMaterijala)
+
+      console.warn('Dodali ste resenje!', this.Resenje);
+
+      this.resenjeService.addResenje(this.dodajResenjeForm.value).subscribe(data => {
+        this.Resenje = data
+        console.log(this.Resenje)
+        this.incidentService.addResenjeToIncident(this.Incident[0].idIncidenta, this.Resenje[0].idResenja).subscribe()
+      }) // server odgovara, mogu da uzmem odgovor sa lambda
+    }
+    else
+    {
+      alert("Vec ste dodali resenje!");
+    }
+  }
+
+  addEkipaToIncident(idEkipe:number){
+    if(this.Incident === -1)
+      alert("Morate prvo da dodate Incident da bi mogli da dodate ekipu!");
+    else
+      this.incidentService.addEkipaToIncident(this.Incident[0].idIncidenta, idEkipe).subscribe()
   }
 
   addId(id:number){

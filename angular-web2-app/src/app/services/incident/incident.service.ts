@@ -23,4 +23,12 @@ export class IncidentService {
     return this.http.post(this.APIUrl + "/Incident/", incident);
   }
 
+  addEkipaToIncident(IdIncidenta:number, IdEkipe:number){
+    return this.http.put(this.APIUrl + "/Incident/DodajEkipu", {IdIncidenta, IdEkipe} )
+  }
+
+  addResenjeToIncident(IdIncidenta:number, IdResenja:number){
+    return this.http.put(this.APIUrl + "/Incident/DodajResenje", {IdIncidenta, IdResenja} )
+  }
+
 }
