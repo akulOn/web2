@@ -92,7 +92,7 @@ export class DodajIncidentComponent implements OnInit {
 
       console.warn('Dodali ste resenje!', this.Resenje);
 
-      this.resenjeService.addResenje(this.dodajResenjeForm.value).subscribe(data => {
+      this.resenjeService.addResenje(this.Resenje).subscribe(data => {
         this.Resenje = data
         console.log(this.Resenje)
         this.incidentService.addResenjeToIncident(this.Incident[0].idIncidenta, this.Resenje[0].idResenja).subscribe()

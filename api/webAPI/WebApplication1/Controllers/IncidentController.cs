@@ -81,7 +81,7 @@ namespace WebApplication1.Controllers
                         command.Parameters.Add(new SqlParameter("@ETR", incident.ETR));
                         command.Parameters.Add(new SqlParameter("@nivoNapona", incident.NivoNapona));
                         command.Parameters.Add(new SqlParameter("@planiramoVremeRada", incident.PlaniranoVremeRada));
-                        command.Parameters.Add(new SqlParameter("@idKorisnika", incident.IdKorisnika));
+                        // command.Parameters.Add(new SqlParameter("@idKorisnika", incident.IdKorisnika)); 
 
                         using (var adapter = new SqlDataAdapter(command))
                         {
