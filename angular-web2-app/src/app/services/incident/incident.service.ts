@@ -11,8 +11,8 @@ export class IncidentService {
 
   constructor(private http:HttpClient) {  }
 
-  getAllIncidenti():Observable<Incident>{
-    return this.http.get<Incident>(this.APIUrl + "/Incident/GetAll");
+  getAllIncidenti():Observable<Incident[]>{
+    return this.http.get<Incident[]>(this.APIUrl + "/Incident/GetAll");
   }
 
   getIncident(id:number){

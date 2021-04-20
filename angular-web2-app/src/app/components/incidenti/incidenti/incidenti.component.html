@@ -1,46 +1,73 @@
-<div class="help d-flex justify-content-center">
-  <div class="btn-group btn-group-toggle align" data-toggle="buttons">
-    <label class="btn btn-secondary active">
-      <input type="radio" checked (click)="pagination(0)"> Default
-    </label>
-    <label class="btn btn-secondary">
-      <input type="radio" (click)="pagination(5)"> 5
-    </label>
-    <label class="btn btn-secondary">
-      <input type="radio" (click)="pagination(10)"> 10
-    </label>
-    <label class="btn btn-secondary">
-      <input type="radio" (click)="pagination(25)"> 25
-    </label>
-    <label class="btn btn-secondary">
-      <input type="radio" (click)="pagination(50)"> 50
-    </label>
-  </div>
-</div>
+<div class="mat-elevation-z8 data-table">
+  <table mat-table matSort aria-label="Elements">
+    <!-- Id Column -->
+    <ng-container matColumnDef="idIncidenta" sticky>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Id incidenta</p></th>
+      <td mat-cell *matCellDef="let row">{{row.idIncidenta | number}}</td>
+    </ng-container>
 
-<div class="d-flex justify-content-center">
-  <div [hidden]="incidenti.length === 0" class="w-50">
-      <table matSort (matSortChange)="sortData($event)" class="table table-striped table-bordered table-sm">
-        <thead>
-          <th mat-sort-header="id">IncidentId</th>
-          <th mat-sort-header="Prioritet">Prioritet</th>
-          <th mat-sort-header="Potvrdjen">Potvrdjen</th>
-          <th mat-sort-header="ETA">ETA</th>
-          <th mat-sort-header="ATA">ATA</th>
-          <th mat-sort-header="ETR">ETR</th>
-          <th mat-sort-header="Nivo Napona">Nivo Napona</th>  <!--mat-sort-header mora da primi istu vrednost kao sto i je u th-u -->
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of sortedData">
-            <td>{{ item.idIncidenta }}</td>
-            <td>{{ item.Prioritet }}</td>
-            <td>{{ item.Potvrdjen }}</td>
-            <td>{{ item.ETA | date}}</td>
-            <td>{{ item.ATA | date}}</td>
-            <td>{{ item.ETR | date}}</td>
-            <td>{{ item.NivoNapona}} kW</td>
-          </tr>
-        </tbody>
-      </table>
-  </div>
+    <!-- Tip Column -->
+    <ng-container matColumnDef="NazivTipIncidenta" sticky>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Tip</p></th>
+      <td mat-cell *matCellDef="let row">{{row.NazivTipIncidenta}}</td>
+    </ng-container>
+    
+    <!-- Prioritet Column -->
+    <ng-container matColumnDef="Prioritet">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Prioritet</p></th>
+      <td mat-cell *matCellDef="let row">{{row.Prioritet}}</td>
+    </ng-container>
+
+    <!-- Potvrdjen Column -->
+    <ng-container matColumnDef="Potvrdjen">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Potvrdjen</p></th>
+      <td mat-cell *matCellDef="let row">{{row.Potvrdjen}}</td>
+    </ng-container>
+
+    <!-- Status Column -->
+    <ng-container matColumnDef="NazivStatusaIncidenta">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Status</p></th>
+      <td mat-cell *matCellDef="let row">{{row.NazivStatusaIncidenta}}</td>
+    </ng-container>
+
+    <!-- ETA Column -->
+    <ng-container matColumnDef="ETA">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p>ETA</p></th>
+      <td mat-cell *matCellDef="let row">{{row.ETA | date}}</td>
+    </ng-container>
+
+    <!-- ATA Column -->
+    <ng-container matColumnDef="ATA">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p>ATA</p></th>
+      <td mat-cell *matCellDef="let row">{{row.ATA | date}}</td>
+    </ng-container>
+
+    <!-- ETR Column -->
+    <ng-container matColumnDef="ETR">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p>ETR</p></th>
+      <td mat-cell *matCellDef="let row">{{row.ETR | date}}</td>
+    </ng-container>
+
+    <!-- Nivo napona Column -->
+    <ng-container matColumnDef="NivoNapona">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Nivo napona</p></th>
+      <td mat-cell *matCellDef="let row">{{row.NivoNapona | number}} kW</td>
+    </ng-container>
+
+    <!-- Planirano vreme rada Column -->
+    <ng-container matColumnDef="PlaniranoVremeRada">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Planirano vreme rada</p></th>
+      <td mat-cell *matCellDef="let row">{{row.PlaniranoVremeRada | date}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator #paginator
+      [length]="dataSource?.data?.length"
+      [pageIndex]="0"
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 20]">
+  </mat-paginator>
 </div>

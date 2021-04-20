@@ -9,10 +9,9 @@ export class Incident {
     ETR:Date;
     nivoNapona:number;
     planiranoVremeRada:Date;
-    idKorisnika:number;
 
     constructor(idIncidenta:number, nazivTipIncidenta:string, prioritet:number, potvrdjen:boolean, nazivStatusaIncidenta:string, ETA:Date,
-        ATA:Date, ETR:Date, nivoNapona:number, planiranoVremeRada:Date, idKorisnika:number) {
+        ATA:Date, ETR:Date, nivoNapona:number, planiranoVremeRada:Date) {
         this.idIncidenta = idIncidenta;
         this.nazivTipIncidenta = nazivTipIncidenta;
         this.prioritet = prioritet;
@@ -23,6 +22,5 @@ export class Incident {
         this.ETR = ETR;
         this.nivoNapona = nivoNapona;
         this.planiranoVremeRada = planiranoVremeRada;
-        this.idKorisnika = idKorisnika;
     }
 }
