@@ -1,0 +1,90 @@
+<div class="mat-elevation-z8 data-table">
+  <input class="form-control" (keyup)="applyFilter($event.target)" matInput placeholder="Filter">
+  
+  <table mat-table matSort aria-label="Elements" class="table table-bordered table-hover">
+    <!-- Id Column -->
+    <ng-container matColumnDef="idBezbednosnogDokumenta">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Id bezbednosnog dokumenta</p></th>
+      <td mat-cell *matCellDef="let row">{{row.idBezbednosnogDokumenta | number}}</td>
+    </ng-container>
+
+      <!-- Tip Column -->
+      <ng-container matColumnDef="Tip">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Tip</p></th>
+      <td mat-cell *matCellDef="let row">{{row.Tip}}</td>
+    </ng-container>
+
+      <!-- Status Column -->
+      <ng-container matColumnDef="Status">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Status</p></th>
+      <td mat-cell *matCellDef="let row">{{row.Status}}</td>
+    </ng-container>
+
+      <!-- Ekipa Column -->
+      <ng-container matColumnDef="Ekipa">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Ekipa</p></th>
+      <td mat-cell *matCellDef="let row">{{row.Ekipa}}</td>
+    </ng-container>
+
+    <!-- Detalji Column -->
+    <ng-container matColumnDef="Detalji">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Detalji</p></th>
+      <td mat-cell *matCellDef="let row">{{row.Detalji}}</td>
+    </ng-container>
+
+    <!-- Beleske Column -->
+    <ng-container matColumnDef="Beleske">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Beleske</p></th>
+      <td mat-cell *matCellDef="let row">{{row.Beleske}}</td>
+    </ng-container>
+
+    <!-- TelefonskiBroj Column -->
+    <ng-container matColumnDef="TelefonskiBroj">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Telefonski broj</p></th>
+      <td mat-cell *matCellDef="let row">{{row.TelefonskiBroj}}</td>
+    </ng-container>
+
+    <!-- DatumKreiranja Column -->
+    <ng-container matColumnDef="DatumKreiranja">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Datum kreiranja</p></th>
+      <td mat-cell *matCellDef="let row">{{row.DatumKreiranja | date}}</td>
+    </ng-container>
+
+  <!--
+      AllWorkOperationsCompleted Column 
+    <ng-container matColumnDef="AllWorkOperationsCompleted">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p>All work operations completed</p></th>
+      <td mat-cell *matCellDef="let row">{{row.AllWorkOperationsCompleted}}</td>
+    </ng-container>
+
+      AllTagsRemoved Column 
+    <ng-container matColumnDef="AllTagsRemoved">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p>All tags removed</p></th>
+      <td mat-cell *matCellDef="let row">{{row.AllTagsRemoved}}</td>
+    </ng-container>
+
+      GroundingRemoved Column 
+    <ng-container matColumnDef="GroundingRemoved">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Grounding removed</p></th>
+      <td mat-cell *matCellDef="let row">{{row.GroundingRemoved}}</td>
+    </ng-container>
+
+      ReadyForService Column 
+    <ng-container matColumnDef="ReadyForService">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Ready for service</p></th>
+      <td mat-cell *matCellDef="let row">{{row.ReadyForService}}</td>
+    </ng-container>
+  -->
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  
+  <mat-paginator #paginator
+      [length]="dataSource?.data?.length"
+      [pageIndex]="0"
+      [pageSize]="10"
+      [pageSizeOptions]="[5, 10, 20]">
+  </mat-paginator>
+</div>
+
+<app-bezbednosni-dokument-log></app-bezbednosni-dokument-log>

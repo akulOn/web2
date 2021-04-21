@@ -161,6 +161,8 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\BezbednosniDokumentController.cs" />
+    <Compile Include="Controllers\BezbednosniDokumentLogController.cs" />
     <Compile Include="Controllers\EkipaController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IncidentController.cs" />
@@ -175,6 +177,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BezbednosniDokument.cs" />
+    <Compile Include="Models\BezbednosniDokumentLog.cs" />
+    <Compile Include="Models\BezbednosniDokumentStatus.cs" />
     <Compile Include="Models\Ekipa.cs" />
     <Compile Include="Models\Incident.cs" />
     <Compile Include="Models\IncidentEkipa.cs" />

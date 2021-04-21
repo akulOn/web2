@@ -16,6 +16,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { DodajIncidentComponent } from './components/incidenti/dodaj-incident/dodaj-incident.component';
+import { BezbednosniDokumentComponent } from './components/bezbednosniDokumenti/bezbednosni-dokument/bezbednosni-dokument.component';
+import { BezbednosniDokumentLogComponent } from './components/bezbednosniDokumenti/bezbednosni-dokument-log/bezbednosni-dokument-log.component';
 
 const materialModules = [
   MatTableModule,
@@ -31,6 +33,8 @@ const materialModules = [
     NeRegistrovanComponent,
     IncidentiComponent,
     DodajIncidentComponent,
+    BezbednosniDokumentComponent,
+    BezbednosniDokumentLogComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,5 @@
 .data-table {
-    width: 80%;
+    width: 65%;
     margin: 70px auto;
     overflow: auto;
     text-align: center;
@@ -7,6 +7,7 @@
 
 td.mat-column-NazivTipIncidenta {
     background-color: whitesmoke;
+    padding-right: 6px;
 }
 
 td.mat-column-idIncidenta {
@@ -19,8 +20,4 @@ td.mat-column-idIncidenta {
 
 .mat-table-sticky-border-elem-left {
     border-right: 1px solid #e0e0e0;
-}
-
-table {
-    width: 100%;
 }
