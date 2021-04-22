@@ -1,0 +1,29 @@
+<h1>Dodaj element mreze</h1>
+<form [formGroup]="dodajOpremuForm" (ngSubmit)="onSubmitOprema()">
+    <div class="form-group">
+        <label for="Adresa">Adresa</label>
+        <input required class="form-control" id="Adresa" type="text" formControlName="Adresa">
+    </div>
+    <div class="form-group">
+        <label for="Kordinate">Kordinate</label>
+        <input required class="form-control" id="Kordinate" type="text" formControlName="Kordinate">
+    </div>
+    <div class="form-group">
+        <label for="Tip">Tip</label>
+        <select required id="Tip" class="form-control" formControlName="Tip">
+            <option>Prekidac</option>
+            <option>Osigurac</option>
+            <option>Transformator</option>
+            <option>Diskonektor</option>
+            <option>Potrosac</option>
+        </select>
+    </div>
+    <div class="row" style="text-align: center;">
+        <div class="col" style="color: blueviolet;" *ngIf="dodajOpremuForm.status === 'INVALID'">
+            Forma nije dobro popunjena.
+        </div>
+        <div class="col form-group">
+            <button [disabled]="!dodajOpremuForm.valid" class="btn btn-danger" type="submit">Dodaj element mreze</button>
+        </div>
+    </div>
+</form>

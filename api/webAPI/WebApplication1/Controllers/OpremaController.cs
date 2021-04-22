@@ -21,7 +21,15 @@ namespace WebApplication1.Controllers
         {
             // trebalo bi da se radi sa procedrama na bazi, nije dobro da ovde direktno kucam SQL upite
             string query = @"
-                    select * from Oprema
+                    select
+	                    o.idOpreme,
+	                    o.Naziv,
+	                    t.Naziv as Tip,
+	                    o.Kordinate,
+	                    o.Adresa
+                    from Oprema o
+	                    join TipOpreme t on o.idTipOpreme = t.idTipOpreme
+                    where Status = 1
                     ";
             DataTable table = new DataTable();
 
@@ -45,7 +53,16 @@ namespace WebApplication1.Controllers
         {
             // trebalo bi da se radi sa procedrama na bazi, nije dobro da ovde direktno kucam SQL upite
             string query = @"
-                    select * from Oprema where idOpreme not in (select idOpreme from IncidentOprema)
+                    select
+	                    o.idOpreme,
+	                    o.Naziv,
+	                    t.Naziv as Tip,
+	                    o.Kordinate,
+	                    o.Adresa
+                    from Oprema o
+	                    join TipOpreme t on o.idTipOpreme = t.idTipOpreme
+                    where idOpreme not in (select idOpreme from IncidentOprema)
+                        and o.Status = 1
                     ";
             DataTable table = new DataTable();
 
@@ -67,7 +84,15 @@ namespace WebApplication1.Controllers
         public HttpResponseMessage Get(int id)
         {
             string query = @"
-                    select * from dbo.Oprema where idOpreme = " + id
+                    select
+	                    o.idOpreme,
+	                    o.Naziv,
+	                    t.Naziv as Tip,
+	                    o.Kordinate,
+	                    o.Adresa
+                    from Oprema o
+	                    join TipOpreme t on o.idTipOpreme = t.idTipOpreme
+                    where idOpreme = " + id
                     ;
             DataTable table = new DataTable();
 
@@ -88,19 +113,21 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public HttpResponseMessage Post(Oprema oprema)
         {
-            string query = @"
-                    insert into dbo.Oprema(idTipOpreme, Kordinate, Adresa) values (" + oprema.IdTipOpreme + ", + '" + oprema.Kordinate + "', +  '" + oprema.Adresa + "')"
-                    ;
+            string procedure = "InsertOprema";
             DataTable table = new DataTable();
             try
             {
                 using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
                 {
-                    using (var command = new SqlCommand(query, connection))
+                    using (var command = new SqlCommand(procedure, connection))
                     {
+                        command.Parameters.Add(new SqlParameter("@Tip", oprema.Tip));
+                        command.Parameters.Add(new SqlParameter("@Kordinate", oprema.Kordinate));
+                        command.Parameters.Add(new SqlParameter("@Adresa", oprema.Adresa));
+
                         using (var adapter = new SqlDataAdapter(command))
                         {
-                            command.CommandType = CommandType.Text;
+                            command.CommandType = CommandType.StoredProcedure;
                             adapter.Fill(table);
                         }
                     }
@@ -118,8 +145,8 @@ namespace WebApplication1.Controllers
         {
             string query = @"
                     Update Oprema
-                    set idTipOpreme = " + oprema.IdTipOpreme + ", Adresa = '" + oprema.Adresa + "', Kordinate = '" + oprema.Kordinate + "'" +
-                    "where Naziv = '" + oprema.Naziv + "'"
+                    set Adresa = '" + oprema.Adresa + "', Kordinate = '" + oprema.Kordinate + "'" +
+                    "where idOpreme = " + oprema.idOpreme
                     ;
             DataTable table = new DataTable();
             try
@@ -146,19 +173,18 @@ namespace WebApplication1.Controllers
         [HttpDelete]
         public HttpResponseMessage Delete(int id) // prolazi ako ne postoji oprema
         {
-            string query = @"
-                    delete from Oprema where idOpreme = " + id
-                    ;
+            string procedure = "dbo.DeleteOprema";
             DataTable table = new DataTable();
             try
             {
                 using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
                 {
-                    using (var command = new SqlCommand(query, connection))
+                    using (var command = new SqlCommand(procedure, connection))
                     {
+                        command.Parameters.Add(new SqlParameter("@id", id));
                         using (var adapter = new SqlDataAdapter(command))
                         {
-                            command.CommandType = CommandType.Text;
+                            command.CommandType = CommandType.StoredProcedure;
                             adapter.Fill(table);
                         }
                     }
@@ -206,7 +232,7 @@ namespace WebApplication1.Controllers
         {
             // trebalo bi da se radi sa procedrama na bazi, nije dobro da ovde direktno kucam SQL upite
             string query = @"
-                    select * from Poziv where idPoziva in (select idPoziva from OpremaPoziv where idOpreme =" + id +")";
+                    select * from Poziv where idPoziva in (select idPoziva from OpremaPoziv where idOpreme = " + id +")";
                 DataTable table = new DataTable();
 
             try

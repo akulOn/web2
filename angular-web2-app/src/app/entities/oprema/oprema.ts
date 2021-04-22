@@ -1,14 +1,14 @@
 export class Oprema {
-    IdOpreme:number;
+    idOpreme:number;
     Naziv:string;
-    IdTipOpreme:number;
+    Tip:string;
     Kordinate:string;
     Adresa:string;
 
-    constructor(IdOpreme:number, Naziv:string, IdTipOpreme:number, Kordinate:string, Adresa:string) {
-        this.IdOpreme = IdOpreme;
+    constructor(idOpreme:number, Naziv:string, Tip:string, Kordinate:string, Adresa:string) {
+        this.idOpreme = idOpreme;
         this.Naziv = Naziv;
-        this.IdTipOpreme = IdTipOpreme;
+        this.Tip = Tip;
         this.Kordinate = Kordinate;
         this.Adresa = Adresa;
     }

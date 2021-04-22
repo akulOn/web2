@@ -1,0 +1,20 @@
+.data-table {
+    width: 80%;
+    margin: 70px auto;
+    overflow: auto;
+    text-align: center;
+    padding: 10px;
+}
+
+button {
+    margin: 5px;
+}
+
+.filter-input {
+    margin: auto 10%;
+}
+
+.filter-button {
+    margin: auto;
+    margin-right: 35px;
+}

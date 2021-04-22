@@ -1,0 +1,63 @@
+<div class="mat-elevation-z8 data-table">
+    <div class="d-flex flex-nowrap">
+        <h1>Svi elementi mreze</h1>
+        <input class="form-control filter-input" (keyup)="applyFilter($event.target)" matInput placeholder="Filter">
+        <input type="button" class="btn btn-primary filter-button" (click)="showDodavanje()" value="Dodaj element mreze">
+    </div>
+
+    
+    <table mat-table matSort aria-label="Elements" class="table table-bordered table-hover">
+        <!-- Id Column -->
+        <ng-container matColumnDef="idOpreme">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Id Opreme</p></th>
+            <td mat-cell *matCellDef="let row">{{row.idOpreme | number}}</td>
+        </ng-container>
+  
+        <!-- Naziv Column -->
+        <ng-container matColumnDef="Naziv">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Naziv</p></th>
+            <td mat-cell *matCellDef="let row">{{row.Naziv}}</td>
+        </ng-container>
+  
+        <!-- Tip Column -->
+        <ng-container matColumnDef="Tip">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Tip</p></th>
+            <td mat-cell *matCellDef="let row">{{row.Tip}}</td>
+        </ng-container>
+  
+        <!-- Kordinate Column -->
+        <ng-container matColumnDef="Kordinate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Kordinate</p></th>
+            <td mat-cell *matCellDef="let row">{{row.Kordinate}}</td>
+        </ng-container>
+  
+        <!-- Adresa Column -->
+        <ng-container matColumnDef="Adresa">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Adresa</p></th>
+            <td mat-cell *matCellDef="let row">{{row.Adresa}}</td>
+        </ng-container>
+  
+        <!-- actions Column -->
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell  *matHeaderCellDef > Actions </th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-button class="btn btn-primary" (click)="posaljiIdElementa($event.target, row.idOpreme)">Uredi</button>
+              <button mat-button class="btn btn-secondary" (click)="ObrisiElementMreze(row.idOpreme)">Obrisi</button>
+            </td>
+          </ng-container>
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    
+    <mat-paginator #paginator
+        [length]="dataSource?.data?.length"
+        [pageIndex]="0"
+        [pageSize]="10"
+        [pageSizeOptions]="[5, 10, 20]">
+    </mat-paginator>
+</div>
+
+<app-uredenje-elemenata-mreze [hidden]="!showChild" (messageEvent)="reciveMessage($event)"></app-uredenje-elemenata-mreze>
+
+<app-dodaj-element-mreze [hidden]="!showDodavanjeElementa"></app-dodaj-element-mreze>

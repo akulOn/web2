@@ -18,6 +18,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { DodajIncidentComponent } from './components/incidenti/dodaj-incident/dodaj-incident.component';
 import { BezbednosniDokumentComponent } from './components/bezbednosniDokumenti/bezbednosni-dokument/bezbednosni-dokument.component';
 import { BezbednosniDokumentLogComponent } from './components/bezbednosniDokumenti/bezbednosni-dokument-log/bezbednosni-dokument-log.component';
+import { DodajElementMrezeComponent } from './components/elementi-mreze/dodaj-element-mreze/dodaj-element-mreze.component';
+import { PregledElemenataMrezeComponent } from './components/elementi-mreze/pregled-elemenata-mreze/pregled-elemenata-mreze.component';
+import { UredenjeElemenataMrezeComponent } from './components/elementi-mreze/uredenje-elemenata-mreze/uredenje-elemenata-mreze.component';
 
 const materialModules = [
   MatTableModule,
@@ -35,6 +38,9 @@ const materialModules = [
     DodajIncidentComponent,
     BezbednosniDokumentComponent,
     BezbednosniDokumentLogComponent,
+    DodajElementMrezeComponent,
+    PregledElemenataMrezeComponent,
+    UredenjeElemenataMrezeComponent,
   ],
   imports: [
     BrowserModule,

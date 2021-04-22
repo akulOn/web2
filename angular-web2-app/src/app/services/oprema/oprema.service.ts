@@ -13,15 +13,15 @@ export class OpremaService {
 
   constructor(private http:HttpClient) {  }
 
-  getAllOprema():Observable<Oprema>{
-    return this.http.get<Oprema>(this.APIUrl + "/Oprema/GetAll");
+  getAllOprema():Observable<Oprema[]>{
+    return this.http.get<Oprema[]>(this.APIUrl + "/Oprema/GetAll");
   }
 
-  getAllSafeOprema():Observable<Oprema>{ // vraca svu opremu koja nije dodeljena nekom incidentu
-    return this.http.get<Oprema>(this.APIUrl + "/Oprema/GetAllSafe");
+  getAllSafeOprema():Observable<Oprema[]>{ // vraca svu opremu koja nije dodeljena nekom incidentu
+    return this.http.get<Oprema[]>(this.APIUrl + "/Oprema/GetAllSafe");
   }
 
-  getOprema(id:number){
+  getOprema(id:number):Observable<Oprema>{
     return this.http.get<Oprema>(this.APIUrl + "/Oprema/" + id);
   }
 
@@ -29,7 +29,15 @@ export class OpremaService {
     return this.http.post(this.APIUrl + "/Oprema/", oprema);
   }
 
-  getAllPoziviVezaniZaOpremu(id:number){
-    return this.http.get<any>(this.APIUrl + "/Oprema/GetAllPoziviVezaniZaOpremu/" + id);
+  getAllPoziviVezaniZaOpremu(id:number):Observable<Poziv[]>{
+    return this.http.get<Poziv[]>(this.APIUrl + "/Oprema/GetAllPoziviVezaniZaOpremu/" + id);
+  }
+
+  deleteOprema(id:number):Observable<Oprema[]>{
+    return this.http.delete<Oprema[]>(this.APIUrl + "/Oprema/" + id);
+  }
+
+  updateOprema(oprema:Oprema){
+    return this.http.put<Oprema>(this.APIUrl + "/Oprema/", oprema);
   }
 }

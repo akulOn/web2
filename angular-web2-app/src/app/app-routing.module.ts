@@ -5,12 +5,14 @@ import { IncidentiComponent } from './components/incidenti/incidenti/incidenti.c
 import { NeRegistrovanComponent } from './components/neRegistrovan/ne-registrovan/ne-registrovan.component';
 import { DodajIncidentComponent } from "./components/incidenti/dodaj-incident/dodaj-incident.component";
 import { BezbednosniDokumentComponent } from './components/bezbednosniDokumenti/bezbednosni-dokument/bezbednosni-dokument.component';
+import { PregledElemenataMrezeComponent } from './components/elementi-mreze/pregled-elemenata-mreze/pregled-elemenata-mreze.component';
 
 const routes: Routes = [
   { path : 'incidenti', component: IncidentiComponent },
   { path : 'neReg', component: NeRegistrovanComponent },
   { path : 'dodaj-incident', component: DodajIncidentComponent },
-  { path : 'bezbednosni-dokumenti', component: BezbednosniDokumentComponent }
+  { path : 'bezbednosni-dokumenti', component: BezbednosniDokumentComponent },
+  { path : 'elementi-mreze', component: PregledElemenataMrezeComponent }
 ];
 
 @NgModule({
