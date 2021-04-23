@@ -31,4 +31,7 @@ export class IncidentService {
     return this.http.put(this.APIUrl + "/Incident/DodajResenje", {IdIncidenta, IdResenja} )
   }
 
+  addSlikaToIncident(id:number, slika:FormData){
+    return this.http.put(this.APIUrl + "/Incident/DodajSliku/" + id, slika);
+  }
 }

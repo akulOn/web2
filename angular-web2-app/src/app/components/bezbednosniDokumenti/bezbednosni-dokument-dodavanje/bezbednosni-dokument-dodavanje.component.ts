@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { BezbednosniDokument } from 'src/app/entities/bezbednosni-dokument/bezbednosni-dokument';
 import { BezbednosniDokumentService } from 'src/app/services/bezbednosni-dokument/bezbednosni-dokument.service';
 
 @Component({
@@ -28,9 +29,15 @@ export class BezbednosniDokumentDodavanjeComponent implements OnInit {
 
   @Output() messageEvent = new EventEmitter<string>();
 
+  izabranaSlika!:File;
+
   constructor(private formBuilder:FormBuilder, private bezbednosniDokumentService:BezbednosniDokumentService) {}
 
   ngOnInit(): void {
+  }
+
+  onFileSelected(event:any) {
+    this.izabranaSlika = event.target!.files[0];
   }
 
   onSubmitBezbednosniDokument() {
@@ -38,6 +45,20 @@ export class BezbednosniDokumentDodavanjeComponent implements OnInit {
 
     console.warn('Dodali ste bezbednosni dokument!', this.dodajBezbednosniDokumentForm.value);
 
-    this.bezbednosniDokumentService.addBezbednosniDokument(this.dodajBezbednosniDokumentForm.value).subscribe() // server odgovara, mogu da uzmem odgovor sa lambda
+    const slika = new FormData();
+    try{
+      slika.append('image', this.izabranaSlika, this.izabranaSlika.name);
+    }
+    catch{
+      
+    }
+    this.bezbednosniDokumentService.addBezbednosniDokument(this.dodajBezbednosniDokumentForm.value).subscribe( data => {
+      console.log(data[0]);
+      console.log(this.izabranaSlika.name);
+      
+      
+      this.bezbednosniDokumentService.addSlikaToBezbednosniDokument(data[0].idBezbednosnogDokumenta, slika).subscribe()
+    }) // server odgovara, mogu da uzmem odgovor sa lambda
+    
   }
 }

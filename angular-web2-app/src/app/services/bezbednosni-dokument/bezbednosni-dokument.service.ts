@@ -19,11 +19,15 @@ export class BezbednosniDokumentService {
     return this.http.get<BezbednosniDokument>(this.APIUrl + "/BezbednosniDokument/" + id);
   }
 
-  addBezbednosniDokument(bezbednosniDokument:BezbednosniDokument){
-    return this.http.post(this.APIUrl + "/BezbednosniDokument/", bezbednosniDokument);
+  addBezbednosniDokument(bezbednosniDokument:BezbednosniDokument):Observable<BezbednosniDokument[]>{
+    return this.http.post<BezbednosniDokument[]>(this.APIUrl + "/BezbednosniDokument/", bezbednosniDokument);
   }
 
   updateBezbednosniDokument(idBezbednosnogDokumenta:number, idStatusa:number){
     return this.http.put(this.APIUrl + "/BezbednosniDokument/UpdateBezbednosniDokument/", {idBezbednosnogDokumenta, idStatusa});
+  }
+
+  addSlikaToBezbednosniDokument(id:number, slika:FormData) {    
+    return this.http.put(this.APIUrl + "/BezbednosniDokument/DodajSliku/" + id, slika);
   }
 }

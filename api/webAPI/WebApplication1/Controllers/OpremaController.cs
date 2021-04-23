@@ -226,7 +226,7 @@ namespace WebApplication1.Controllers
             }
         }
 
-        [Route("api/Oprema/GetAllPoziviVezaniZaOpremu/")]
+        [Route("api/Oprema/GetAllPoziviVezaniZaOpremu/{id}")]
         [HttpGet]
         public HttpResponseMessage GetAllPoziviVezaniZaOpremu(int id)
         {

@@ -220,10 +220,8 @@
             </div>
             
             <div class="collapse" id="slika" data-parent="#accordion">
-                <label class="image-upload-container btn btn-bwm">
-                    <span>Select Image </span>
-                    <input type="file" accept="image/*">
-                </label>
+                <input type="file" (change)="onFileSelected($event)">
+                <button type="button" (click)="OnUpload()">Upload</button>
             </div>
             
         </div>

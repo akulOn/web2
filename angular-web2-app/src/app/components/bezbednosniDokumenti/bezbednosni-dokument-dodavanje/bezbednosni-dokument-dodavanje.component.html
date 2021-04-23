@@ -44,6 +44,9 @@
         <input class="checkbox" type="checkbox" id="ReadyForService" formControlName="ReadyForService">
     </div>
 
+    <div class="form-group">
+        <input type="file" (change)="onFileSelected($event)">
+    </div>
 
     <div class="row" style="text-align: center;">
         <div class="col" style="color: blueviolet;" *ngIf="dodajBezbednosniDokumentForm.status === 'INVALID'">

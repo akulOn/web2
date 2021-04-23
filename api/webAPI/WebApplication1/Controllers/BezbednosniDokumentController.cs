@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using WebApplication1.Models;
 
@@ -158,6 +159,44 @@ namespace WebApplication1.Controllers
                 }
             }
             return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
+        }
+
+        [Route("api/BezbednosniDokument/DodajSliku/{id}")]
+        [HttpPut]
+        public HttpResponseMessage DodajSliku(int id) // ako se doda ista slika nisam siguran sta se desi
+        {
+            string procedure = "dbo.DodajSlikuBezbednosnomDokumentu";
+            DataTable table = new DataTable();
+            try
+            {
+                var httpRequest = HttpContext.Current.Request;
+                var postedFile = httpRequest.Files[0]; // gleda samo prvi fajl, ako ih je vise izabrano
+                string fileName = postedFile.FileName;
+                string physicalPath = HttpContext.Current.Server.MapPath("~/Photos/" + fileName);
+
+                postedFile.SaveAs(physicalPath);
+
+                using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
+                {
+                    using (var command = new SqlCommand(procedure, connection))
+                    {
+                        // 3. add parameter to command, which will be passed to the stored procedure
+                        command.Parameters.Add(new SqlParameter("@idBezbednosnogDokumenta", id)); // tu bi trebalo proslediti informacije o trenutno logovanom korisniku
+                        command.Parameters.Add(new SqlParameter("@Putanja", physicalPath));
+
+                        using (var adapter = new SqlDataAdapter(command))
+                        {
+                            command.CommandType = CommandType.StoredProcedure;
+                            adapter.Fill(table);
+                        }
+                    }
+                }
+                return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
         }
     }
 }

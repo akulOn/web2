@@ -53,6 +53,8 @@ export class DodajIncidentComponent implements OnInit {
   Ekipe:any = [];
   opremaIncident:number[] = []; // oprema koja se treba dodati treuntnom incidentu
 
+  izabranaSlika!:File;
+
   constructor(
     private formBuilder:FormBuilder, 
     private incidentService:IncidentService, 
@@ -125,6 +127,30 @@ export class DodajIncidentComponent implements OnInit {
       this.Pozivi.splice(this.Pozivi.indexOf(id));
     }
     console.log(this.opremaIncident);
+  }
+
+  onFileSelected(event:any) {
+    this.izabranaSlika = event.target!.files[0];
+  }
+
+  OnUpload() {
+    if(this.Incident === -1){
+      alert("Morate prvo da dodate Incident da bi mogli da dodate sliku!");
+      return;
+    }
+
+    if(this.izabranaSlika == null)
+    {
+      console.warn("Niste izabrali sliku!");
+    }
+    else
+    {
+      console.log(this.izabranaSlika);
+
+      const slika = new FormData();
+      slika.append('image', this.izabranaSlika, this.izabranaSlika.name);
+      this.incidentService.addSlikaToIncident(this.Incident[0].idIncidenta, slika).subscribe();
+    }
   }
 }
 
