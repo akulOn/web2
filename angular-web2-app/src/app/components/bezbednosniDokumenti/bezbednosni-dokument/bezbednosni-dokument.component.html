@@ -1,8 +1,10 @@
 <div class="mat-elevation-z8 data-table">
-  <h1 style="text-align: center;">Svi bezbednosni dokumenti</h1>
+  <h1>Svi bezbednosni dokumenti</h1>
+    <div class="d-flex flex-nowrap" style="margin-bottom: 20px;">
+        <input class="form-control filter-input" (keyup)="applyFilter($event.target)" matInput placeholder="Filter">
+        <input type="button" class="btn btn-primary filter-button" (click)="showDodavanje()" value="Dodaj bezbednosni dokument">
+    </div>
 
-  <input class="form-control" (keyup)="applyFilter($event.target)" matInput placeholder="Filter">
-  
   <table mat-table matSort aria-label="Elements" class="table table-bordered table-hover">
     <!-- Id Column -->
     <ng-container matColumnDef="idBezbednosnogDokumenta">
@@ -88,5 +90,7 @@
       [pageSizeOptions]="[5, 10, 20]">
   </mat-paginator>
 </div>
+
+<app-bezbednosni-dokument-dodavanje [hidden]="!showDodavanjeDokumenta" (messageEvent)="reciveMessage($event)"></app-bezbednosni-dokument-dodavanje>
 
 <app-bezbednosni-dokument-log></app-bezbednosni-dokument-log>

@@ -21,6 +21,7 @@ import { BezbednosniDokumentLogComponent } from './components/bezbednosniDokumen
 import { DodajElementMrezeComponent } from './components/elementi-mreze/dodaj-element-mreze/dodaj-element-mreze.component';
 import { PregledElemenataMrezeComponent } from './components/elementi-mreze/pregled-elemenata-mreze/pregled-elemenata-mreze.component';
 import { UredenjeElemenataMrezeComponent } from './components/elementi-mreze/uredenje-elemenata-mreze/uredenje-elemenata-mreze.component';
+import { BezbednosniDokumentDodavanjeComponent } from './components/bezbednosniDokumenti/bezbednosni-dokument-dodavanje/bezbednosni-dokument-dodavanje.component';
 
 const materialModules = [
   MatTableModule,
@@ -41,6 +42,7 @@ const materialModules = [
     DodajElementMrezeComponent,
     PregledElemenataMrezeComponent,
     UredenjeElemenataMrezeComponent,
+    BezbednosniDokumentDodavanjeComponent,
   ],
   imports: [
     BrowserModule,

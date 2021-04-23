@@ -1,6 +1,6 @@
 <div class="mat-elevation-z8 data-table">
-    <div class="d-flex flex-nowrap">
-        <h1>Svi elementi mreze</h1>
+    <h1>Svi elementi mreze</h1>
+    <div class="d-flex flex-nowrap" style="margin-bottom: 20px;">
         <input class="form-control filter-input" (keyup)="applyFilter($event.target)" matInput placeholder="Filter">
         <input type="button" class="btn btn-primary filter-button" (click)="showDodavanje()" value="Dodaj element mreze">
     </div>
@@ -60,4 +60,4 @@
 
 <app-uredenje-elemenata-mreze [hidden]="!showChild" (messageEvent)="reciveMessage($event)"></app-uredenje-elemenata-mreze>
 
-<app-dodaj-element-mreze [hidden]="!showDodavanjeElementa"></app-dodaj-element-mreze>
+<app-dodaj-element-mreze [hidden]="!showDodavanjeElementa" (messageEvent)="reciveMessage($event)"></app-dodaj-element-mreze>

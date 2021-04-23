@@ -1,0 +1,56 @@
+<h1>Dodaj bezbednosni dokument</h1>
+<form [formGroup]="dodajBezbednosniDokumentForm" (ngSubmit)="onSubmitBezbednosniDokument()">
+    <div class="form-group">
+        <label for="Tip">Tip</label>
+        <select required id="Tip" class="form-control" formControlName="Tip">
+            <option>Planirani rad</option>
+            <option>Neplanirani rad</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="Status">Status</label>
+        <input required class="form-control" id="Status" type="text" formControlName="Status">
+    </div>
+    <div class="form-group">
+        <label for="Ekipa">Ekipa</label>
+        <input required class="form-control" id="Ekipa" type="text" formControlName="Ekipa">
+    </div>
+    <div class="form-group">
+        <label for="Detalji">Detalji</label>
+        <input class="form-control" id="Detalji" type="text" formControlName="Detalji">
+    </div>
+    <div class="form-group">
+        <label for="Beleske">Beleske</label>
+        <input class="form-control" id="Beleske" type="text" formControlName="Beleske">
+    </div>
+    <div class="form-group">
+        <label for="DatumKreiranja">Datum kreiranja</label>
+        <input required class="form-control" id="DatumKreiranja" type="datetime" formControlName="DatumKreiranja">
+    </div>
+    <div class="form-group">
+        <label for="AllWorkOperationsCompleted">All work operations completed</label>
+        <input class="checkbox" type="checkbox" id="AllWorkOperationsCompleted" formControlName="AllWorkOperationsCompleted">
+    </div>
+    <div class="form-group">
+        <label for="AllTagsRemoved">All tags removed</label>
+        <input class="checkbox" type="checkbox" id="AllTagsRemoved" formControlName="AllTagsRemoved">
+    </div>
+    <div class="form-group">
+        <label for="GroundingRemoved">Grounding removed</label>
+        <input class="checkbox" type="checkbox" id="GroundingRemoved" formControlName="GroundingRemoved">
+    </div>
+    <div class="form-group">
+        <label for="ReadyForService">Ready for service</label>
+        <input class="checkbox" type="checkbox" id="ReadyForService" formControlName="ReadyForService">
+    </div>
+
+
+    <div class="row" style="text-align: center;">
+        <div class="col" style="color: blueviolet;" *ngIf="dodajBezbednosniDokumentForm.status === 'INVALID'">
+            Forma nije dobro popunjena.
+        </div>
+        <div class="col form-group">
+            <button [disabled]="!dodajBezbednosniDokumentForm.valid" class="btn btn-danger" type="submit">Dodaj element mreze</button>
+        </div>
+    </div>
+</form>
