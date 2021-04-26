@@ -23,6 +23,14 @@ export class IncidentService {
     return this.http.post(this.APIUrl + "/Incident/", incident);
   }
 
+  addOpremaToIncident(IdIncidenta:number, IdOpreme:number){
+    return this.http.put(this.APIUrl + "/Incident/DodajOpremu", {IdIncidenta, IdOpreme} )
+  }
+
+  deleteOpremaFromIncident(IdIncidenta:number, IdOpreme:number){
+    return this.http.put(this.APIUrl + "/Incident/IzbaciOpremu", {IdIncidenta, IdOpreme} )
+  }
+
   addEkipaToIncident(IdIncidenta:number, IdEkipe:number){
     return this.http.put(this.APIUrl + "/Incident/DodajEkipu", {IdIncidenta, IdEkipe} )
   }

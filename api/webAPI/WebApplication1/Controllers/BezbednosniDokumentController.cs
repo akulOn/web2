@@ -198,5 +198,32 @@ namespace WebApplication1.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
         }
+
+        [Route("api/BezbednosniDokument/DodajOpremu")]
+        [HttpPut]
+        public HttpResponseMessage DodajOpremu(BezbednosniDokumentOprema bdo)
+        {
+            DataTable table = new DataTable();
+            foreach (int item in bdo.idOpreme)
+            {
+                string query = @"
+                    if not exists(select * from BezbednosniDokumentOprema where idOpreme = " + item + " and idBezbednosnogDokumenta = " + bdo.idBezbednosnogDokumenta
+                    + ")insert into BezbednosniDokumentOprema(idBezbednosnogDokumenta, idOpreme) values (" + bdo.idBezbednosnogDokumenta + ", " + item + ")"
+                       ;
+
+                using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
+                {
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        using (var adapter = new SqlDataAdapter(command))
+                        {
+                            command.CommandType = CommandType.Text;
+                            adapter.Fill(table);
+                        }
+                    }
+                }
+            }
+            return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
+        }
     }
 }

@@ -11,7 +11,7 @@
                 <button class="btn btn-block btn-dark" data-toggle="collapse" data-target="#slika" aria-expanded="false" aria-controls="slika">Slika</button>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col">
             <div class="collapse show" id="dodajIncidentForm" data-parant="#accordion">
                 <form [formGroup]="dodajIncidentForm" (ngSubmit)="onSubmitIncident()">
                     <div class="row">
@@ -100,7 +100,7 @@
                         <tr *ngFor="let item of Oprema">
                             <td>{{ item.idOpreme }}</td>
                             <td>{{ item.Naziv }}</td>
-                            <td>{{ item.idTipOpreme }}</td>
+                            <td>{{ item.Tip }}</td>
                             <td>{{ item.Kordinate}}</td>
                             <td>{{ item.Adresa}}</td>
                             <td class="text-center align-middle"><input type="checkbox" (change)="addId(item.idOpreme)"></td>

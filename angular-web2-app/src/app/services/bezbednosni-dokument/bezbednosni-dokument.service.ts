@@ -30,4 +30,8 @@ export class BezbednosniDokumentService {
   addSlikaToBezbednosniDokument(id:number, slika:FormData) {    
     return this.http.put(this.APIUrl + "/BezbednosniDokument/DodajSliku/" + id, slika);
   }
+
+  addOpremaToBezbednosniDokument(idBezbednosnogDokumenta:number, idOpreme:number[]) {
+    return this.http.put(this.APIUrl + "/BezbednosniDokument/DodajOpremu/",  {idBezbednosnogDokumenta, idOpreme});
+  }
 }

@@ -114,17 +114,30 @@ export class DodajIncidentComponent implements OnInit {
   }
 
   addId(id:number){
+    if(this.Incident === -1)
+    {
+      alert("Morate prvo da dodate Incident da bi mogli da dodate opremu!");
+      return;
+    }
+
     if(!this.opremaIncident.includes(id))
     {
       this.opremaIncident.push(id);
       this.opremaService.getAllPoziviVezaniZaOpremu(id).subscribe(data => {
-        this.Pozivi = data;
+        data.forEach(x => this.Pozivi.push(x));
       });
+      
+      this.incidentService.addOpremaToIncident(this.Incident[0].idIncidenta, id).subscribe();
     }
     else
     {
-      this.opremaIncident.splice(this.opremaIncident.indexOf(id));
-      this.Pozivi.splice(this.Pozivi.indexOf(id));
+      this.opremaIncident.splice(this.opremaIncident.indexOf(id), 1);
+
+      this.opremaService.getAllPoziviVezaniZaOpremu(id).subscribe(data => {
+        data.forEach(x => this.Pozivi.splice(this.Pozivi.indexOf(data), 1));
+      });
+
+      this.incidentService.deleteOpremaFromIncident(this.Incident[0].idIncidenta, id).subscribe();
     }
     console.log(this.opremaIncident);
   }

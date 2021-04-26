@@ -115,13 +115,42 @@ namespace WebApplication1.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPut]
         [Route("api/Incident/DodajOpremu")]
         public HttpResponseMessage DodajOpremu(IncidentOprema incidentOprema)
         {
             string query = @"
                     if not exists(select idOpreme from IncidentOprema where idIncidenta = " + incidentOprema.IdIncidenta + " and idOpreme = " + incidentOprema.IdOpreme + ")" +
                         "insert into IncidentOprema(idIncidenta, idOpreme) values (" + incidentOprema.IdIncidenta + "," + incidentOprema.IdOpreme + ")"
+                    ;
+            DataTable table = new DataTable();
+            try
+            {
+                using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
+                {
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        using (var adapter = new SqlDataAdapter(command))
+                        {
+                            command.CommandType = CommandType.Text;
+                            adapter.Fill(table);
+                        }
+                    }
+                }
+                return Request.CreateResponse(System.Net.HttpStatusCode.Created, table);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+        }
+
+        [HttpPut]
+        [Route("api/Incident/IzbaciOpremu")]
+        public HttpResponseMessage IzbaciOpremu(IncidentOprema incidentOprema)
+        {
+            string query = @"
+                    delete from IncidentOprema where idIncidenta = " + incidentOprema.IdIncidenta + " and idOpreme = " + incidentOprema.IdOpreme
                     ;
             DataTable table = new DataTable();
             try
