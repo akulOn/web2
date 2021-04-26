@@ -19,9 +19,6 @@ export class PregledElemenataMrezeComponent implements OnInit {
   dataSource = new MatTableDataSource<Oprema>();
 
   @ViewChild(UredenjeElemenataMrezeComponent) child!:UredenjeElemenataMrezeComponent;
-  showChild:boolean = false;
-
-  showDodavanjeElementa:boolean = false;
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['idOpreme', 'Naziv', 'Tip', 'Kordinate', 'Adresa', 'actions' ];
@@ -63,12 +60,10 @@ export class PregledElemenataMrezeComponent implements OnInit {
   posaljiIdElementa(element:any, id:number) {
     console.log(element);
     
-    this.showChild = !this.showChild;
     this.child.FormConstructor(id);
   }
 
   reciveMessage($event:string) {
-    this.showChild = !this.showChild;
     console.log($event);
 
     setTimeout(() => {
@@ -77,9 +72,5 @@ export class PregledElemenataMrezeComponent implements OnInit {
         console.log(data)
       });
     }, 250); // cekaj 0.250 sekundi
-  }
-
-  showDodavanje() {
-    this.showDodavanjeElementa = !this.showDodavanjeElementa;
   }
 }

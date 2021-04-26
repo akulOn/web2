@@ -2,7 +2,7 @@
     <h1>Svi elementi mreze</h1>
     <div class="d-flex flex-nowrap" style="margin-bottom: 20px;">
         <input class="form-control filter-input" (keyup)="applyFilter($event.target)" matInput placeholder="Filter">
-        <input type="button" class="btn btn-primary filter-button" (click)="showDodavanje()" value="Dodaj element mreze">
+        <input type="button" class="btn btn-primary filter-button" data-toggle="modal" data-target="#dodajModal" value="Dodaj element mreze">
     </div>
 
     
@@ -41,7 +41,7 @@
         <ng-container matColumnDef="actions">
             <th mat-header-cell  *matHeaderCellDef > Actions </th>
             <td mat-cell *matCellDef="let row">
-              <button mat-button class="btn btn-primary" (click)="posaljiIdElementa($event.target, row.idOpreme)">Uredi</button>
+              <button mat-button class="btn btn-primary" data-toggle="modal" data-target="#urediModal" (click)="posaljiIdElementa($event.target, row.idOpreme)">Uredi</button>
               <button mat-button class="btn btn-secondary" (click)="ObrisiElementMreze(row.idOpreme)">Obrisi</button>
             </td>
           </ng-container>
@@ -58,6 +58,34 @@
     </mat-paginator>
 </div>
 
-<app-uredenje-elemenata-mreze [hidden]="!showChild" (messageEvent)="reciveMessage($event)"></app-uredenje-elemenata-mreze>
+<div class="modal fade" id="dodajModal" tabindex="-1" role="dialog" aria-labelledby="dodajModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title">Dodaj element mreze</h1>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+            <div class="modal-body">
+                <app-dodaj-element-mreze (messageEvent)="reciveMessage($event)"></app-dodaj-element-mreze>
+            </div>
+        </div>
+    </div>
+</div>
 
-<app-dodaj-element-mreze [hidden]="!showDodavanjeElementa" (messageEvent)="reciveMessage($event)"></app-dodaj-element-mreze>
+<div class="modal fade" id="urediModal" tabindex="-1" role="dialog" aria-labelledby="urediModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title">Uredi element mreze</h1>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+            </div>
+            <div class="modal-body">
+                <app-uredenje-elemenata-mreze (messageEvent)="reciveMessage($event)"></app-uredenje-elemenata-mreze>
+            </div>
+        </div>
+    </div>
+</div>

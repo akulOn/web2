@@ -9,7 +9,7 @@ import { OpremaService } from 'src/app/services/oprema/oprema.service';
 })
 export class DodajElementMrezeComponent implements OnInit {
   dodajOpremuForm = this.formBuilder.group({
-    Tip: ['', Validators.required],
+    Tip: ['Prekidac', Validators.required],
     Kordinate: ['', Validators.required],
     Adresa: ['', Validators.required]
   });

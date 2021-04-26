@@ -2,7 +2,7 @@
   <h1>Svi bezbednosni dokumenti</h1>
     <div class="d-flex flex-nowrap" style="margin-bottom: 20px;">
         <input class="form-control filter-input" (keyup)="applyFilter($event.target)" matInput placeholder="Filter">
-        <input type="button" class="btn btn-primary filter-button" (click)="showDodavanje()" value="Dodaj bezbednosni dokument">
+        <input type="button" class="btn btn-primary filter-button" data-toggle="modal" data-target="#dodajModal" value="Dodaj bezbednosni dokument">
     </div>
 
   <table mat-table matSort aria-label="Elements" class="table table-bordered table-hover">
@@ -91,6 +91,21 @@
   </mat-paginator>
 </div>
 
-<app-bezbednosni-dokument-dodavanje [hidden]="!showDodavanjeDokumenta" (messageEvent)="reciveMessage($event)"></app-bezbednosni-dokument-dodavanje>
 
 <app-bezbednosni-dokument-log></app-bezbednosni-dokument-log>
+
+<div class="modal fade" id="dodajModal" tabindex="-1" role="dialog" aria-labelledby="dodajModalTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h1 class="modal-title">Dodaj bezbednosni dokument</h1>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+          </div>
+          <div class="modal-body">
+            <app-bezbednosni-dokument-dodavanje (messageEvent)="reciveMessage($event)"></app-bezbednosni-dokument-dodavanje>
+          </div>
+      </div>
+  </div>
+</div>

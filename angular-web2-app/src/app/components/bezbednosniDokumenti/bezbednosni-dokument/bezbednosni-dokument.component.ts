@@ -20,8 +20,6 @@ export class BezbednosniDokumentComponent implements OnInit {
   displayedColumns = ['idBezbednosnogDokumenta', 'Tip', 'Status', 'Ekipa', 'Detalji', 'Beleske', 'TelefonskiBroj', 'DatumKreiranja' ];
   //,'AllWorkOperationsCompleted', 'AllTagsRemoved', 'GroundingRemoved', 'ReadyForService'
 
-  showDodavanjeDokumenta:boolean = false;
-
   constructor(private bezbednosniDokumentService:BezbednosniDokumentService) {
     this.dataSource = new MatTableDataSource();
 
@@ -45,12 +43,7 @@ export class BezbednosniDokumentComponent implements OnInit {
     this.dataSource.filter = filterValue.value.trim().toLowerCase()
   }
 
-  showDodavanje() {
-    this.showDodavanjeDokumenta = !this.showDodavanjeDokumenta;
-  }
-
   reciveMessage($event:string) {
-    this.showDodavanjeDokumenta = !this.showDodavanjeDokumenta;
     console.log($event);
 
     setTimeout(() => {
