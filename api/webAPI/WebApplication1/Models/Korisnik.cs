@@ -15,8 +15,8 @@ namespace WebApplication1.Models
         public string Prezime { get; set; }
         public DateTime DatumRodenja { get; set; }
         public string Adresa { get; set; }
-        public int IdTipKorisnika { get; set; }
-        public int IdSlika { get; set; }
+        public string Tip { get; set; }
+        public string Slika { get; set; }
 
     }
 }

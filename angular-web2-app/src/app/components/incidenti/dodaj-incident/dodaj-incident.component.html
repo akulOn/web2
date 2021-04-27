@@ -2,7 +2,6 @@
     <div class="row">
         <div class="col-md-4">
             <div class="row btn-group-vertical w-100">
-                <button class="btn btn-block btn-dark" data-toggle="collapse" data-target="#dodajIncidentForm" aria-expanded="true" aria-controls="dodajIncidentForm">Bazicne informacije</button>
                 <button class="btn btn-block btn-dark" data-toggle="collapse" data-target="#opremaTable" aria-expanded="false" aria-controls="opremaTable">Tabela oprema</button>
                 <button class="btn btn-block btn-dark" data-toggle="collapse" data-target="#dodajResenjeForm" aria-expanded="false" aria-controls="dodajResenjeForm">Dodaj resenje</button>
                 <button class="btn btn-block btn-dark" data-toggle="collapse" data-target="#pozivTable" aria-expanded="false" aria-controls="pozivTable">Tabela poziv</button>
@@ -13,6 +12,7 @@
         </div>
         <div class="col">
             <div class="collapse show" id="dodajIncidentForm" data-parant="#accordion">
+                <h1>Prijavi incident</h1>
                 <form [formGroup]="dodajIncidentForm" (ngSubmit)="onSubmitIncident()">
                     <div class="row">
                         <div class="form-group col-md-6" style="text-align: center;">
@@ -76,7 +76,7 @@
                         </div>
             
                         <div class="form-group col-md-6" style="text-align: center;">
-                            <button [disabled]="!dodajIncidentForm.valid" class="btn btn-danger" type="submit">Prijavi Incident</button>
+                            <button [disabled]="!dodajIncidentForm.valid" class="btn btn-danger" type="submit" data-toggle="collapse" data-target="#dodajIncidentForm" aria-expanded="true" aria-controls="dodajIncidentForm">Prijavi Incident</button>
                         </div>
                     </div>
                     <div style="color: blueviolet;" *ngIf="dodajIncidentForm.status === 'INVALID'">
@@ -86,6 +86,7 @@
             </div>
 
             <div class="collapse" id="opremaTable" data-parent="#accordion">
+                <h1>Tabela opreme</h1>
                 <table class="table table-striped table-bordered table-sm">
                     <thead>
                         <th>IdOpreme</th>
@@ -103,7 +104,7 @@
                             <td>{{ item.Tip }}</td>
                             <td>{{ item.Kordinate}}</td>
                             <td>{{ item.Adresa}}</td>
-                            <td class="text-center align-middle"><input type="checkbox" (change)="addId(item.idOpreme)"></td>
+                            <td class="text-center align-middle"><input type="checkbox" (change)="addIdOpreme(item.idOpreme)"></td>
                             <td>
                                 <button class="btn btn-primary-outline w-100" >
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo" viewBox="0 0 16 16">
@@ -117,24 +118,25 @@
             </div>
 
             <div class="collapse" id="dodajResenjeForm" data-parent="#accordion">
+                <h1>Dodaj resenje</h1>
                 <form [formGroup]="dodajResenjeForm" (ngSubmit)="onSubmitResenje()">
-                    <div class="form-group" style="text-align: center;">
-                        <label for="uzrok">Uzrok</label>
+                    <div class="form-group">
+                        <label for="uzrok">Uzrok:</label>
                         <input required class="form-control" id="uzrok" type="text" formControlName="uzrok" placeholder="Ljudski faktor">
                     </div>
-                    <div class="form-group" style="text-align: center;">
-                        <label for="poduzrok">Poduzrok</label>
+                    <div class="form-group">
+                        <label for="poduzrok">Poduzrok:</label>
                         <input required class="form-control" id="poduzrok" type="text" formControlName="poduzrok" placeholder="Postavljena pogresna oprema">
                     </div>
-                    <div class="form-group" style="text-align: center;">
-                        <label for="tipKonstrukcije">Tip Konstrukcije</label>
+                    <div class="form-group">
+                        <label for="tipKonstrukcije">Tip konstrukcije:</label>
                         <select required id="tipKonstrukcije" class="form-control" formControlName="tipKonstrukcije">
                         <option>Podzemni</option>
                         <option>Nadzemni</option>
                         </select>
                     </div>
-                    <div class="form-group" style="text-align: center;">
-                        <label for="tipMaterijala">Tip Materijala</label>
+                    <div class="form-group">
+                        <label for="tipMaterijala">Tip materijala:</label>
                         <select required id="tipMaterijala" class="form-control" formControlName="tipMaterijala">
                         <option>Metal</option>
                         <option>Plastika</option>
@@ -145,13 +147,14 @@
                             Forma nije dobro popunjena.
                         </div>
                         <div class="col form-group" style="text-align: center;">
-                            <button [disabled]="!dodajResenjeForm.valid" class="btn btn-danger" type="submit">Dodaj Resenje</button>
+                            <button [disabled]="!dodajResenjeForm.valid" class="btn btn-danger" type="submit">Dodaj resenje</button>
                         </div>
                     </div>
                 </form>
             </div>
             
             <div class="collapse" id="pozivTable" data-parent="#accordion">
+                <h1>Tabela poziva</h1>
                 <table class="table table-striped table-bordered table-sm">
                     <thead>
                         <th>IdPoziva</th>
@@ -175,27 +178,65 @@
             </div>
             
             <div class="collapse" id="dodajPozivForm" data-parent="#accordion">
-                <form [formGroup]="dodajPozivForm">
-                    <div class="form-group" style="text-align: center;">
-                        <label for="razlog">Razlog</label>
-                        <input required class="form-control" id="razlog" type="text" formControlName="razlog" placeholder="Nema struje">
+                <h1>Dodaj poziv</h1>
+                <form [formGroup]="dodajPozivForm" (ngSubmit)="onSubmitPoziv()">
+                    <div class="form-group">
+                        <label for="razlog">Razlog:</label>
+                        <select required class="form-control" id="razlog" formControlName="razlog">
+                              <option>Nema struje</option>
+                              <option>Postoji kvar</option>
+                              <option>Treperenja svetla</option>
+                              <option>Povratak struje</option>
+                              <option>Delimicna struja</option>
+                              <option>Problem s naponom</option>
+                        </select>
                     </div>
-                    <div class="form-group" style="text-align: center;">
-                        <label for="komentar">Komentar</label>
+                    <div class="form-group">
+                        <label for="komentar">Komentar:</label>
                         <input class="form-control" id="komentar" type="text" formControlName="komentar" placeholder="Potrosac je bez struje">
                     </div>
-                    <div class="form-group" style="text-align: center;">
-                        <label for="kvar">Kvar</label>
+                    <div class="form-group">
+                        <label for="kvar">Kvar:</label>
                         <input required class="form-control" id="kvar" type="kvar" formControlName="kvar">
                     </div>
-                    <div class="form-group" style="text-align: center;">
-                        <label for="idPotrosaca">Potrosac</label>
-                        <input class="form-control" id="idPotrosaca" type="number" formControlName="idPotrosaca">
+                    <div class="row">
+                        <div class="col" style="color: blueviolet;" *ngIf="dodajPozivForm.status === 'INVALID'">
+                            Forma nije dobro popunjena.
+                        </div>
+                        <div class="col form-group" style="text-align: center;">
+                            <button [disabled]="!dodajPozivForm.valid" class="btn btn-danger" type="submit">Dodaj poziv</button>
+                        </div>
                     </div>
                 </form>
+                <table class="table table-striped table-bordered table-sm">
+                    <thead>
+                        <th>Korisnicko ime</th>
+                        <th>Email</th>
+                        <th>Ime</th>
+                        <th>Prezime</th>
+                        <th>Dodeli Incident</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of Potrosaci">
+                            <td>{{ item.KorisnickoIme }}</td>
+                            <td>{{ item.Email }}</td>
+                            <td>{{ item.Ime }}</td>
+                            <td>{{ item.Prezime }}</td>
+                            <td>
+                                <button class="btn btn-primary-outline w-100" (click)="addPotrosacToPoziv(item.idKorisnika)">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-award" viewBox="0 0 16 16">
+                                        <path d="M9.669.864 8 0 6.331.864l-1.858.282-.842 1.68-1.337 1.32L2.6 6l-.306 1.854 1.337 1.32.842 1.68 1.858.282L8 12l1.669-.864 1.858-.282.842-1.68 1.337-1.32L13.4 6l.306-1.854-1.337-1.32-.842-1.68L9.669.864zm1.196 1.193.684 1.365 1.086 1.072L12.387 6l.248 1.506-1.086 1.072-.684 1.365-1.51.229L8 10.874l-1.355-.702-1.51-.229-.684-1.365-1.086-1.072L3.614 6l-.25-1.506 1.087-1.072.684-1.365 1.51-.229L8 1.126l1.356.702 1.509.229z"/>
+                                        <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/>
+                                      </svg>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             
             <div class="collapse" id="ekipaTable" data-parent="#accordion">
+                <h1>Tabela ekipa</h1>
                 <table class="table table-striped table-bordered table-sm">
                     <thead>
                         <th>IdEkipe</th>
@@ -220,10 +261,10 @@
             </div>
             
             <div class="collapse" id="slika" data-parent="#accordion">
-                <input type="file" (change)="onFileSelected($event)">
-                <button type="button" (click)="OnUpload()">Upload</button>
+                <h1>Dodaj sliku</h1>
+                <input type="file" class="btn btn-secondary btn-sm" (change)="onFileSelected($event)">
+                <button type="button" class="btn btn-primary btn-sm" (click)="OnUpload()" style="margin-left: 5px;">Upload</button>
             </div>
-            
         </div>
         
     </div>

@@ -41,7 +41,7 @@ namespace WebApplication1.Controllers
 
         [Route("api/Korisnik/GetAll")]
         [HttpGet]
-        public HttpResponseMessage GetAll() // zapravo je GetAll
+        public HttpResponseMessage GetAll()
         {
             // trebalo bi da se radi sa procedrama na bazi, nije dobro da ovde direktno kucam SQL upite
             string procedure = "dbo.GetAllKorisnik";
@@ -51,19 +51,59 @@ namespace WebApplication1.Controllers
             {
                 using (var command = new SqlCommand(procedure, connection))
                 {
-                    command.CommandType = CommandType.StoredProcedure;
-
                     // 3. add parameter to command, which will be passed to the stored procedure
                     // command.Parameters.Add(new SqlParameter("@CustomerID", custId));
 
                     using (var adapter = new SqlDataAdapter(command))
                     {
+                        command.CommandType = CommandType.StoredProcedure;
                         adapter.Fill(table);
                     }
                 }
             }
             return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
         }
+
+        [Route("api/Korisnik/GetAllPotrosaci")]
+        [HttpGet]
+        public HttpResponseMessage GetAllPotrosaci()
+        {
+            string query = @"                    
+                        select 
+		                    k.idKorisnika,
+		                    k.KorisnickoIme,
+		                    k.Email,
+		                    k.Lozinka,
+		                    k.Ime,
+		                    k.Prezime,
+		                    k.DatumRodenja,
+		                    k.Adresa,
+		                    tk.Naziv as Tip,
+		                    s.Putanja as Slika
+	                    from Korisnik k
+		                    left join TipKorisnika tk on k.idTipKorisnika = tk.idTipKorisnika
+		                    left join Slika s on k.idSlike = s.idSlike
+                        where k.idTipKorisnika = 3"
+                        ;
+            DataTable table = new DataTable();
+
+            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
+            {
+                using (var command = new SqlCommand(query, connection))
+                {
+                    // 3. add parameter to command, which will be passed to the stored procedure
+                    // command.Parameters.Add(new SqlParameter("@CustomerID", custId));
+
+                    using (var adapter = new SqlDataAdapter(command))
+                    {
+                        command.CommandType = CommandType.Text;
+                        adapter.Fill(table);
+                    }
+                }
+            }
+            return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
+        }
+
         [HttpPost]
         public HttpResponseMessage Post(Korisnik korisnik) // ako dodas vec postojeceg korisnika nece baciti error, ali nece ga dodati u bazu
         {
@@ -79,15 +119,15 @@ namespace WebApplication1.Controllers
 
                         // 3. add parameter to command, which will be passed to the stored procedure
                         command.Parameters.Add(new SqlParameter("@idKorisnika", korisnik.IdKorisnika));
-                        command.Parameters.Add(new SqlParameter("@korisnickoIme", korisnik.KorisnickoIme));
-                        command.Parameters.Add(new SqlParameter("@email", korisnik.Email));
-                        command.Parameters.Add(new SqlParameter("@lozinka", korisnik.Lozinka));
-                        command.Parameters.Add(new SqlParameter("@ime", korisnik.Ime));
-                        command.Parameters.Add(new SqlParameter("@prezime", korisnik.Prezime));
-                        command.Parameters.Add(new SqlParameter("@datumRodenja", korisnik.DatumRodenja));
-                        command.Parameters.Add(new SqlParameter("@adresa", korisnik.Adresa));
-                        command.Parameters.Add(new SqlParameter("@idTipKorisnika", korisnik.IdTipKorisnika));
-                        command.Parameters.Add(new SqlParameter("@idSlika", korisnik.IdSlika));
+                        command.Parameters.Add(new SqlParameter("@KorisnickoIme", korisnik.KorisnickoIme));
+                        command.Parameters.Add(new SqlParameter("@Email", korisnik.Email));
+                        command.Parameters.Add(new SqlParameter("@Lozinka", korisnik.Lozinka));
+                        command.Parameters.Add(new SqlParameter("@Ime", korisnik.Ime));
+                        command.Parameters.Add(new SqlParameter("@Prezime", korisnik.Prezime));
+                        command.Parameters.Add(new SqlParameter("@DatumRodenja", korisnik.DatumRodenja));
+                        command.Parameters.Add(new SqlParameter("@Adresa", korisnik.Adresa));
+                        command.Parameters.Add(new SqlParameter("@Tip", korisnik.Tip));
+                        command.Parameters.Add(new SqlParameter("@Slika", korisnik.Slika));
 
                         using (var adapter = new SqlDataAdapter(command))
                         {
@@ -103,6 +143,7 @@ namespace WebApplication1.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
         }
+
         [HttpPut]
         public HttpResponseMessage Put(Korisnik korisnik) // nece baciti error ako korisnik ne postoji u bazi
         {
@@ -118,15 +159,15 @@ namespace WebApplication1.Controllers
 
                         // 3. add parameter to command, which will be passed to the stored procedure
                         command.Parameters.Add(new SqlParameter("@idKorisnika", korisnik.IdKorisnika));
-                        command.Parameters.Add(new SqlParameter("@korisnickoIme", korisnik.KorisnickoIme));
-                        command.Parameters.Add(new SqlParameter("@email", korisnik.Email));
-                        command.Parameters.Add(new SqlParameter("@lozinka", korisnik.Lozinka));
-                        command.Parameters.Add(new SqlParameter("@ime", korisnik.Ime));
-                        command.Parameters.Add(new SqlParameter("@prezime", korisnik.Prezime));
-                        command.Parameters.Add(new SqlParameter("@datumRodenja", korisnik.DatumRodenja));
-                        command.Parameters.Add(new SqlParameter("@adresa", korisnik.Adresa));
-                        command.Parameters.Add(new SqlParameter("@idTipKorisnika", korisnik.IdTipKorisnika));
-                        command.Parameters.Add(new SqlParameter("@idSlika", korisnik.IdSlika));
+                        command.Parameters.Add(new SqlParameter("@KorisnickoIme", korisnik.KorisnickoIme));
+                        command.Parameters.Add(new SqlParameter("@Email", korisnik.Email));
+                        command.Parameters.Add(new SqlParameter("@Lozinka", korisnik.Lozinka));
+                        command.Parameters.Add(new SqlParameter("@Ime", korisnik.Ime));
+                        command.Parameters.Add(new SqlParameter("@Prezime", korisnik.Prezime));
+                        command.Parameters.Add(new SqlParameter("@DatumRodenja", korisnik.DatumRodenja));
+                        command.Parameters.Add(new SqlParameter("@Adresa", korisnik.Adresa));
+                        command.Parameters.Add(new SqlParameter("@idTipKorisnika", korisnik.Tip));
+                        command.Parameters.Add(new SqlParameter("@idSlika", korisnik.Slika));
 
                         using (var adapter = new SqlDataAdapter(command))
                         {
@@ -142,6 +183,7 @@ namespace WebApplication1.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
         }
+
         [HttpDelete]
         public HttpResponseMessage Delete(int id) // prolazi ako ne postoji korisnik
         {

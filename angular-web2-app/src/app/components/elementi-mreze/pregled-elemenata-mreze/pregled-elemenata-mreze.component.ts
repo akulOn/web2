@@ -66,11 +66,9 @@ export class PregledElemenataMrezeComponent implements OnInit {
   reciveMessage($event:string) {
     console.log($event);
 
-    setTimeout(() => {
-      this.opremaService.getAllOprema().subscribe((data:Oprema[]) => {
-        this.dataSource.data = data
-        console.log(data)
-      });
-    }, 250); // cekaj 0.250 sekundi
+    this.opremaService.getAllOprema().subscribe((data:Oprema[]) => {
+      this.dataSource.data = data
+      console.log(data)
+    });
   }
 }

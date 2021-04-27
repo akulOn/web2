@@ -1,15 +1,15 @@
 export class Poziv {
-    IdPoziva:number;
-    IdRazloga:number;
+    idPoziva:number;
+    Razlog:string;
     Komentar:string;
     Kvar:string;
-    IdTipPotrosaca:number;
+    idPotrosaca:number;
 
-    constructor(IdPoziva:number, IdRazloga:number, Komentar:string, Kvar:string, IdTipPotrosaca:number){
-        this.IdPoziva = IdPoziva;
-        this.IdRazloga = IdRazloga;
+    constructor(idPoziva:number, Razlog:string, Komentar:string, Kvar:string, idPotrosaca:number){
+        this.idPoziva = idPoziva;
+        this.Razlog = Razlog;
         this.Komentar = Komentar;
         this.Kvar = Kvar;
-        this.IdTipPotrosaca = IdTipPotrosaca;
+        this.idPotrosaca = idPotrosaca;
     }
 }

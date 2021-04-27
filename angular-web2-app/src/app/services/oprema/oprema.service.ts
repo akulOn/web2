@@ -40,4 +40,8 @@ export class OpremaService {
   updateOprema(oprema:Oprema){
     return this.http.put<Oprema>(this.APIUrl + "/Oprema/", oprema);
   }
+
+  addPozivToOprema(idOpreme:number[], idPoziva:number){
+    return this.http.post<Oprema>(this.APIUrl + "/Oprema/DodajPoziv", {idOpreme, idPoziva});
+  }
 }

@@ -200,23 +200,29 @@ namespace WebApplication1.Controllers
         [Route("api/Oprema/DodajPoziv")]
         [HttpPost]
         public HttpResponseMessage DodajPoziv(OpremaPoziv opremaPoziv)
-        {
-            string query = @"
-                    insert into OpremaPoziv values (" + opremaPoziv.IdOpreme + "," + opremaPoziv.IdPoziva + ")"
-                    ;
+        {   
             DataTable table = new DataTable();
             try
             {
                 using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
                 {
-                    using (var command = new SqlCommand(query, connection))
+                    foreach (int item in opremaPoziv.IdOpreme)
                     {
-                        using (var adapter = new SqlDataAdapter(command))
+                        string query = @"
+                                if not exists(select * from OpremaPoziv where idOpreme = " + item + " and idPoziva = " + opremaPoziv.IdPoziva + ")" +
+                                    "insert into OpremaPoziv values (" + item + "," + opremaPoziv.IdPoziva + ")"
+                                    ;
+
+                        using (var command = new SqlCommand(query, connection))
                         {
-                            command.CommandType = CommandType.Text;
-                            adapter.Fill(table);
+                            using (var adapter = new SqlDataAdapter(command))
+                            {
+                                command.CommandType = CommandType.Text;
+                                adapter.Fill(table);
+                            }
                         }
                     }
+                    
                 }
                 return Request.CreateResponse(System.Net.HttpStatusCode.OK);
             }

@@ -12,15 +12,15 @@ export class PozivService {
 
   constructor(private http:HttpClient) {  }
 
-  getAllPozivi():Observable<Poziv>{
-    return this.http.get<Poziv>(this.APIUrl + "/Poziv/GetAll");
+  getAllPozivi():Observable<Poziv[]>{
+    return this.http.get<Poziv[]>(this.APIUrl + "/Poziv/GetAll");
   }
 
-  getPoziv(id:number){
-    return this.http.get<Poziv>(this.APIUrl + "/Poziv/" + id);
+  getPoziv(id:number):Observable<Poziv[]>{
+    return this.http.get<Poziv[]>(this.APIUrl + "/Poziv/" + id);
   }
 
-  addPoziv(poziv:Poziv){
-    return this.http.post(this.APIUrl + "/Poziv/", poziv);
+  addPoziv(poziv:Poziv):Observable<Poziv[]>{
+    return this.http.post<Poziv[]>(this.APIUrl + "/Poziv/", poziv);
   }
 }

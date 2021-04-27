@@ -37,10 +37,11 @@ export class UredenjeElemenataMrezeComponent implements OnInit {
   }
 
   onSubmitOprema() {
-    this.messageEvent.emit("Uspesno ste uredili element! " + this.Oprema[0].idOpreme);
-
     let temp:Oprema = new Oprema(this.Oprema[0].idOpreme, this.Oprema[0].Naziv, this.Oprema[0].Tip, this.urediOpremuForm.value.Kordinate, this.urediOpremuForm.value.Adresa);
     console.warn('Uredili ste opremu!', temp);
-    this.opremaService.updateOprema(temp).subscribe() // server odgovara, mogu da uzmem odgovor sa lambda
+    
+    this.opremaService.updateOprema(temp).subscribe(data => {
+      this.messageEvent.emit("Uspesno ste uredili element! " + this.Oprema[0].idOpreme);
+    }); // server odgovara, mogu da uzmem odgovor sa lambda
   }
 }

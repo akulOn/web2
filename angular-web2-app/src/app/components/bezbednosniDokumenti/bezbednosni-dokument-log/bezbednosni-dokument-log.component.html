@@ -1,42 +1,40 @@
-<div class="mat-elevation-z8 data-table">    
-  <h1 style="text-align: center;">Istorijat</h1>
+<h1>Istorijat</h1>
 
-    <table mat-table matSort aria-label="Elements" class="table table-bordered table-hover">
-      <!-- Id Column -->
-      <ng-container matColumnDef="idBezbednosnogDokumenta">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Id bezbednosnog dokumenta</p></th>
-        <td mat-cell *matCellDef="let row">{{row.idBezbednosnogDokumenta | number}}</td>
-      </ng-container>
+<table mat-table matSort aria-label="Elements" class="table table-bordered table-hover">
+  <!-- Id Column -->
+  <ng-container matColumnDef="idBezbednosnogDokumenta">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Id bezbednosnog dokumenta</p></th>
+    <td mat-cell *matCellDef="let row">{{row.idBezbednosnogDokumenta | number}}</td>
+  </ng-container>
 
-       <!-- Status Column -->
-       <ng-container matColumnDef="Status">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Status</p></th>
-        <td mat-cell *matCellDef="let row">{{row.Status}}</td>
-      </ng-container>
+    <!-- Status Column -->
+    <ng-container matColumnDef="Status">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Status</p></th>
+    <td mat-cell *matCellDef="let row">{{row.Status}}</td>
+  </ng-container>
 
-      <!-- DatumPromene Column -->
-      <ng-container matColumnDef="DatumPromene">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Datum promene</p></th>
-        <td mat-cell *matCellDef="let row">{{row.DatumPromene | date}}</td>
-      </ng-container>
+  <!-- DatumPromene Column -->
+  <ng-container matColumnDef="DatumPromene">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header><p>Datum promene</p></th>
+    <td mat-cell *matCellDef="let row">{{row.DatumPromene | date}}</td>
+  </ng-container>
 
-      <ng-container matColumnDef="actions">
-        <th mat-header-cell  *matHeaderCellDef > &nbsp; </th>
-        <td mat-cell *matCellDef="let row" >
-            <select (change)="selectOption($event.target!, row.idBezbednosnogDokumenta, row.Status)">
-                <option [value]="item.id" *ngFor="let item of items">{{item.status}}</option>
-            </select>
-        </td>
-      </ng-container>
+  <ng-container matColumnDef="actions">
+    <th mat-header-cell  *matHeaderCellDef > &nbsp; </th>
+    <td mat-cell *matCellDef="let row" >
+        <select (change)="selectOption($event.target!, row.idBezbednosnogDokumenta, row.Status)">
+            <option [value]="item.id" *ngFor="let item of items">{{item.status}}</option>
+        </select>
+    </td>
+  </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  
-    <mat-paginator #paginator
-        [length]="dataSource?.data?.length"
-        [pageIndex]="0"
-        [pageSize]="10"
-        [pageSizeOptions]="[5, 10, 20]">
-    </mat-paginator>
-  </div>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<mat-paginator #paginator
+    [length]="dataSource?.data?.length"
+    [pageIndex]="0"
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 20]">
+</mat-paginator>

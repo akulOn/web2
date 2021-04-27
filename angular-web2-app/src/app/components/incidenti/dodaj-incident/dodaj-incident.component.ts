@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, ValidatorFn, Validators } from "@angular/forms";
 import { Incident } from 'src/app/entities/incident/incident';
+import { Poziv } from 'src/app/entities/poziv/poziv';
 import { Resenje } from 'src/app/entities/resenje/resenje';
 import { EkipaService } from 'src/app/services/ekipa/ekipa.service';
 import { IncidentService } from "src/app/services/incident/incident.service";
+import { KorisnikService } from 'src/app/services/korisnik/korisnik.service';
 import { OpremaService } from 'src/app/services/oprema/oprema.service';
 import { PozivService } from 'src/app/services/poziv/poziv.service';
 import { ResenjeService } from 'src/app/services/resenje/resenje.service';
@@ -39,19 +41,21 @@ export class DodajIncidentComponent implements OnInit {
   });
 
   dodajPozivForm = this.formBuilder.group({
-    razlog: ['', Validators.required],
+    razlog: ['Nema struje', Validators.required],
     komentar: [''],
-    kvar: ['', Validators.required],
-    idPotrosaca: ['']
+    kvar: ['', Validators.required]
   })
 
   Incident:any;
   Resenje:any;
 
+  Potrosaci:any = [];
   Oprema:any = [];
   Pozivi:any = [];
   Ekipe:any = [];
+
   opremaIncident:number[] = []; // oprema koja se treba dodati treuntnom incidentu
+  idPotrosaca!:number; // potrosac koji je izabran kod poziva
 
   izabranaSlika!:File;
 
@@ -61,7 +65,8 @@ export class DodajIncidentComponent implements OnInit {
     private opremaService:OpremaService,
     private pozivService:PozivService,
     private ekipaService:EkipaService,
-    private resenjeService:ResenjeService
+    private resenjeService:ResenjeService,
+    private korisnikService:KorisnikService
     ) { }
 
   ngOnInit(): void {
@@ -73,10 +78,18 @@ export class DodajIncidentComponent implements OnInit {
 
     this.ekipaService.getAllEkipe().subscribe(data => {
       this.Ekipe = data
-    })
+    });
+
+    this.ekipaService.getAllEkipe().subscribe(data => {
+      this.Ekipe = data
+    });
+
+    this.korisnikService.getAllPotrosaci().subscribe(data => {
+      this.Potrosaci = data
+    });
   }
 
-  onSubmitIncident(){
+  onSubmitIncident() {
     // tu se moze pokupiti id trenutno logovanog korisnika
     console.warn('Dodali ste incident!', this.dodajIncidentForm.value);
 
@@ -85,7 +98,7 @@ export class DodajIncidentComponent implements OnInit {
     }) // server odgovara, mogu da uzmem odgovor sa lambda
   }
 
-  onSubmitResenje(){
+  onSubmitResenje() {
     if(this.Incident === -1)
       alert("Morate prvo da dodate Incident da bi mogli da dodate resenje!");
     else if (this.Resenje == null)
@@ -106,14 +119,41 @@ export class DodajIncidentComponent implements OnInit {
     }
   }
 
-  addEkipaToIncident(idEkipe:number){
+  onSubmitPoziv() {
+    if(this.Incident === -1)
+    {
+      alert("Morate prvo da dodate Incident da bi mogli da dodate pozive!");
+      return;
+    }
+    if(this.opremaIncident == [])
+    {
+      alert("Morate prvo da izaberete opremu da bi dodali pozive!");
+      return;
+    }    
+
+    this.pozivService.addPoziv(new Poziv(0 /* nebitno */, this.dodajPozivForm.value.razlog, this.dodajPozivForm.value.komentar, this.dodajPozivForm.value.kvar, this.idPotrosaca)).subscribe(data => {
+      console.log(data[0]);
+      
+      this.opremaService.addPozivToOprema(this.opremaIncident, data[0].idPoziva).subscribe();
+    });
+  }
+
+  addPotrosacToPoziv(id:number) {
+    this.idPotrosaca = id;
+
+    this.korisnikService.getKorisnik(this.idPotrosaca).subscribe(data => {
+      alert("Potrosaca:  " + data[0].KorisnickoIme + " ste izabrali da dodeli poziv");
+    });
+  }
+
+  addEkipaToIncident(idEkipe:number) {
     if(this.Incident === -1)
       alert("Morate prvo da dodate Incident da bi mogli da dodate ekipu!");
     else
       this.incidentService.addEkipaToIncident(this.Incident[0].idIncidenta, idEkipe).subscribe()
   }
 
-  addId(id:number){
+  addIdOpreme(id:number) {
     if(this.Incident === -1)
     {
       alert("Morate prvo da dodate Incident da bi mogli da dodate opremu!");

@@ -22,10 +22,10 @@ export class DodajElementMrezeComponent implements OnInit {
   }
 
   onSubmitOprema() {
-    this.messageEvent.emit("Uspesno ste dodali element!");
-
     console.warn('Dodali ste opremu!', this.dodajOpremuForm.value);
 
-    this.opremaService.addOprema(this.dodajOpremuForm.value).subscribe() // server odgovara, mogu da uzmem odgovor sa lambda
+    this.opremaService.addOprema(this.dodajOpremuForm.value).subscribe(data => {
+      this.messageEvent.emit("Uspesno ste dodali element!");
+    }) // server odgovara, mogu da uzmem odgovor sa lambda
   }
 }

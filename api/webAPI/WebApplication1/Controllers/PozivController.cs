@@ -70,10 +70,10 @@ namespace WebApplication1.Controllers
                     using (var command = new SqlCommand(procedure, connection))
                     {
                         // 3. add parameter to command, which will be passed to the stored procedure
-                        command.Parameters.Add(new SqlParameter("@idRazloga", poziv.IdRazloga));
-                        command.Parameters.Add(new SqlParameter("@komentar", poziv.Komentar));
-                        command.Parameters.Add(new SqlParameter("@kvar", poziv.Kvar));
-                        command.Parameters.Add(new SqlParameter("@idPotrosaca", poziv.IdPotrosaca));
+                        command.Parameters.Add(new SqlParameter("@Razlog", poziv.Razlog));
+                        command.Parameters.Add(new SqlParameter("@Komentar", poziv.Komentar));
+                        command.Parameters.Add(new SqlParameter("@Kvar", poziv.Kvar));
+                        command.Parameters.Add(new SqlParameter("@idPotrosaca", poziv.idPotrosaca));
 
                         using (var adapter = new SqlDataAdapter(command))
                         {
@@ -82,7 +82,7 @@ namespace WebApplication1.Controllers
                         }
                     }
                 }
-                return Request.CreateResponse(System.Net.HttpStatusCode.OK);
+                return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
             }
             catch (Exception e)
             {

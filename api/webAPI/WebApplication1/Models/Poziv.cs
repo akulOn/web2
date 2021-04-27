@@ -7,10 +7,10 @@ namespace WebApplication1.Models
 {
     public class Poziv
     {
-        public int IdPoziva { get; set; }
-        public int IdRazloga { get; set; }
+        public int idPoziva { get; set; }
+        public string Razlog { get; set; }
         public string Komentar { get; set; }
         public string Kvar { get; set; }
-        public string IdPotrosaca { get; set; }
+        public int idPotrosaca { get; set; }
     }
 }
