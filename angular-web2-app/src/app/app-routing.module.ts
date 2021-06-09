@@ -6,13 +6,15 @@ import { NeRegistrovanComponent } from './components/neRegistrovan/ne-registrova
 import { DodajIncidentComponent } from "./components/incidenti/dodaj-incident/dodaj-incident.component";
 import { BezbednosniDokumentComponent } from './components/bezbednosniDokumenti/bezbednosni-dokument/bezbednosni-dokument.component';
 import { PregledElemenataMrezeComponent } from './components/elementi-mreze/pregled-elemenata-mreze/pregled-elemenata-mreze.component';
+import { MojProfilComponent } from './components/moj-profil/moj-profil.component';
 
 const routes: Routes = [
   { path : 'incidenti', component: IncidentiComponent },
   { path : 'neReg', component: NeRegistrovanComponent },
   { path : 'dodaj-incident', component: DodajIncidentComponent },
   { path : 'bezbednosni-dokumenti', component: BezbednosniDokumentComponent },
-  { path : 'elementi-mreze', component: PregledElemenataMrezeComponent }
+  { path : 'elementi-mreze', component: PregledElemenataMrezeComponent },
+  { path : 'moj-profil', component: MojProfilComponent }
 ];
 
 @NgModule({

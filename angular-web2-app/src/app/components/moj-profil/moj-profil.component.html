@@ -1,0 +1,69 @@
+<div class="mat-elevation-z8 data-table">
+    <h1>Izmeni moj profil</h1>
+    <div class="d-flex flex-nowrap" style="margin-bottom: 20px;">
+        <!-- <form [formGroup]="izmenaProfila">
+            <label>Korisničko ime:</label>
+
+        </form> -->
+        <table>
+            <tr>
+                <td>
+                    <label>Korisničko ime:</label>
+                </td>
+                <td>        
+                    <input type="text">   
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Email:</label>      
+                </td>
+                <td>        
+                    <input type="email">                   
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Ime:</label>
+                </td>
+                <td>        
+                    <input type="text">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Prezime:</label>
+                </td>
+                <td>        
+                    <input type="text">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Adresa:</label>
+                </td>
+                <td>        
+                    <input type="text">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Tip korisnika:</label>
+                </td>
+                <td>
+                    <select required id="Tip" class="form-control" formControlName="Tip">
+                        <option>Član ekipe</option>
+                        <option>Dispečer</option>
+                        <option>Radnik</option>
+                        <option>Potrošač</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit" class="btn btn-primary">Izmeni</button>
+                </td>
+            </tr>
+        </table>              
+    </div>
+</div>
