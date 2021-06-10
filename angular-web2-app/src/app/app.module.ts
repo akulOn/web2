@@ -55,7 +55,7 @@ const materialModules = [
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    materialModules
+    materialModules,
   ],
   providers: [],
   bootstrap: [AppComponent],
