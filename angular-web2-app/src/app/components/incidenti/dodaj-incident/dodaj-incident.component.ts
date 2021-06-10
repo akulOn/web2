@@ -162,6 +162,8 @@ export class DodajIncidentComponent implements OnInit {
 
     if(!this.opremaIncident.includes(id))
     {
+      alert("Dodali ste opremu id: " + id +" incidentu!");
+
       this.opremaIncident.push(id);
       this.opremaService.getAllPoziviVezaniZaOpremu(id).subscribe(data => {
         data.forEach(x => this.Pozivi.push(x));
@@ -171,6 +173,8 @@ export class DodajIncidentComponent implements OnInit {
     }
     else
     {
+      alert("Izbacili ste opremu id: " + id +" sa incidenta!");
+
       this.opremaIncident.splice(this.opremaIncident.indexOf(id), 1);
 
       this.opremaService.getAllPoziviVezaniZaOpremu(id).subscribe(data => {

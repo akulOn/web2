@@ -77,6 +77,30 @@ namespace WebApplication1.Controllers
             return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
         }
 
+        [Route("api/Incident/Korisnik/{id}")]
+        [HttpGet]
+        public HttpResponseMessage GetKorisnik(int id)
+        {
+            // trebalo bi da se radi sa procedrama na bazi, nije dobro da ovde direktno kucam SQL upite
+            string query = @"
+                    select * from Incident where idKorisnika = " + id
+                    ;
+            DataTable table = new DataTable();
+
+            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
+            {
+                using (var command = new SqlCommand(query, connection))
+                {
+                    using (var adapter = new SqlDataAdapter(command))
+                    {
+                        command.CommandType = CommandType.Text;
+                        adapter.Fill(table);
+                    }
+                }
+            }
+            return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
+        }
+
         [HttpPost]
         public HttpResponseMessage Post(Incident incident)
         {

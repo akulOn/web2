@@ -96,6 +96,48 @@ namespace WebApplication1.Controllers
             return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
         }
 
+        [Route("api/BezbednosniDokument/Korisnik/{id}")]
+        [HttpGet]
+        public HttpResponseMessage GetKorisnik(int id)
+        {
+            // trebalo bi da se radi sa procedrama na bazi, nije dobro da ovde direktno kucam SQL upite
+            string query = @"
+                    select 
+	                    bd.idBezbednosnogDokumenta,
+	                    td.Naziv as Tip,
+	                    sd.Naziv as Status,
+	                    e.Naziv as Ekipa,
+	                    --bd.idKorisnika,
+	                    bd.Detalji,
+	                    bd.Beleske,
+	                    bd.TelefonskiBroj,
+	                    bd.DatumKreiranja,
+	                    bd.AllWorkOperationsCompleted,
+	                    bd.AllTagsRemoved,
+	                    bd.GroundingRemoved,
+	                    bd.ReadyForService
+                    from BezbednosniDokument bd
+	                    join TipDokumenta td on bd.idTipDokumenta = td.idTipDokumenta
+	                    join StatusDokumenta sd on bd.idStatusDokumenta = sd.idStatusDokumenta
+	                    join Ekipa e on bd.idEkipe = e.idEkipe
+                    where bd.idKorisnika = " + id
+                        ;
+            DataTable table = new DataTable();
+
+            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
+            {
+                using (var command = new SqlCommand(query, connection))
+                {
+                    using (var adapter = new SqlDataAdapter(command))
+                    {
+                        command.CommandType = CommandType.Text;
+                        adapter.Fill(table);
+                    }
+                }
+            }
+            return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
+        }
+
         [HttpPost]
         public HttpResponseMessage Post(BezbednosniDokument bezbednosniDokument)
         {

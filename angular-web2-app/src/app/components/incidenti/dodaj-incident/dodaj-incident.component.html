@@ -1,4 +1,4 @@
-<div class="container" style="margin-top: 55px;" id="accordion">
+<div class="container" style="margin-top: 100px;" id="accordion">
     <div class="row">
         <div class="col-md-4">
             <div class="row btn-group-vertical w-100">
@@ -104,7 +104,9 @@
                             <td>{{ item.Tip }}</td>
                             <td>{{ item.Kordinate}}</td>
                             <td>{{ item.Adresa}}</td>
-                            <td class="text-center align-middle"><input type="checkbox" (change)="addIdOpreme(item.idOpreme)"></td>
+                            <td>
+                                <input class="btn btn-primary" type="button" (click)="addIdOpreme(item.idOpreme)" value="Klik!">
+                            </td>
                             <td>
                                 <button class="btn btn-primary-outline w-100" >
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-geo" viewBox="0 0 16 16">
@@ -266,6 +268,8 @@
                 <button type="button" class="btn btn-primary btn-sm" (click)="OnUpload()" style="margin-left: 5px;">Upload</button>
             </div>
         </div>
-        
+    </div>
+    <div class="row">
+        <button class="btn btn-danger"routerLink='/neReg'>Kraj</button>
     </div>
 </div>
