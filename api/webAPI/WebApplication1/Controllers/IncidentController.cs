@@ -59,7 +59,24 @@ namespace WebApplication1.Controllers
         {
             // trebalo bi da se radi sa procedrama na bazi, nije dobro da ovde direktno kucam SQL upite
             string query = @"
-                    select * from Incident where idIncidenta = " + id
+                    select 
+	                    idIncidenta,
+	                    ti.Naziv as NazivTipIncidenta,
+	                    Prioritet,
+	                    Potvrdjen,
+	                    si.Naziv as NazivStatusaIncidenta,
+	                    ETA,
+	                    ATA,
+	                    ETR,
+	                    AfektovaniPotrosaci,
+	                    Pozivi,
+	                    NivoNapona,
+	                    PlaniranoVremeRada,
+	                    idKorisnika
+                    from Incident i
+	                    join TipIncidenta ti on i.idTipIncidenta = ti.idTipIncidenta
+	                    join StatusIncidenta si on i.idStatusIncidenta = si.idStatusIncidenta
+                    where idIncidenta = " + id
                     ;
             DataTable table = new DataTable();
 
@@ -83,7 +100,24 @@ namespace WebApplication1.Controllers
         {
             // trebalo bi da se radi sa procedrama na bazi, nije dobro da ovde direktno kucam SQL upite
             string query = @"
-                    select * from Incident where idKorisnika = " + id
+                    select 
+	                    idIncidenta,
+	                    ti.Naziv as NazivTipIncidenta,
+	                    Prioritet,
+	                    Potvrdjen,
+	                    si.Naziv as NazivStatusaIncidenta,
+	                    ETA,
+	                    ATA,
+	                    ETR,
+	                    AfektovaniPotrosaci,
+	                    Pozivi,
+	                    NivoNapona,
+	                    PlaniranoVremeRada,
+	                    idKorisnika
+                    from Incident i
+	                    join TipIncidenta ti on i.idTipIncidenta = ti.idTipIncidenta
+	                    join StatusIncidenta si on i.idStatusIncidenta = si.idStatusIncidenta
+                    where idKorisnika = " + id
                     ;
             DataTable table = new DataTable();
 

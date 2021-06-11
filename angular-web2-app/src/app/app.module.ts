@@ -24,7 +24,7 @@ import { PregledElemenataMrezeComponent } from './components/elementi-mreze/preg
 import { UredenjeElemenataMrezeComponent } from './components/elementi-mreze/uredenje-elemenata-mreze/uredenje-elemenata-mreze.component';
 import { BezbednosniDokumentDodavanjeComponent } from './components/bezbednosniDokumenti/bezbednosni-dokument-dodavanje/bezbednosni-dokument-dodavanje.component';
 import { MojProfilComponent } from './components/moj-profil/moj-profil.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 const materialModules = [
   MatTableModule,
@@ -47,7 +47,7 @@ const materialModules = [
     UredenjeElemenataMrezeComponent,
     BezbednosniDokumentDodavanjeComponent,
     MojProfilComponent,
-    DashboardComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,

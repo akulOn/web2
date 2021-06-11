@@ -19,6 +19,10 @@ export class IncidentService {
     return this.http.get<Incident>(this.APIUrl + "/Incident/" + id);
   }
 
+  getIncidentKorisnik(id:number){
+    return this.http.get<Incident[]>(this.APIUrl + "/Incident/Korisnik/" + id);
+  }
+
   addIncident(incident:Incident){
     return this.http.post(this.APIUrl + "/Incident/", incident);
   }
