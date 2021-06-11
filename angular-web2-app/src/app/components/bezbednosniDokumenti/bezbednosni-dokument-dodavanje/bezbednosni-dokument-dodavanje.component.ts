@@ -81,4 +81,13 @@ export class BezbednosniDokumentDodavanjeComponent implements OnInit {
     }
     console.log(this.OpremaToAdd);
   }
+
+  getPlanRada(/*id:number*/) {
+    // id - idPlanaRada
+    const id:number = 1; // jedini Plan rada u bazi
+    this.bezbednosniDokumentService.getPlanRada(id).subscribe(data =>
+      {
+        console.log(data);
+      })
+  }
 }

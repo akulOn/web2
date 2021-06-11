@@ -34,4 +34,8 @@ export class BezbednosniDokumentService {
   addOpremaToBezbednosniDokument(idBezbednosnogDokumenta:number, idOpreme:number[]) {
     return this.http.put(this.APIUrl + "/BezbednosniDokument/DodajOpremu/",  {idBezbednosnogDokumenta, idOpreme});
   }
+
+  getPlanRada(idPlanaRada:number) {
+    return this.http.get(this.APIUrl + "/PlanRada/" + idPlanaRada);
+  }
 }

@@ -168,6 +168,7 @@
     <Compile Include="Controllers\IncidentController.cs" />
     <Compile Include="Controllers\KorisnikController.cs" />
     <Compile Include="Controllers\OpremaController.cs" />
+    <Compile Include="Controllers\PlanRadaController.cs" />
     <Compile Include="Controllers\PozivController.cs" />
     <Compile Include="Controllers\ResenjeController.cs" />
     <Compile Include="Controllers\TipKonstrukcijeController.cs" />

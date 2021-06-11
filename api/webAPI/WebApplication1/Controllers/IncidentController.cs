@@ -135,7 +135,7 @@ namespace WebApplication1.Controllers
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
             }
         }
 
@@ -165,7 +165,7 @@ namespace WebApplication1.Controllers
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
             }
         }
 
@@ -194,7 +194,7 @@ namespace WebApplication1.Controllers
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
             }
         }
 
@@ -225,7 +225,7 @@ namespace WebApplication1.Controllers
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
             }
         }
 
@@ -256,7 +256,7 @@ namespace WebApplication1.Controllers
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
             }
         }
 
@@ -294,7 +294,7 @@ namespace WebApplication1.Controllers
             }
             catch (Exception e)
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
             }
         }
     }

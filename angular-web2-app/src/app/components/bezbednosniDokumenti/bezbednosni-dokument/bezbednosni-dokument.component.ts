@@ -46,12 +46,10 @@ export class BezbednosniDokumentComponent implements OnInit {
   reciveMessage($event:string) {
     console.log($event);
 
-    setTimeout(() => {
       this.bezbednosniDokumentService.getAllBezbednosneDokumente().subscribe((data:BezbednosniDokument[]) => {
         this.dataSource.data = data
         console.log(data)
       });
-    }, 250); // cekaj 0.250 sekundi
   }
 }
 
