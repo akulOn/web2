@@ -4,6 +4,7 @@ import { BezbednosniDokument } from 'src/app/entities/bezbednosni-dokument/bezbe
 import { Oprema } from 'src/app/entities/oprema/oprema';
 import { BezbednosniDokumentService } from 'src/app/services/bezbednosni-dokument/bezbednosni-dokument.service';
 import { OpremaService } from 'src/app/services/oprema/oprema.service';
+import { PlanRadaService } from 'src/app/services/plan-rada/plan-rada.service';
 
 @Component({
   selector: 'app-bezbednosni-dokument-dodavanje',
@@ -37,7 +38,9 @@ export class BezbednosniDokumentDodavanjeComponent implements OnInit {
 
   constructor(private formBuilder:FormBuilder,
      private bezbednosniDokumentService:BezbednosniDokumentService,
-     private opremaService:OpremaService) {}
+     private opremaService:OpremaService,
+     private planRadaService:PlanRadaService
+     ) {}
 
   ngOnInit(): void {
     this.opremaService.getAllOprema().subscribe(data => {
@@ -85,9 +88,9 @@ export class BezbednosniDokumentDodavanjeComponent implements OnInit {
   getPlanRada(/*id:number*/) {
     // id - idPlanaRada
     const id:number = 1; // jedini Plan rada u bazi
-    this.bezbednosniDokumentService.getPlanRada(id).subscribe(data =>
-      {
-        console.log(data);
-      })
+    this.planRadaService.getPlanRada(id).subscribe(data =>
+    {
+      console.log(data);
+    });
   }
 }

@@ -1,17 +1,116 @@
-<div class="container">
-    <div class="row" style="margin: 100px;">
-        <div class="col-sm-4" style="border-style: groove;">
-            <h2>Moji incidenti</h2> 
+<div style="margin: 100px">
+    <div class="row">
+        <div class="col-4 border-top">
+            <div class="row border-bottom">
+                <div class="col-8">
+                    <h2>Moji incidenti</h2>
+                </div>
+                <div class="col-4">
+                    <button class="btn btn-outline-dark" routerLink='/incidenti'>
+                        <i class="bi bi-window"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-8">
+                    <h3>Resen</h3>
+                </div>
+                <div class="col-4">
+                    <h3>{{ incidentiStatusi[0] }}</h3>
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-8">
+                    <h3>Izraden</h3>
+                </div>
+                <div class="col-4">
+                    <h3>{{ incidentiStatusi[1] }}</h3>
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-8">
+                    <h3>Dostavljen</h3>
+                </div>
+                <div class="col-4">
+                    <h3>{{ incidentiStatusi[2] }}</h3>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-4" style="border-style: groove;">
-            <h2>Moji planovi rada</h2>
+        <div class="col-4 border-top">
+            <div class="row border-bottom">
+                <div class="col-8">
+                    <h2>Moji planovi rada</h2>
+                </div>
+                <div class="col-4">
+                    <button class="btn btn-outline-dark">
+                        <i class="bi bi-window"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-8">
+                    <h3>Izraden</h3>
+                </div>
+                <div class="col-4">
+                    <h3>{{ planoviRadaStatusi[0] }}</h3>
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-8">
+                    <h3>Greska</h3>
+                </div>
+                <div class="col-4">
+                    <h3>{{ planoviRadaStatusi[1] }}</h3>
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-8">
+                    <h3>Obustavljen</h3>
+                </div>
+                <div class="col-4">
+                    <h3>{{ planoviRadaStatusi[2] }}</h3>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-4" style="border-style: groove;">
-            <h2>Moji bezbednosni dokumenti</h2>
+        <div class="col-4 border-top">
+            <div class="row border-bottom align-items-end">
+                <div class="col-8">
+                    <h2>Moji bezbednosni dokumenti</h2>
+                </div>
+                <div class="col-4">
+                    <button class="btn btn-outline-dark" routerLink='/bezbednosni-dokumenti'>
+                        <i class="bi bi-window"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="row border-bottom align-items-end">
+                <div class="col-8">
+                    <h3>Izraden</h3>
+                </div>
+                <div class="col-4">
+                    <h3>{{ bezbednosniDokumentiStatusi[0] }}</h3>
+                </div>
+            </div>
+            <div class="row border-bottom align-items-end">
+                <div class="col-8">
+                    <h3>Greska</h3>
+                </div>
+                <div class="col-4">
+                    <h3>{{ bezbednosniDokumentiStatusi[1] }}</h3>
+                </div>
+            </div>
+            <div class="row border-bottom align-items-end">
+                <div class="col-8">
+                    <h3>Obustavljen</h3>
+                </div>
+                <div class="col-4">
+                    <h3>{{ bezbednosniDokumentiStatusi[2] }}</h3>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">
-        <div id="columnChartContainer" class="col-sm-6"></div>
-        <div id="pieChartContainer" class="col-sm-6"></div>
+        <div id="columnChartContainer" class="col-6"></div>
+        <div id="pieChartContainer" class="col-6"></div>
     </div>
 </div>

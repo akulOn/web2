@@ -251,5 +251,38 @@ namespace WebApplication1.Controllers
                 return "SaveFile() failed!";
             }
         }
+
+        [Route("api/Korisnik/Dokumenti/{id}")]
+        [HttpGet]
+        public HttpResponseMessage GetDokumenti(int id)
+        {
+            string query = @"select
+	                            count(distinct i.idIncidenta) as Incidenti,
+	                            count(distinct pr.idPlanaRada) as PlanRada,
+	                            count(distinct bd.idBezbednosnogDokumenta) as BezbednosniDokument
+                            from Korisnik k
+	                            join Incident i on k.idKorisnika = i.idKorisnika
+	                            join PlanRada pr on k.idKorisnika = pr.idKorisnika
+	                            join BezbednosniDokument bd on k.idKorisnika = bd.idKorisnika
+                            where k.idKorisnika = " + id +
+                                " group by k.idKorisnika";
+            DataTable table = new DataTable();
+
+            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
+            {
+                using (var command = new SqlCommand(query, connection))
+                {
+                    // 3. add parameter to command, which will be passed to the stored procedure
+                    // command.Parameters.Add(new SqlParameter("@CustomerID", custId));
+
+                    using (var adapter = new SqlDataAdapter(command))
+                    {
+                        command.CommandType = CommandType.Text;
+                        adapter.Fill(table);
+                    }
+                }
+            }
+            return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
+        }
     }
 }

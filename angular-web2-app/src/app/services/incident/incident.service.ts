@@ -27,6 +27,10 @@ export class IncidentService {
     return this.http.post(this.APIUrl + "/Incident/", incident);
   }
 
+  preuzmi(IdIncidenta:number, IdKorisnika:number) {
+    return this.http.put(this.APIUrl + '/Incident/KorisnikPreuzmi/', {IdIncidenta, IdKorisnika} )
+  }
+
   addOpremaToIncident(IdIncidenta:number, IdOpreme:number){
     return this.http.put(this.APIUrl + "/Incident/DodajOpremu", {IdIncidenta, IdOpreme} )
   }

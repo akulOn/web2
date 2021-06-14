@@ -26,4 +26,8 @@ export class KorisnikService {
   addKorisnik(korisnik:Korisnik){
     return this.http.post(this.APIUrl + "/Korisnik/", korisnik);
   }
+
+  getDokumenti(id:number):any{
+    return this.http.get<any>(this.APIUrl + "/Korisnik/Dokumenti/" + id);
+  }
 }

@@ -80,10 +80,6 @@ export class DodajIncidentComponent implements OnInit {
       this.Ekipe = data
     });
 
-    this.ekipaService.getAllEkipe().subscribe(data => {
-      this.Ekipe = data
-    });
-
     this.korisnikService.getAllPotrosaci().subscribe(data => {
       this.Potrosaci = data
     });
@@ -132,8 +128,7 @@ export class DodajIncidentComponent implements OnInit {
     }    
 
     this.pozivService.addPoziv(new Poziv(0 /* nebitno */, this.dodajPozivForm.value.razlog, this.dodajPozivForm.value.komentar, this.dodajPozivForm.value.kvar, this.idPotrosaca)).subscribe(data => {
-      console.log(data[0]);
-      
+      this.Pozivi.push(data[0]);
       this.opremaService.addPozivToOprema(this.opremaIncident, data[0].idPoziva).subscribe();
     });
   }

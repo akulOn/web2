@@ -23,18 +23,16 @@ export class BezbednosniDokumentLogComponent implements OnInit {
 
   items: any[] = [
     { id: 0, status: ''},
-    { id: 1, status: 'Drafted' },
-    { id: 2, status: 'Issue' },
-    { id: 3, status: 'Cancel' },
+    { id: 1, status: 'Izraden' },
+    { id: 2, status: 'Greska' },
+    { id: 3, status: 'Obustavljen' },
   ];
 
-  constructor(private bezbednosniDokumentLogService:BezbednosniDokumentLogService, private bezbednosniDokumentService:BezbednosniDokumentService) {
+  constructor(
+    private bezbednosniDokumentLogService:BezbednosniDokumentLogService,
+    private bezbednosniDokumentService:BezbednosniDokumentService
+    ) {
     this.dataSource = new MatTableDataSource();
-
-    this.bezbednosniDokumentLogService.getAllBezbednosneDokumenteLog().subscribe((data:BezbednosniDokumentLog[]) => {
-      this.dataSource.data = data
-      console.log(data)
-    });
   }
 
   ngAfterViewInit(): void {
@@ -44,7 +42,10 @@ export class BezbednosniDokumentLogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+    this.bezbednosniDokumentLogService.getAllBezbednosneDokumenteLog().subscribe((data:BezbednosniDokumentLog[]) => {
+      this.dataSource.data = data
+      console.log(data)
+    });
   }
 
   selectOption(idStatusa: any, idBezbednosnogDokumenta: number, Status:string) {
@@ -64,7 +65,10 @@ export class BezbednosniDokumentLogComponent implements OnInit {
       return;
     }
 
-    this.bezbednosniDokumentService.updateBezbednosniDokument(idBezbednosnogDokumenta, idStatusa.value).subscribe();
-    window.location.reload();
+    this.bezbednosniDokumentService.updateBezbednosniDokument(idBezbednosnogDokumenta, idStatusa.value).subscribe(data => {
+      this.ngOnInit();
+    });
+
+    //window.location.reload();
   }
 }

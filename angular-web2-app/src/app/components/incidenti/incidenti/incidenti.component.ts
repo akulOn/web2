@@ -23,7 +23,7 @@ export class IncidentiComponent implements OnInit {
   dataSource = new MatTableDataSource<Incident>();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
-  displayedColumns = ['idIncidenta', 'NazivTipIncidenta', 'Prioritet', 'Potvrdjen', 'NazivStatusaIncidenta', 'ETA', 'ATA', 'ETR', 'NivoNapona', 'PlaniranoVremeRada' ];
+  displayedColumns = ['idIncidenta', 'NazivTipIncidenta', 'Prioritet', 'Potvrdjen', 'NazivStatusaIncidenta', 'ETA', 'ATA', 'ETR', 'NivoNapona', 'PlaniranoVremeRada', 'actions' ];
 
   constructor(private incidentService:IncidentService) {
     this.dataSource = new MatTableDataSource();
@@ -41,6 +41,17 @@ export class IncidentiComponent implements OnInit {
 
   ngOnInit(): void {
     
+  }
+
+  applyFilter(filterValue:any) {
+    this.dataSource.filter = filterValue.value.trim().toLowerCase()
+  }
+
+  preuzmi(idIncidenta:any) {
+    console.log("Preuzmi incident: " + idIncidenta);
+
+    // 0 - logovan korisnik id
+    this.incidentService.preuzmi(idIncidenta, 0).subscribe();
   }
 }
 
