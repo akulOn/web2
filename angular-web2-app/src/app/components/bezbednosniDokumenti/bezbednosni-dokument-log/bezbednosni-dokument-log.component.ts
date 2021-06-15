@@ -1,8 +1,7 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable, MatTableDataSource } from '@angular/material/table';
-import {  MatButtonModule } from '@angular/material/button';
 import { BezbednosniDokumentLog } from 'src/app/entities/bezbednosni-dokument-log/bezbednosni-dokument-log';
 import { BezbednosniDokumentLogService } from 'src/app/services/bezbednosni-dokument-log/bezbednosni-dokument-log.service';
 import { BezbednosniDokumentService } from 'src/app/services/bezbednosni-dokument/bezbednosni-dokument.service';
@@ -28,6 +27,8 @@ export class BezbednosniDokumentLogComponent implements OnInit {
     { id: 3, status: 'Obustavljen' },
   ];
 
+  @Input() idKorisnika:number = -1;
+
   constructor(
     private bezbednosniDokumentLogService:BezbednosniDokumentLogService,
     private bezbednosniDokumentService:BezbednosniDokumentService
@@ -42,10 +43,18 @@ export class BezbednosniDokumentLogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.bezbednosniDokumentLogService.getAllBezbednosneDokumenteLog().subscribe((data:BezbednosniDokumentLog[]) => {
-      this.dataSource.data = data
-      console.log(data)
-    });
+    if (this.idKorisnika == -1)
+    {
+      this.bezbednosniDokumentLogService.getAllBezbednosneDokumenteLog().subscribe((data:BezbednosniDokumentLog[]) => {
+        this.dataSource.data = data
+      });
+    }
+    else
+    {
+      this.bezbednosniDokumentLogService.getAllBezbednosneDokumenteLogKorisnik(this.idKorisnika).subscribe((data:BezbednosniDokumentLog[]) => {
+        this.dataSource.data = data
+      });
+    }
   }
 
   selectOption(idStatusa: any, idBezbednosnogDokumenta: number, Status:string) {

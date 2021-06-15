@@ -181,6 +181,7 @@
     <Compile Include="Models\BezbednosniDokument.cs" />
     <Compile Include="Models\BezbednosniDokumentLog.cs" />
     <Compile Include="Models\BezbednosniDokumentOprema.cs" />
+    <Compile Include="Models\BezbednosniDokumentOpreme.cs" />
     <Compile Include="Models\BezbednosniDokumentStatus.cs" />
     <Compile Include="Models\Ekipa.cs" />
     <Compile Include="Models\Incident.cs" />

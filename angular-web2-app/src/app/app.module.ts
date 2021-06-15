@@ -25,6 +25,7 @@ import { UredenjeElemenataMrezeComponent } from './components/elementi-mreze/ure
 import { BezbednosniDokumentDodavanjeComponent } from './components/bezbednosniDokumenti/bezbednosni-dokument-dodavanje/bezbednosni-dokument-dodavanje.component';
 import { MojProfilComponent } from './components/moj-profil/moj-profil.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DodajPozivComponent } from './components/dodaj-poziv/dodaj-poziv.component'; 
 
 const materialModules = [
   MatTableModule,
@@ -47,7 +48,8 @@ const materialModules = [
     UredenjeElemenataMrezeComponent,
     BezbednosniDokumentDodavanjeComponent,
     MojProfilComponent,
-    DashboardComponent
+    DashboardComponent,
+    DodajPozivComponent,
   ],
   imports: [
     BrowserModule,

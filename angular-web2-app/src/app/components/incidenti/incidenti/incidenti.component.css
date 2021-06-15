@@ -1,10 +1,3 @@
-.data-table {
-    width: 65%;
-    margin: 100px auto;
-    overflow: auto;
-    text-align: center;
-}
-
 td.mat-column-NazivTipIncidenta {
     background-color: whitesmoke;
     padding-right: 6px;

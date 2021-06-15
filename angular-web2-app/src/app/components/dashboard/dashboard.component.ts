@@ -12,6 +12,7 @@ import { PlanRadaService } from 'src/app/services/plan-rada/plan-rada.service';
 })
 
 export class DashboardComponent implements OnInit {
+  idKoirniska:number = 0;
   incidentiStatusi:number[] = [0, 0, 0];
   bezbednosniDokumentiStatusi:number[] = [0, 0, 0];
   planoviRadaStatusi:number[] = [0, 0, 0]
@@ -25,7 +26,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     // Stubovi - 0 - idKorisnik za kojeg smo dodali podatke
-    this.incidentService.getIncidentKorisnik(0).subscribe((Incidenti) => {
+    this.incidentService.getIncidentKorisnik(this.idKoirniska).subscribe((Incidenti) => {
       this.parseIncidentiStatusi(Incidenti); // Status incidenata
 
       let chartColumn = new CanvasJS.Chart("columnChartContainer", {
@@ -43,7 +44,7 @@ export class DashboardComponent implements OnInit {
     });
 
     // Pita - 0 - idKorisnik za kojeg smo dodali podatke
-    this.korisnkService.getDokumenti(0).subscribe(data => {   
+    this.korisnkService.getDokumenti(this.idKoirniska).subscribe(data => {   
       let chartPie = new CanvasJS.Chart("pieChartContainer", {
         theme: "light2",
         animationEnabled: true,
@@ -63,12 +64,12 @@ export class DashboardComponent implements OnInit {
     });
 
     // Status bezbednosnih dokumenta - 0 - idKorisnik za kojeg smo dodali podatke
-    this.bezbednosniDokumentService.getBezbednosniDokumentKorisnik(0).subscribe(data => {
+    this.bezbednosniDokumentService.getBezbednosniDokumentKorisnik(this.idKoirniska).subscribe(data => {
       this.parseBezbednosniDokumentiStatusi(data);
     });
 
     // Status plana rada - 0 - idKorisnik za kojeg smo dodali podatke
-    this.planRadaService.getPlanRadaKorisnik(0).subscribe(data => {
+    this.planRadaService.getPlanRadaKorisnik(this.idKoirniska).subscribe(data => {
       this.parsePlanoviRadaStatusi(data);
     });
   }

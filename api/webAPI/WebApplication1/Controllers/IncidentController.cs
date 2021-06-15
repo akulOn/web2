@@ -199,6 +199,39 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [Route("api/Incident/Oprema/{id}")]
+        [HttpGet]
+        public HttpResponseMessage GetOprema(int id)
+        {
+            // trebalo bi da se radi sa procedrama na bazi, nije dobro da ovde direktno kucam SQL upite
+            string query = @"
+                    select
+	                    o.idOpreme,
+	                    o.Naziv,
+	                    t.Naziv as Tip,
+	                    o.Kordinate,
+	                    o.Adresa
+                    from Oprema o
+	                    join TipOpreme t on o.idTipOpreme = t.idTipOpreme
+                        join IncidentOprema id on o.idOpreme = id.idOpreme
+                    where Status = 1
+                        and id.idIncidenta = " + id;
+            DataTable table = new DataTable();
+
+            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
+            {
+                using (var command = new SqlCommand(query, connection))
+                {
+                    using (var adapter = new SqlDataAdapter(command))
+                    {
+                        command.CommandType = CommandType.Text;
+                        adapter.Fill(table);
+                    }
+                }
+            }
+            return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
+        }
+
         [HttpPut]
         [Route("api/Incident/DodajOpremu")]
         public HttpResponseMessage DodajOpremu(IncidentOprema incidentOprema)
@@ -329,27 +362,32 @@ namespace WebApplication1.Controllers
             try
             {
                 var httpRequest = HttpContext.Current.Request;
-                var postedFile = httpRequest.Files[0]; // gleda samo prvi fajl, ako ih je vise izabrano
-                string fileName = postedFile.FileName;
-                string physicalPath = HttpContext.Current.Server.MapPath("~/Photos/" + fileName);
 
-                postedFile.SaveAs(physicalPath);
+                //foreach (HttpPostedFile postedFile in httpRequest.Files)
+                //{
+                    var postedFile = httpRequest.Files[0]; // gleda samo prvi fajl, ako ih je vise izabrano
+                    string fileName = postedFile.FileName;
+                    string physicalPath = HttpContext.Current.Server.MapPath("~/Photos/" + fileName);
 
-                using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
-                {
-                    using (var command = new SqlCommand(procedure, connection))
+                    postedFile.SaveAs(physicalPath);
+
+                    using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
                     {
-                        // 3. add parameter to command, which will be passed to the stored procedure
-                        command.Parameters.Add(new SqlParameter("@idIncidenta", id)); // tu bi trebalo proslediti informacije o trenutno logovanom korisniku
-                        command.Parameters.Add(new SqlParameter("@Putanja", physicalPath));
-
-                        using (var adapter = new SqlDataAdapter(command))
+                        using (var command = new SqlCommand(procedure, connection))
                         {
-                            command.CommandType = CommandType.StoredProcedure;
-                            adapter.Fill(table);
+                            // 3. add parameter to command, which will be passed to the stored procedure
+                            command.Parameters.Add(new SqlParameter("@idIncidenta", id)); // tu bi trebalo proslediti informacije o trenutno logovanom korisniku
+                            command.Parameters.Add(new SqlParameter("@Putanja", physicalPath));
+
+                            using (var adapter = new SqlDataAdapter(command))
+                            {
+                                command.CommandType = CommandType.StoredProcedure;
+                                adapter.Fill(table);
+                            }
                         }
                     }
-                }
+                //}
+                
                 return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
             }
             catch (Exception e)

@@ -14,4 +14,8 @@ export class BezbednosniDokumentLogService {
   getAllBezbednosneDokumenteLog():Observable<BezbednosniDokumentLog[]>{
     return this.http.get<BezbednosniDokumentLog[]>(this.APIUrl + "/BezbednosniDokumentLog/GetAll");
   }
+
+  getAllBezbednosneDokumenteLogKorisnik(id:number):Observable<BezbednosniDokumentLog[]>{
+    return this.http.get<BezbednosniDokumentLog[]>(this.APIUrl + "/BezbednosniDokumentLog/GetAllKorisnik/" + id);
+  }
 }

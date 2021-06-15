@@ -6,7 +6,7 @@
                     <h2>Moji incidenti</h2>
                 </div>
                 <div class="col-4">
-                    <button class="btn btn-outline-dark" routerLink='/incidenti'>
+                    <button class="btn btn-outline-dark" [routerLink]="['/incidenti', idKoirniska]">
                         <i class="bi bi-window"></i>
                     </button>
                 </div>
@@ -73,17 +73,17 @@
             </div>
         </div>
         <div class="col-4 border-top">
-            <div class="row border-bottom align-items-end">
+            <div class="row border-bottom">
                 <div class="col-8">
                     <h2>Moji bezbednosni dokumenti</h2>
                 </div>
                 <div class="col-4">
-                    <button class="btn btn-outline-dark" routerLink='/bezbednosni-dokumenti'>
+                    <button class="btn btn-outline-dark" [routerLink]="['/bezbednosni-dokumenti', idKoirniska]">
                         <i class="bi bi-window"></i>
                     </button>
                 </div>
             </div>
-            <div class="row border-bottom align-items-end">
+            <div class="row border-bottom">
                 <div class="col-8">
                     <h3>Izraden</h3>
                 </div>
@@ -91,7 +91,7 @@
                     <h3>{{ bezbednosniDokumentiStatusi[0] }}</h3>
                 </div>
             </div>
-            <div class="row border-bottom align-items-end">
+            <div class="row border-bottom">
                 <div class="col-8">
                     <h3>Greska</h3>
                 </div>
@@ -99,7 +99,7 @@
                     <h3>{{ bezbednosniDokumentiStatusi[1] }}</h3>
                 </div>
             </div>
-            <div class="row border-bottom align-items-end">
+            <div class="row border-bottom">
                 <div class="col-8">
                     <h3>Obustavljen</h3>
                 </div>

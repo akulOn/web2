@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Incident } from '../../entities/incident/incident';
 import { HttpClient } from "@angular/common/http";
 import { Observable } from "rxjs"; // async
+import { Oprema } from 'src/app/entities/oprema/oprema';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +30,10 @@ export class IncidentService {
 
   preuzmi(IdIncidenta:number, IdKorisnika:number) {
     return this.http.put(this.APIUrl + '/Incident/KorisnikPreuzmi/', {IdIncidenta, IdKorisnika} )
+  }
+
+  getOprema(id:number) : Observable<Oprema[]> {
+    return this.http.get<Oprema[]>(this.APIUrl + "/Incident/Oprema/" + id);
   }
 
   addOpremaToIncident(IdIncidenta:number, IdOpreme:number){

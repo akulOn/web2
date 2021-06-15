@@ -239,9 +239,42 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [Route("api/BezbednosniDokument/Oprema/{id}")]
+        [HttpGet]
+        public HttpResponseMessage GetOprema(int id)
+        {
+            // trebalo bi da se radi sa procedrama na bazi, nije dobro da ovde direktno kucam SQL upite
+            string query = @"
+                    select
+	                    o.idOpreme,
+	                    o.Naziv,
+	                    t.Naziv as Tip,
+	                    o.Kordinate,
+	                    o.Adresa
+                    from Oprema o
+	                    join TipOpreme t on o.idTipOpreme = t.idTipOpreme
+                        join BezbednosniDokumentOprema bdo on o.idOpreme = bdo.idOpreme
+                    where Status = 1
+                        and bdo.idBezbednosnogDokumenta = " + id;
+            DataTable table = new DataTable();
+
+            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
+            {
+                using (var command = new SqlCommand(query, connection))
+                {
+                    using (var adapter = new SqlDataAdapter(command))
+                    {
+                        command.CommandType = CommandType.Text;
+                        adapter.Fill(table);
+                    }
+                }
+            }
+            return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
+        }
+
         [Route("api/BezbednosniDokument/DodajOpremu")]
         [HttpPut]
-        public HttpResponseMessage DodajOpremu(BezbednosniDokumentOprema bdo)
+        public HttpResponseMessage DodajOpremu(BezbednosniDokumentOpreme bdo)
         {
             DataTable table = new DataTable();
             foreach (int item in bdo.idOpreme)
@@ -264,6 +297,35 @@ namespace WebApplication1.Controllers
                 }
             }
             return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
+        }
+
+        [HttpPut]
+        [Route("api/BezbednosniDokument/IzbaciOpremu")]
+        public HttpResponseMessage IzbaciOpremu(BezbednosniDokumentOprema bdo)
+        {
+            string query = @"
+                    delete from BezbednosniDokumentOprema where idBezbednosnogDokumenta = " + bdo.idBezbednosnogDokumenta + " and idOpreme = " + bdo.idOpreme
+                    ;
+            DataTable table = new DataTable();
+            try
+            {
+                using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
+                {
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        using (var adapter = new SqlDataAdapter(command))
+                        {
+                            command.CommandType = CommandType.Text;
+                            adapter.Fill(table);
+                        }
+                    }
+                }
+                return Request.CreateResponse(System.Net.HttpStatusCode.Created, table);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+            }
         }
     }
 }

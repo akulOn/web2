@@ -1,15 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { IncidentService } from '../../../services/incident/incident.service';
 import { Incident } from '../../../entities/incident/incident';
-
-import { DataSource } from '@angular/cdk/collections';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTable } from '@angular/material/table';
-import { map } from 'rxjs/operators';
-import { Observable, of as observableOf, merge } from 'rxjs';
-
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
+import { Oprema } from 'src/app/entities/oprema/oprema';
 
 @Component({
   selector: 'app-incidenti',
@@ -25,12 +22,16 @@ export class IncidentiComponent implements OnInit {
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['idIncidenta', 'NazivTipIncidenta', 'Prioritet', 'Potvrdjen', 'NazivStatusaIncidenta', 'ETA', 'ATA', 'ETR', 'NivoNapona', 'PlaniranoVremeRada', 'actions' ];
 
-  constructor(private incidentService:IncidentService) {
-    this.dataSource = new MatTableDataSource();
+  idKorisnika:number = -1;
+  naslov:string = "Svi incidenti";
+  Oprema:Oprema[] = [];
+  idIncidenta:number = -1; // incident za kojeg se prikazuje oprema
 
-    this.incidentService.getAllIncidenti().subscribe((data: Incident[]) => {
-      this.dataSource.data = data;
-    });
+  constructor(
+    private incidentService:IncidentService,
+    private route: ActivatedRoute
+    ) {
+    this.dataSource = new MatTableDataSource();
   }
 
   ngAfterViewInit(): void {
@@ -40,7 +41,24 @@ export class IncidentiComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+    this.route.params.subscribe(params => {
+      if(params['id'] != undefined)
+        this.idKorisnika = params['id'];
+      });
+
+    if (this.idKorisnika == -1)
+    {
+      this.incidentService.getAllIncidenti().subscribe((data: Incident[]) => {
+        this.dataSource.data = data;
+      });
+    }
+    else
+    {
+      this.naslov = "Svi incidenti korisnika: " + this.idKorisnika;
+      this.incidentService.getIncidentKorisnik(this.idKorisnika).subscribe((data: Incident[]) => {
+        this.dataSource.data = data;
+      });
+    }
   }
 
   applyFilter(filterValue:any) {
@@ -48,10 +66,28 @@ export class IncidentiComponent implements OnInit {
   }
 
   preuzmi(idIncidenta:any) {
-    console.log("Preuzmi incident: " + idIncidenta);
+    alert("Preuzeli ste incident sa id: " + idIncidenta);
 
     // 0 - logovan korisnik id
-    this.incidentService.preuzmi(idIncidenta, 0).subscribe();
+    this.incidentService.preuzmi(idIncidenta, this.idKorisnika).subscribe();
+  }
+
+  prikaziOpremu(idIncidenta:number) {
+    this.idIncidenta = idIncidenta;
+
+    this.incidentService.getOprema(idIncidenta).subscribe(data => {
+      this.Oprema = data;
+    });
+  }
+
+  removeOprema(idOpreme:number) {
+    this.incidentService.deleteOpremaFromIncident(this.idIncidenta, idOpreme).subscribe(data => {
+
+      this.incidentService.getOprema(this.idIncidenta).subscribe(data => {
+        this.Oprema = data;
+      });
+      
+    });
   }
 }
 

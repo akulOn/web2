@@ -8,6 +8,6 @@ namespace WebApplication1.Models
     public class BezbednosniDokumentOprema
     {
         public int idBezbednosnogDokumenta { get; set; }
-        public int[] idOpreme { get; set; }
+        public int idOpreme { get; set; }
     }
 }

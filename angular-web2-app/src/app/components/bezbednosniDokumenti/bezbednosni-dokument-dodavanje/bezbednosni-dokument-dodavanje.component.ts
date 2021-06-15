@@ -15,7 +15,7 @@ export class BezbednosniDokumentDodavanjeComponent implements OnInit {
 
   dodajBezbednosniDokumentForm = this.formBuilder.group({
     Tip: ['Planirani rad', Validators.required],
-    Status: ['Drafted', Validators.required], // {value: 'Drafted', disabled: true}
+    Status: ['Izraden', Validators.required], // {value: 'Drafted', disabled: true}
     Ekipa: ['KOI Code', Validators.required], // {value: 'KOI Code', disabled: true}
     Detalji: [''],
     Beleske: [''],
@@ -34,7 +34,7 @@ export class BezbednosniDokumentDodavanjeComponent implements OnInit {
 
   Oprema:Oprema[] = [];
   OpremaToAdd:number[] = [];
-  izabranaSlika!:File;
+  izabraneSlike!:File[];
 
   constructor(private formBuilder:FormBuilder,
      private bezbednosniDokumentService:BezbednosniDokumentService,
@@ -49,7 +49,7 @@ export class BezbednosniDokumentDodavanjeComponent implements OnInit {
   }
 
   onFileSelected(event:any) {
-    this.izabranaSlika = event.target!.files[0];
+    this.izabraneSlike = event.target!.files;
   }
 
   onSubmitBezbednosniDokument() {
@@ -57,20 +57,21 @@ export class BezbednosniDokumentDodavanjeComponent implements OnInit {
 
     console.warn('Dodali ste bezbednosni dokument!', this.dodajBezbednosniDokumentForm.value);
 
-    const slika = new FormData();
-    try{
-      slika.append('image', this.izabranaSlika, this.izabranaSlika.name);
+    try {
+      this.bezbednosniDokumentService.addBezbednosniDokument(this.dodajBezbednosniDokumentForm.value).subscribe( data => {      
+        this.bezbednosniDokumentService.addOpremaToBezbednosniDokument(data[0].idBezbednosnogDokumenta, this.OpremaToAdd).subscribe();
+  
+        Array.from(this.izabraneSlike).forEach(file => { 
+          const slika = new FormData();
+          slika.append('image', file, file.name);
+  
+          this.bezbednosniDokumentService.addSlikaToBezbednosniDokument(data[0].idBezbednosnogDokumenta, slika).subscribe();
+        });
+      });
     }
-    catch{
+    catch {
       console.log("Niste izabrali sliku!");
     }
-    this.bezbednosniDokumentService.addBezbednosniDokument(this.dodajBezbednosniDokumentForm.value).subscribe( data => {
-      console.log(data[0]);
-      console.log(this.izabranaSlika.name);
-      
-      this.bezbednosniDokumentService.addOpremaToBezbednosniDokument(data[0].idBezbednosnogDokumenta, this.OpremaToAdd).subscribe();
-      this.bezbednosniDokumentService.addSlikaToBezbednosniDokument(data[0].idBezbednosnogDokumenta, slika).subscribe();
-    }) // server odgovara, mogu da uzmem odgovor sa lambda
   }
 
   addId(idOpreme:number) {

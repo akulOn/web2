@@ -115,9 +115,9 @@
                         </tr>
                     </tbody>
                 </table>
-                <ul class="list-group" *ngFor="let oprema in opremaIncident">
+                <ul class="list-group" *ngFor="let oprema of opremaIncident">
                     <li class="list-group-item active">Dodata oprema:</li>
-                    <li class="list-group-item">Id opeme: - {{ oprema }}</li>
+                    <li class="list-group-item">Id opeme: {{ oprema }}</li>
                 </ul>
             </div>
 
@@ -263,7 +263,7 @@
             
             <div class="collapse" id="slika" data-parent="#accordion">
                 <h1>Dodaj sliku</h1>
-                <input type="file" class="btn btn-secondary btn-sm" (change)="onFileSelected($event)">
+                <input type="file" class="btn btn-secondary btn-sm" accept="image/png, image/gif, image/jpeg" multiple (change)="onFileSelected($event)">
                 <button type="button" class="btn btn-primary btn-sm" (click)="OnUpload()" style="margin-left: 5px;">Upload</button>
             </div>
         </div>

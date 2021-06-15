@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, ValidatorFn, Validators } from "@angular/forms";
-import { Incident } from 'src/app/entities/incident/incident';
+import { FormBuilder, Validators } from "@angular/forms";
 import { Poziv } from 'src/app/entities/poziv/poziv';
 import { Resenje } from 'src/app/entities/resenje/resenje';
 import { EkipaService } from 'src/app/services/ekipa/ekipa.service';
@@ -18,9 +17,9 @@ import { ResenjeService } from 'src/app/services/resenje/resenje.service';
 export class DodajIncidentComponent implements OnInit {
   dodajIncidentForm = this.formBuilder.group({
     NazivTipIncidenta: ['Planirani', Validators.required],
-    prioritet: ['', [Validators.required, Validators.min(0)]] ,
+    //prioritet: ['', [Validators.required, Validators.min(0)]] ,
     potvrdjen: '',
-    NazivStatusaIncidenta: ['submitted', Validators.required],
+    NazivStatusaIncidenta: ['Resen', Validators.required],
     ETA: ['', Validators.required],
     ATA: '',
     ETR: '',
@@ -44,7 +43,7 @@ export class DodajIncidentComponent implements OnInit {
     razlog: ['Nema struje', Validators.required],
     komentar: [''],
     kvar: ['', Validators.required]
-  })
+  });
 
   Incident:any;
   Resenje:any;
@@ -57,7 +56,7 @@ export class DodajIncidentComponent implements OnInit {
   opremaIncident:number[] = []; // oprema koja se treba dodati treuntnom incidentu
   idPotrosaca!:number; // potrosac koji je izabran kod poziva
 
-  izabranaSlika!:File;
+  izabraneSlike!:File[];
 
   constructor(
     private formBuilder:FormBuilder, 
@@ -182,26 +181,26 @@ export class DodajIncidentComponent implements OnInit {
   }
 
   onFileSelected(event:any) {
-    this.izabranaSlika = event.target!.files[0];
+    this.izabraneSlike = event.target!.files;
   }
 
-  OnUpload() {
+  OnUpload() {    
     if(this.Incident === -1){
       alert("Morate prvo da dodate Incident da bi mogli da dodate sliku!");
       return;
     }
 
-    if(this.izabranaSlika == null)
+    if(this.izabraneSlike == null || this.izabraneSlike == [])
     {
       console.warn("Niste izabrali sliku!");
     }
     else
     {
-      console.log(this.izabranaSlika);
-
-      const slika = new FormData();
-      slika.append('image', this.izabranaSlika, this.izabranaSlika.name);
-      this.incidentService.addSlikaToIncident(this.Incident[0].idIncidenta, slika).subscribe();
+      Array.from(this.izabraneSlike).forEach(file => { 
+        const slika = new FormData();
+        slika.append('image', file, file.name);
+        this.incidentService.addSlikaToIncident(this.Incident[0].idIncidenta, slika).subscribe();
+       });
     }
   }
 }
