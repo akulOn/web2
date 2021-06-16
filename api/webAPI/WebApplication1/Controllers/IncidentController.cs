@@ -353,6 +353,33 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [Route("api/Incident/Slike/{id}")]
+        [HttpGet]
+        public HttpResponseMessage GetSlika(int id)
+        {
+            string query = @"
+                    select
+	                    i.idSlike,
+	                    s.Putanja
+                    from IncidentSlika i
+	                    join Slika s on i.idSlike = s.idSlike
+                    where i.idIncidenta = " + id;
+            DataTable table = new DataTable();
+
+            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
+            {
+                using (var command = new SqlCommand(query, connection))
+                {
+                    using (var adapter = new SqlDataAdapter(command))
+                    {
+                        command.CommandType = CommandType.Text;
+                        adapter.Fill(table);
+                    }
+                }
+            }
+            return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
+        }
+
         [Route("api/Incident/DodajSliku/{id}")]
         [HttpPut]
         public HttpResponseMessage DodajSliku(int id)
@@ -389,6 +416,64 @@ namespace WebApplication1.Controllers
                 //}
                 
                 return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+        }
+
+        [Route("api/Incident/IzbaciSliku")]
+        [HttpPut]
+        public HttpResponseMessage IzbaciOpremu(IncidentSlika i)
+        {
+            string query = @"
+                    delete from IncidentSlika where idSlike = " + i.idSlike + " and idIncidenta = " + i.idIncidenta
+                    ;
+            DataTable table = new DataTable();
+            try
+            {
+                using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
+                {
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        using (var adapter = new SqlDataAdapter(command))
+                        {
+                            command.CommandType = CommandType.Text;
+                            adapter.Fill(table);
+                        }
+                    }
+                }
+                return Request.CreateResponse(System.Net.HttpStatusCode.Created, table);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+        }
+
+        [Route("api/Incident/PrebaciSliku")]
+        [HttpPut]
+        public HttpResponseMessage PrebaciSliku(IncidentSlika i)
+        {
+            string query = @"
+                    update IncidentSlika set idIncidenta = " + i.idIncidenta + " where idSlike = " + i.idSlike
+                    ;
+            DataTable table = new DataTable();
+            try
+            {
+                using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
+                {
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        using (var adapter = new SqlDataAdapter(command))
+                        {
+                            command.CommandType = CommandType.Text;
+                            adapter.Fill(table);
+                        }
+                    }
+                }
+                return Request.CreateResponse(System.Net.HttpStatusCode.Created, table);
             }
             catch (Exception e)
             {

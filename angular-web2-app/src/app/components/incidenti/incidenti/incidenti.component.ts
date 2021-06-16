@@ -26,6 +26,8 @@ export class IncidentiComponent implements OnInit {
   naslov:string = "Svi incidenti";
   Oprema:Oprema[] = [];
   idIncidenta:number = -1; // incident za kojeg se prikazuje oprema
+  Slike:any[] = [];
+  idPrebaci:number = -1;
 
   constructor(
     private incidentService:IncidentService,
@@ -72,21 +74,49 @@ export class IncidentiComponent implements OnInit {
     this.incidentService.preuzmi(idIncidenta, this.idKorisnika).subscribe();
   }
 
-  prikaziOpremu(idIncidenta:number) {
+  prikazi(idIncidenta:number) {
     this.idIncidenta = idIncidenta;
-
     this.incidentService.getOprema(idIncidenta).subscribe(data => {
       this.Oprema = data;
+    });
+    this.incidentService.getSlike(idIncidenta).subscribe(data => {
+      this.Slike = data;
     });
   }
 
   removeOprema(idOpreme:number) {
     this.incidentService.deleteOpremaFromIncident(this.idIncidenta, idOpreme).subscribe(data => {
-
       this.incidentService.getOprema(this.idIncidenta).subscribe(data => {
         this.Oprema = data;
       });
-      
+    });
+  }
+
+  removeSlika(idSlike:number) {
+    this.incidentService.deleteSlika(this.idIncidenta, idSlike).subscribe(data => {
+      this.incidentService.getSlike(this.idIncidenta).subscribe(data => {
+        this.Slike = data;
+      });
+    });
+  }
+
+  prebaciSliku(idSlike:number) {
+    if(this.idPrebaci < 0)
+    {
+      alert("Izaberite validan broj!");
+      return;
+    }
+
+    if (this.dataSource.data.find(x => x.idIncidenta == this.idPrebaci) == undefined)
+    {
+      alert("Izaberite validan broj!");
+      return;
+    }
+
+    this.incidentService.prebaciSliku(this.idPrebaci, idSlike).subscribe(data => {
+      this.incidentService.getSlike(this.idIncidenta).subscribe(data => {
+        this.Slike = data;
+      });
     });
   }
 }

@@ -115,9 +115,9 @@
                         </tr>
                     </tbody>
                 </table>
+                <h2>Tabela dodate opreme:</h2>
                 <ul class="list-group" *ngFor="let oprema of opremaIncident">
-                    <li class="list-group-item active">Dodata oprema:</li>
-                    <li class="list-group-item">Id opeme: {{ oprema }}</li>
+                    <li class="list-group-item active">Id opeme: {{ oprema }}</li>
                 </ul>
             </div>
 
@@ -262,9 +262,21 @@
             </div>
             
             <div class="collapse" id="slika" data-parent="#accordion">
-                <h1>Dodaj sliku</h1>
-                <input type="file" class="btn btn-secondary btn-sm" accept="image/png, image/gif, image/jpeg" multiple (change)="onFileSelected($event)">
-                <button type="button" class="btn btn-primary btn-sm" (click)="OnUpload()" style="margin-left: 5px;">Upload</button>
+                <div class="row">
+                    <h1>Dodaj sliku</h1>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                        <input type="file" class="btn btn-secondary btn-sm" accept="image/png, image/gif, image/jpeg" multiple (change)="onFileSelected($event)">
+                        <button type="button" class="btn btn-primary btn-sm mt-1" (click)="OnUpload()" style="margin-left: 5px;">Upload</button>
+                    </div>
+                    <div class="col-6" [hidden]="!izabraneSlike">
+                        <h2>Dodate slike:</h2>
+                        <ul class="list-group" *ngFor="let slika of izabraneSlike">
+                            <li class="list-group-item active">Naziv slike: {{ slika.name }}</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -26,8 +26,10 @@ export class BezbednosniDokumentComponent implements OnInit {
   @Input()idKorisnika:number = -1;
   naslov:string = "Svi bezbednosni dokumenti";
   Oprema:Oprema[] = [];
-  idBezbednosnogDokumenta:number = -1; // incident za kojeg se prikazuje oprema
-  
+  Slike:any[] = [];
+  idBezbednosnogDokumenta:number = -1; // bezbednosni dokument za kojeg se prikazuje oprema/slike
+  idPrebaci:number = -1;  // bezbednosni dokument na kojeg treba prebaciti sliku
+
   constructor(
     private bezbednosniDokumentService:BezbednosniDokumentService,
     private route: ActivatedRoute
@@ -69,27 +71,56 @@ export class BezbednosniDokumentComponent implements OnInit {
 
   reciveMessage($event:string) {
     console.log($event);
-
       this.bezbednosniDokumentService.getAllBezbednosneDokumente().subscribe((data:BezbednosniDokument[]) => {
         this.dataSource.data = data
       });
   }
 
-  prikaziOpremu(idBezbednosnogDokumenta:number) {
+  prikazi(idBezbednosnogDokumenta:number) {
     this.idBezbednosnogDokumenta = idBezbednosnogDokumenta;
-
     this.bezbednosniDokumentService.getOprema(idBezbednosnogDokumenta).subscribe(data => {
       this.Oprema = data;
+    });
+
+    this.idBezbednosnogDokumenta = idBezbednosnogDokumenta;
+    this.bezbednosniDokumentService.getSlike(idBezbednosnogDokumenta).subscribe(data => {
+      this.Slike = data;
     });
   }
 
   removeOprema(idOpreme:number) {
     this.bezbednosniDokumentService.deleteOpremaFromBezbednosniDokument(this.idBezbednosnogDokumenta, idOpreme).subscribe(data => {
-
       this.bezbednosniDokumentService.getOprema(this.idBezbednosnogDokumenta).subscribe(data => {
         this.Oprema = data;
       });
-      
+    });
+  }
+
+  removeSlika(idSlike:number) {
+    this.bezbednosniDokumentService.deleteSlika(this.idBezbednosnogDokumenta, idSlike).subscribe(data => {
+      this.bezbednosniDokumentService.getSlike(this.idBezbednosnogDokumenta).subscribe(data => {
+        this.Slike = data;
+      });
+    });
+  }
+
+  prebaciSliku(idSlike:number) {
+    if (this.idPrebaci < 0)
+    {
+      alert("Izaberite validan broj!");
+      return;
+    }
+
+    if (this.dataSource.data.find(x => x.idBezbednosnogDokumenta == this.idPrebaci) == undefined)
+    {
+      alert("Izaberite validan broj!");
+      return;
+    }
+
+    this.bezbednosniDokumentService.prebaciSliku(this.idPrebaci, idSlike).subscribe(data => {
+      this.bezbednosniDokumentService.getSlike(this.idBezbednosnogDokumenta).subscribe(data => {
+        this.Slike = data;
+      });
     });
   }
 }

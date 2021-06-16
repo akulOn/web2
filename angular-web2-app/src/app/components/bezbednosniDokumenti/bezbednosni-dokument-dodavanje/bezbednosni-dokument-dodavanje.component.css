@@ -5,3 +5,7 @@
     width: 25px;
     background-color: #eee;
 }
+
+.list-group-item {
+    border-radius: 0%;
+}

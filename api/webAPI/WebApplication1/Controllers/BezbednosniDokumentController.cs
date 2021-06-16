@@ -201,6 +201,33 @@ namespace WebApplication1.Controllers
             return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
         }
 
+        [Route("api/BezbednosniDokument/Slike/{id}")]
+        [HttpGet]
+        public HttpResponseMessage GetSlika(int id)
+        {
+            string query = @"
+                    select 
+	                    bds.idSlike,
+	                    s.Putanja
+                    from BezbednosniDokumentSlika bds
+	                    join Slika s on bds.idSlike = s.idSlike
+                    where idDokumenta = " + id;
+            DataTable table = new DataTable();
+
+            using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
+            {
+                using (var command = new SqlCommand(query, connection))
+                {
+                    using (var adapter = new SqlDataAdapter(command))
+                    {
+                        command.CommandType = CommandType.Text;
+                        adapter.Fill(table);
+                    }
+                }
+            }
+            return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
+        }
+
         [Route("api/BezbednosniDokument/DodajSliku/{id}")]
         [HttpPut]
         public HttpResponseMessage DodajSliku(int id) // ako se doda ista slika nisam siguran sta se desi
@@ -232,6 +259,64 @@ namespace WebApplication1.Controllers
                     }
                 }
                 return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+        }
+
+        [Route("api/BezbednosniDokument/IzbaciSliku")]
+        [HttpPut]
+        public HttpResponseMessage IzbaciOpremu(BezbednosniDokumetSlika bds)
+        {
+            string query = @"
+                    delete from BezbednosniDokumentSlika where idSlike = "+ bds.idSlike + " and idDokumenta = " + bds.idBezbednosnogDokumenta
+                    ;
+            DataTable table = new DataTable();
+            try
+            {
+                using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
+                {
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        using (var adapter = new SqlDataAdapter(command))
+                        {
+                            command.CommandType = CommandType.Text;
+                            adapter.Fill(table);
+                        }
+                    }
+                }
+                return Request.CreateResponse(System.Net.HttpStatusCode.Created, table);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+        }
+
+        [Route("api/BezbednosniDokument/PrebaciSliku")]
+        [HttpPut]
+        public HttpResponseMessage PrebaciSliku(BezbednosniDokumetSlika bds)
+        {
+            string query = @"
+                    update BezbednosniDokumentSlika set idDokumenta = " + bds.idBezbednosnogDokumenta + " where idSlike = " + bds.idSlike 
+                    ;
+            DataTable table = new DataTable();
+            try
+            {
+                using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
+                {
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        using (var adapter = new SqlDataAdapter(command))
+                        {
+                            command.CommandType = CommandType.Text;
+                            adapter.Fill(table);
+                        }
+                    }
+                }
+                return Request.CreateResponse(System.Net.HttpStatusCode.Created, table);
             }
             catch (Exception e)
             {

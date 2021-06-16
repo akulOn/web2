@@ -36,6 +36,18 @@ export class BezbednosniDokumentService {
     return this.http.put(this.APIUrl + "/BezbednosniDokument/DodajSliku/" + id, slika);
   }
 
+  getSlike(id:number) {
+    return this.http.get<any[]>(this.APIUrl + "/BezbednosniDokument/Slike/" + id);
+  }
+
+  deleteSlika(idBezbednosnogDokumenta:number, idSlike:number) {
+    return this.http.put(this.APIUrl + "/BezbednosniDokument/IzbaciSliku/", {idBezbednosnogDokumenta, idSlike});
+  }
+
+  prebaciSliku(idBezbednosnogDokumenta:number, idSlike:number) {
+    return this.http.put(this.APIUrl + "/BezbednosniDokument/PrebaciSliku/", {idBezbednosnogDokumenta, idSlike});
+  }
+
   getOprema(id:number) {
     return this.http.get<Oprema[]>(this.APIUrl + "/BezbednosniDokument/Oprema/" + id);
   }

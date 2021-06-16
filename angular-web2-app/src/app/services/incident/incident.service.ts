@@ -52,7 +52,19 @@ export class IncidentService {
     return this.http.put(this.APIUrl + "/Incident/DodajResenje", {IdIncidenta, IdResenja} )
   }
 
+  getSlike(id:number) {
+    return this.http.get<any[]>(this.APIUrl + "/Incident/Slike/" + id);
+  }
+
   addSlikaToIncident(id:number, slika:FormData){
     return this.http.put(this.APIUrl + "/Incident/DodajSliku/" + id, slika);
+  }
+
+  deleteSlika(idIncidenta:number, idSlike:number) {
+    return this.http.put(this.APIUrl + "/Incident/IzbaciSliku/", {idIncidenta, idSlike});
+  }
+
+  prebaciSliku(idIncidenta:number, idSlike:number) {
+    return this.http.put(this.APIUrl + "/Incident/PrebaciSliku/", {idIncidenta, idSlike});
   }
 }

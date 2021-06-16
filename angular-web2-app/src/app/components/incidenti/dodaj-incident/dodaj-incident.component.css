@@ -19,3 +19,7 @@
 #slika {
     margin-top: 5px;
 }
+
+.list-group-item {
+    border-radius: 0%;
+}
