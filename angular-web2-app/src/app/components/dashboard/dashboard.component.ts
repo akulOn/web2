@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import * as CanvasJS from '../../../assets/canvasjs.min.js';
 import { IncidentService } from "src/app/services/incident/incident.service";
 import { KorisnikService } from 'src/app/services/korisnik/korisnik.service';
 import { BezbednosniDokumentService } from 'src/app/services/bezbednosni-dokument/bezbednosni-dokument.service';
@@ -17,6 +16,28 @@ export class DashboardComponent implements OnInit {
   bezbednosniDokumentiStatusi:number[] = [0, 0, 0];
   planoviRadaStatusi:number[] = [0, 0, 0]
 
+  incidentiMulti:any; // podaci za area-chart
+  // options
+  view: [number, number] = [700, 370];
+  colorSchemeArea = {
+    domain: ['#704FC4', '#4B852C']
+  };
+  legend: boolean = true;
+  showLabels: boolean = true;
+  animations: boolean = true;
+  xAxis: boolean = true;
+  yAxis: boolean = true;
+  showYAxisLabel: boolean = true;
+  showXAxisLabel: boolean = true;
+  xAxisLabel: string = 'Datum';
+  yAxisLabel: string = 'Kolicina';
+  timeline: boolean = true;
+
+  dokumenti:any; // podaci za pie-chart
+  colorSchemePie = {
+    domain: ['#704FC4', '#4B852C', '#B67A3D']
+  };
+
   constructor(
     private incidentService:IncidentService,
     private bezbednosniDokumentService:BezbednosniDokumentService, 
@@ -25,42 +46,19 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // Stubovi - 0 - idKorisnik za kojeg smo dodali podatke
-    this.incidentService.getIncidentKorisnik(this.idKoirniska).subscribe((Incidenti) => {
-      this.parseIncidentiStatusi(Incidenti); // Status incidenata
-
-      let chartColumn = new CanvasJS.Chart("columnChartContainer", {
-        animationEnabled: true,
-        exportEnabled: true,
-        title: {
-          text: "Incidenti stubovi graf"
-        },
-        data: [{
-          type: "column",
-          dataPoints: this.parseColumnData(Incidenti)
-        }]
-      });
-      chartColumn.render();
+    // Area - 0 - idKorisnik za kojeg smo dodali podatke
+    this.incidentService.chart(this.idKoirniska).subscribe(data => {
+      this.incidentiMulti = data;
     });
 
     // Pita - 0 - idKorisnik za kojeg smo dodali podatke
     this.korisnkService.getDokumenti(this.idKoirniska).subscribe(data => {   
-      let chartPie = new CanvasJS.Chart("pieChartContainer", {
-        theme: "light2",
-        animationEnabled: true,
-        exportEnabled: true,
-        title:{
-          text: "Dokumenti pita graf"
-        },
-        data: [{
-          type: "pie",
-          showInLegend: true,
-          toolTipContent: "<b>{name}</b>: {y} (#percent%)",
-          indexLabel: "{name} - #percent%",
-          dataPoints: this.parsePieData(data)
-        }]
-      });
-      chartPie.render();
+      this.dokumenti = this.parsePieData(data);
+    });
+
+     // Status incidenata - 0 - idKorisnik za kojeg smo dodali podatke
+    this.incidentService.getIncidentKorisnik(this.idKoirniska).subscribe((Incidenti) => {
+      this.parseIncidentiStatusi(Incidenti);
     });
 
     // Status bezbednosnih dokumenta - 0 - idKorisnik za kojeg smo dodali podatke
@@ -74,43 +72,25 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  parseColumnData(data) : any[]{
-    let paresedData:any[] = [];
-    paresedData.push({y: 0, label: "Planirani"});
-    paresedData.push({y: 0, label: "Neplanirani"});
-
-    for (var i = 0; i < data.length; i++) 
-    {
-      for (var j = 0; j < paresedData.length; j++)
-      {
-        if (paresedData[j].label == data[i].NazivTipIncidenta)
-        {
-          paresedData[j].y = paresedData[j].y + 1;
-        }
-      }
-    }
-    return paresedData;
-  }
-
   parsePieData(data) : any[] {
     let paresedData:any[] = [];
-    paresedData.push({y: 0, name: "Bezbednosni dokumenti"});
-    paresedData.push({y: 0, name: "Incidenti"});
-    paresedData.push({y: 0, name: "Planovi rada"});
+    paresedData.push({name: "Bezbednosni dokumenti", value: 0});
+    paresedData.push({name: "Incidenti", value: 0});
+    paresedData.push({name: "Planovi rada", value: 0});
 
       for (var i = 0; i < paresedData.length; i++)
       {
         if (paresedData[i].name == "Bezbednosni dokumenti")
         {
-          paresedData[i].y = data[0].BezbednosniDokument;
+          paresedData[i].value = data[0].BezbednosniDokument;
         }
         else if(paresedData[i].name == "Incidenti")
         {
-          paresedData[i].y = data[0].Incidenti;
+          paresedData[i].value = data[0].Incidenti;
         }
         else if(paresedData[i].name == "Planovi rada")
         {
-          paresedData[i].y = data[0].PlanRada;
+          paresedData[i].value = data[0].PlanRada;
         }
       }
     return paresedData;
@@ -167,3 +147,4 @@ export class DashboardComponent implements OnInit {
     });
   }
 }
+

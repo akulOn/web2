@@ -392,29 +392,29 @@ namespace WebApplication1.Controllers
 
                 //foreach (HttpPostedFile postedFile in httpRequest.Files)
                 //{
-                    var postedFile = httpRequest.Files[0]; // gleda samo prvi fajl, ako ih je vise izabrano
-                    string fileName = postedFile.FileName;
-                    string physicalPath = HttpContext.Current.Server.MapPath("~/Photos/" + fileName);
+                var postedFile = httpRequest.Files[0]; // gleda samo prvi fajl, ako ih je vise izabrano
+                string fileName = postedFile.FileName;
+                string physicalPath = HttpContext.Current.Server.MapPath("~/Photos/" + fileName);
 
-                    postedFile.SaveAs(physicalPath);
+                postedFile.SaveAs(physicalPath);
 
-                    using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
+                using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
+                {
+                    using (var command = new SqlCommand(procedure, connection))
                     {
-                        using (var command = new SqlCommand(procedure, connection))
-                        {
-                            // 3. add parameter to command, which will be passed to the stored procedure
-                            command.Parameters.Add(new SqlParameter("@idIncidenta", id)); // tu bi trebalo proslediti informacije o trenutno logovanom korisniku
-                            command.Parameters.Add(new SqlParameter("@Putanja", physicalPath));
+                        // 3. add parameter to command, which will be passed to the stored procedure
+                        command.Parameters.Add(new SqlParameter("@idIncidenta", id)); // tu bi trebalo proslediti informacije o trenutno logovanom korisniku
+                        command.Parameters.Add(new SqlParameter("@Putanja", physicalPath));
 
-                            using (var adapter = new SqlDataAdapter(command))
-                            {
-                                command.CommandType = CommandType.StoredProcedure;
-                                adapter.Fill(table);
-                            }
+                        using (var adapter = new SqlDataAdapter(command))
+                        {
+                            command.CommandType = CommandType.StoredProcedure;
+                            adapter.Fill(table);
                         }
                     }
+                }
                 //}
-                
+
                 return Request.CreateResponse(System.Net.HttpStatusCode.OK, table);
             }
             catch (Exception e)
@@ -474,6 +474,71 @@ namespace WebApplication1.Controllers
                     }
                 }
                 return Request.CreateResponse(System.Net.HttpStatusCode.Created, table);
+            }
+            catch (Exception e)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, e.Message);
+            }
+        }
+
+        [Route("api/Incident/Chart/{id}")]
+        [HttpGet]
+        public HttpResponseMessage GetPodatkeZaGraf(int id)
+        {
+            string query = @"
+                    select
+	                    idTipIncidenta,
+	                    count(idTipIncidenta) as Tip,
+	                    DatumKreiranja
+                    from Incident
+                    where idKorisnika = " + id + " group by DatumKreiranja, idTipIncidenta"
+                    ;
+            DataTable table = new DataTable();
+            try
+            {
+                using (var connection = new SqlConnection(ConfigurationManager.ConnectionStrings["ElektroDistribucijaAppDB"].ConnectionString))
+                {
+                    using (var command = new SqlCommand(query, connection))
+                    {
+                        using (var adapter = new SqlDataAdapter(command))
+                        {
+                            command.CommandType = CommandType.Text;
+                            adapter.Fill(table);
+                        }
+                    }
+                }
+
+                List<WebApplication1.Models.Helpers.Chart> chartData = new List<WebApplication1.Models.Helpers.Chart>();
+                chartData.Add(new Models.Helpers.Chart() { name = "Planirani", series = new List<Models.Helpers.ChartData>() });
+                chartData.Add(new Models.Helpers.Chart() { name = "Neplanirani", series = new List<Models.Helpers.ChartData>() });
+
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    int idTipa = table.Rows[i].Field<int>(0);
+                    int countTip = table.Rows[i].Field<int>(1);
+                    DateTime datum = table.Rows[i].Field<DateTime>(2);
+
+                    if(idTipa == 1) // Planirani
+                    {
+                        chartData.FirstOrDefault(x => x.name == "Planirani")
+                            .series.Add(new Models.Helpers.ChartData()
+                            {
+                                name = datum.ToString(),
+                                value = countTip
+                            });
+                    }
+                    else if (idTipa == 2) // Neplanirani
+                    {
+                        chartData.FirstOrDefault(x => x.name == "Neplanirani")
+                            .series.Add(new Models.Helpers.ChartData()
+                            {
+                                name = datum.ToString(),
+                                value = countTip
+                            });
+                    }
+                }
+
+                return Request.CreateResponse(System.Net.HttpStatusCode.Created, chartData);
             }
             catch (Exception e)
             {

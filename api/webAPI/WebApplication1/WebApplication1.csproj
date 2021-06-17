@@ -184,7 +184,9 @@
     <Compile Include="Models\BezbednosniDokumentOpreme.cs" />
     <Compile Include="Models\BezbednosniDokumentStatus.cs" />
     <Compile Include="Models\BezbednosniDokumetSlika.cs" />
+    <Compile Include="Models\Helpers\Chart.cs" />
     <Compile Include="Models\Ekipa.cs" />
+    <Compile Include="Models\Helpers\ChartData.cs" />
     <Compile Include="Models\Incident.cs" />
     <Compile Include="Models\IncidentEkipa.cs" />
     <Compile Include="Models\IncidentKorisnik.cs" />

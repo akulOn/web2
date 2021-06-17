@@ -67,4 +67,8 @@ export class IncidentService {
   prebaciSliku(idIncidenta:number, idSlike:number) {
     return this.http.put(this.APIUrl + "/Incident/PrebaciSliku/", {idIncidenta, idSlike});
   }
+
+  chart(id:number) {
+    return this.http.get<any[]>(this.APIUrl + "/Incident/Chart/" + id);
+  }
 }

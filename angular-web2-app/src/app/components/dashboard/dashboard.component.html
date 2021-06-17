@@ -109,8 +109,31 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <div id="columnChartContainer" class="col-6"></div>
-        <div id="pieChartContainer" class="col-6"></div>
+    <div class="row align-items-center mt-3">
+        <div class="col-6">
+            <ngx-charts-area-chart
+                [view]="view" 
+                [scheme]="colorSchemeArea"
+                [results]="incidentiMulti"
+                [legend]="legend" 
+                [showXAxisLabel]="showXAxisLabel" 
+                [showYAxisLabel]="showYAxisLabel" 
+                [xAxis]="xAxis" [yAxis]="yAxis" 
+                [xAxisLabel]="xAxisLabel" 
+                [yAxisLabel]="yAxisLabel"
+                [timeline]="timeline"
+            ></ngx-charts-area-chart>
+        </div>
+        <div class="col-6">
+            <ngx-charts-pie-chart
+                [results]="dokumenti"
+                [view]="view" 
+                [scheme]="colorSchemePie" 
+                [gradient]="true" 
+                [legend]="true" 
+                [labels]="showLabels" 
+                [doughnut]="true"
+            ></ngx-charts-pie-chart>
+        </div>
     </div>
 </div>
