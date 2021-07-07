@@ -1,0 +1,109 @@
+<form [formGroup]="dodajBezbednosniDokumentForm" (ngSubmit)="onSubmitBezbednosniDokument()">
+    <div class="form-group">
+        <label for="Tip">Tip</label>
+        <select required id="Tip" class="form-control" formControlName="Tip">
+            <option>Planirani rad</option>
+            <option>Neplanirani rad</option>
+        </select>
+    </div>
+    <div>
+        <label>Plan rada</label>
+        <input type="button" (click)="getPlanRada()" value="..."> 
+    </div>
+    <div class="form-group">
+        <label for="Status">Status</label>
+        <select required id="Status" class="form-control" formControlName="Status">
+            <option>Izraden</option>
+            <option>Greska</option>
+            <option>Obustavljen</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="Ekipa">Ekipa</label>
+        <select required id="Ekipa" class="form-control" formControlName="Ekipa">
+            <option>Fantastik</option>
+            <option>KOI Code</option>
+            <option>Hitna popravka</option>
+            <option>Kontrola</option>
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="Detalji">Detalji</label>
+        <input class="form-control" id="Detalji" type="text" formControlName="Detalji">
+    </div>
+    <div class="form-group">
+        <label for="Beleske">Beleske</label>
+        <input class="form-control" id="Beleske" type="text" formControlName="Beleske">
+    </div>
+    <div class="form-group">
+        <label for="DatumKreiranja">Datum kreiranja</label>
+        <input required class="form-control" id="DatumKreiranja" type="datetime" formControlName="DatumKreiranja">
+    </div>
+    <div class="form-group">
+        <label for="AllWorkOperationsCompleted">All work operations completed</label>
+        <input class="checkbox" type="checkbox" id="AllWorkOperationsCompleted" formControlName="AllWorkOperationsCompleted">
+    </div>
+    <div class="form-group">
+        <label for="AllTagsRemoved">All tags removed</label>
+        <input class="checkbox" type="checkbox" id="AllTagsRemoved" formControlName="AllTagsRemoved">
+    </div>
+    <div class="form-group">
+        <label for="GroundingRemoved">Grounding removed</label>
+        <input class="checkbox" type="checkbox" id="GroundingRemoved" formControlName="GroundingRemoved">
+    </div>
+    <div class="form-group">
+        <label for="ReadyForService">Ready for service</label>
+        <input class="checkbox" type="checkbox" id="ReadyForService" formControlName="ReadyForService">
+    </div>
+
+    <div class="form-group">
+        <input type="file" accept="image/png, image/gif, image/jpeg" multiple (change)="onFileSelected($event)">
+    </div>
+
+    <div class="col-6" [hidden]="!izabraneSlike">
+        <h2>Dodate slike:</h2>
+        <ul class="list-group" *ngFor="let slika of izabraneSlike">
+            <li class="list-group-item active">Naziv slike: {{ slika.name }}</li>
+        </ul>
+    </div>
+
+    <table class="table table-striped table-bordered table-sm">
+        <thead>
+            <th>IdOpreme</th>
+            <th>Naziv</th>
+            <th>IdTipOpreme</th>
+            <th>Kordinate</th>
+            <th>Adresa</th>
+            <th>Prijavi</th>
+            <th>Lokacija</th>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of Oprema">
+                <td>{{ item.idOpreme }}</td>
+                <td>{{ item.Naziv }}</td>
+                <td>{{ item.Tip }}</td>
+                <td>{{ item.Kordinate}}</td>
+                <td>{{ item.Adresa}}</td>
+                <td class="text-center align-middle"><input class="btn btn-primary" type="button" (click)="addId(item.idOpreme)" value="Klik!" ></td>
+                <td>
+                    <button class="btn btn-primary-outline w-100" >
+                        <i class="bi bi-pin-map"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul class="list-group" *ngFor="let oprema of OpremaToAdd">
+        <li class="list-group-item active">Id opeme: {{ oprema }}</li>
+    </ul>
+
+    <div class="row" style="text-align: center;">
+        <div class="col" style="color: blueviolet;" *ngIf="dodajBezbednosniDokumentForm.status === 'INVALID'">
+            Forma nije dobro popunjena.
+        </div>
+        <div class="col form-group">
+            <button [disabled]="!dodajBezbednosniDokumentForm.valid" class="btn btn-danger" type="submit">Dodaj bezbednosni dokument</button>
+        </div>
+    </div>
+</form>

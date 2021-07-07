@@ -1,0 +1,25 @@
+.btn {
+    border-radius: 0%;
+}
+
+.btn-primary-outline:hover {
+    background-color: lightgray;
+}
+
+#dodajIncidentForm {
+    border-spacing: 15px;
+    border-bottom: 2px solid black;
+}
+
+#dodajResenjeForm, #dodajPozivForm, #opremaTable, #pozivTable, #ekipaTable {
+    width: 80%;
+    margin: 5px auto;
+}
+
+#slika {
+    margin-top: 5px;
+}
+
+.list-group-item {
+    border-radius: 0%;
+}

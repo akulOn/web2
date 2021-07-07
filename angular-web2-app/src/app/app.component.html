@@ -2,14 +2,27 @@
     <div class="collapse navbar-collapse" id="navbarText">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" routerLink='/neReg'>Home</a>
+            <a class="nav-link" routerLink='/ne-registrovan'>Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" routerLink='/incidenti'>Incidenti</a>
+            <a class="nav-link" routerLink='/dashboard'>Dashboard</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/incidenti-svi">Svi incidenti</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/bezbednosni-dokumenti-svi">Svi bezbednosni dokumenti</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink='/elementi-mreze'>Svi elementi mreze</a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" routerLink='/moj-profil'>Moj profil</a>
+          </li> -->
         </ul>
         <span class="navbar-text">
-          Ovde se moze dodati trenutno logovani student
+          <a class="nav-link" routerLink='/moj-profil'><fa-icon [icon]="faUser"></fa-icon></a>
+          <!-- Ovde se moze dodati trenutno logovani korisnik -->
         </span>
       </div>
 </nav>

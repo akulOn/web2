@@ -1,0 +1,139 @@
+<div style="margin: 100px">
+    <div class="row">
+        <div class="col-4 border-top">
+            <div class="row border-bottom">
+                <div class="col-8">
+                    <h2>Moji incidenti</h2>
+                </div>
+                <div class="col-4">
+                    <button class="btn btn-outline-dark" [routerLink]="['/incidenti', idKoirniska]">
+                        <i class="bi bi-window"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-8">
+                    <h3>Resen</h3>
+                </div>
+                <div class="col-4">
+                    <h3>{{ incidentiStatusi[0] }}</h3>
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-8">
+                    <h3>Izraden</h3>
+                </div>
+                <div class="col-4">
+                    <h3>{{ incidentiStatusi[1] }}</h3>
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-8">
+                    <h3>Dostavljen</h3>
+                </div>
+                <div class="col-4">
+                    <h3>{{ incidentiStatusi[2] }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 border-top">
+            <div class="row border-bottom">
+                <div class="col-8">
+                    <h2>Moji planovi rada</h2>
+                </div>
+                <div class="col-4">
+                    <button class="btn btn-outline-dark">
+                        <i class="bi bi-window"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-8">
+                    <h3>Izraden</h3>
+                </div>
+                <div class="col-4">
+                    <h3>{{ planoviRadaStatusi[0] }}</h3>
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-8">
+                    <h3>Greska</h3>
+                </div>
+                <div class="col-4">
+                    <h3>{{ planoviRadaStatusi[1] }}</h3>
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-8">
+                    <h3>Obustavljen</h3>
+                </div>
+                <div class="col-4">
+                    <h3>{{ planoviRadaStatusi[2] }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 border-top">
+            <div class="row border-bottom">
+                <div class="col-8">
+                    <h2>Moji bezbednosni dokumenti</h2>
+                </div>
+                <div class="col-4">
+                    <button class="btn btn-outline-dark" [routerLink]="['/bezbednosni-dokumenti', idKoirniska]">
+                        <i class="bi bi-window"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-8">
+                    <h3>Izraden</h3>
+                </div>
+                <div class="col-4">
+                    <h3>{{ bezbednosniDokumentiStatusi[0] }}</h3>
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-8">
+                    <h3>Greska</h3>
+                </div>
+                <div class="col-4">
+                    <h3>{{ bezbednosniDokumentiStatusi[1] }}</h3>
+                </div>
+            </div>
+            <div class="row border-bottom">
+                <div class="col-8">
+                    <h3>Obustavljen</h3>
+                </div>
+                <div class="col-4">
+                    <h3>{{ bezbednosniDokumentiStatusi[2] }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row align-items-center mt-3">
+        <div class="col-6">
+            <ngx-charts-area-chart
+                [view]="view" 
+                [scheme]="colorSchemeArea"
+                [results]="incidentiMulti"
+                [legend]="legend" 
+                [showXAxisLabel]="showXAxisLabel" 
+                [showYAxisLabel]="showYAxisLabel" 
+                [xAxis]="xAxis" [yAxis]="yAxis" 
+                [xAxisLabel]="xAxisLabel" 
+                [yAxisLabel]="yAxisLabel"
+                [timeline]="timeline"
+            ></ngx-charts-area-chart>
+        </div>
+        <div class="col-6">
+            <ngx-charts-pie-chart
+                [results]="dokumenti"
+                [view]="view" 
+                [scheme]="colorSchemePie" 
+                [gradient]="true" 
+                [legend]="true" 
+                [labels]="showLabels" 
+                [doughnut]="true"
+            ></ngx-charts-pie-chart>
+        </div>
+    </div>
+</div>

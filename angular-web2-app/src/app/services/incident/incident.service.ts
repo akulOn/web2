@@ -1,27 +1,74 @@
 import { Injectable } from '@angular/core';
 import { Incident } from '../../entities/incident/incident';
+import { HttpClient } from "@angular/common/http";
+import { Observable } from "rxjs"; // async
+import { Oprema } from 'src/app/entities/oprema/oprema';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IncidentService {
+  readonly APIUrl = "https://localhost:44335/api";
 
-  mockedIncidenti() : Array<Incident>
-  {
-    let incidenti = new Array<Incident>();
+  constructor(private http:HttpClient) {  }
 
-    const i1 = new Incident(new Date('2021-01-01'), '0637747444', 'done', 'Aksentija Marodica 73');
-    const i2 = new Incident(new Date('1998-01-27'), '0615756842', 'draft', 'Beogradski put 66');
-    const i3 = new Incident(new Date('1996-04-30'), '0698243213', 'submited', 'Matija Gubca 69');
-    const i4 = new Incident(new Date('2001-03-31'), '0624984649', 'danger', 'Braca Radica 25');
-
-    incidenti.push(i1);
-    incidenti.push(i2);
-    incidenti.push(i3);
-    incidenti.push(i4);
-
-    return incidenti;
+  getAllIncidenti():Observable<Incident[]>{
+    return this.http.get<Incident[]>(this.APIUrl + "/Incident/GetAll");
   }
 
-  constructor() { }
+  getIncident(id:number){
+    return this.http.get<Incident>(this.APIUrl + "/Incident/" + id);
+  }
+
+  getIncidentKorisnik(id:number){
+    return this.http.get<Incident[]>(this.APIUrl + "/Incident/Korisnik/" + id);
+  }
+
+  addIncident(incident:Incident){
+    return this.http.post(this.APIUrl + "/Incident/", incident);
+  }
+
+  preuzmi(IdIncidenta:number, IdKorisnika:number) {
+    return this.http.put(this.APIUrl + '/Incident/KorisnikPreuzmi/', {IdIncidenta, IdKorisnika} )
+  }
+
+  getOprema(id:number) : Observable<Oprema[]> {
+    return this.http.get<Oprema[]>(this.APIUrl + "/Incident/Oprema/" + id);
+  }
+
+  addOpremaToIncident(IdIncidenta:number, IdOpreme:number){
+    return this.http.put(this.APIUrl + "/Incident/DodajOpremu", {IdIncidenta, IdOpreme} )
+  }
+
+  deleteOpremaFromIncident(IdIncidenta:number, IdOpreme:number){
+    return this.http.put(this.APIUrl + "/Incident/IzbaciOpremu", {IdIncidenta, IdOpreme} )
+  }
+
+  addEkipaToIncident(IdIncidenta:number, IdEkipe:number){
+    return this.http.put(this.APIUrl + "/Incident/DodajEkipu", {IdIncidenta, IdEkipe} )
+  }
+
+  addResenjeToIncident(IdIncidenta:number, IdResenja:number){
+    return this.http.put(this.APIUrl + "/Incident/DodajResenje", {IdIncidenta, IdResenja} )
+  }
+
+  getSlike(id:number) {
+    return this.http.get<any[]>(this.APIUrl + "/Incident/Slike/" + id);
+  }
+
+  addSlikaToIncident(id:number, slika:FormData){
+    return this.http.put(this.APIUrl + "/Incident/DodajSliku/" + id, slika);
+  }
+
+  deleteSlika(idIncidenta:number, idSlike:number) {
+    return this.http.put(this.APIUrl + "/Incident/IzbaciSliku/", {idIncidenta, idSlike});
+  }
+
+  prebaciSliku(idIncidenta:number, idSlike:number) {
+    return this.http.put(this.APIUrl + "/Incident/PrebaciSliku/", {idIncidenta, idSlike});
+  }
+
+  chart(id:number) {
+    return this.http.get<any[]>(this.APIUrl + "/Incident/Chart/" + id);
+  }
 }

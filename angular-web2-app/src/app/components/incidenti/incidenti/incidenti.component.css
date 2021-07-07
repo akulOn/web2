@@ -1,3 +1,16 @@
-.bs-example{
-    margin-top: 100px;
+td.mat-column-NazivTipIncidenta {
+    background-color: whitesmoke;
+    padding-right: 6px;
+}
+
+td.mat-column-idIncidenta {
+    background-color: whitesmoke;
+}
+
+.mat-table-sticky-border-elem-right {
+    border-left: 1px solid #e0e0e0;
+}
+
+.mat-table-sticky-border-elem-left {
+    border-right: 1px solid #e0e0e0;
 }

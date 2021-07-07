@@ -1,0 +1,11 @@
+.checkbox {
+    margin-left: 10px;
+    position: absolute;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+}
+
+.list-group-item {
+    border-radius: 0%;
+}
